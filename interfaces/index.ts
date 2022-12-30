@@ -1,24 +1,35 @@
+import { type } from "os";
+
 export type ImgixType = {
-  url: string
-  imgix_url: string
-}
+  url: string;
+  imgix_url: string;
+};
 
 export type AuthorType = {
-  title: string
+  title: string;
   metadata: {
-    picture: ImgixType
-  }
-}
+    picture: ImgixType;
+  };
+};
 
 export type PostType = {
-  title: string
-  slug: string
-  content: string
-  created_at: string
-  metadata: {
-    cover_image: ImgixType
-    author: AuthorType
-    excerpt: string
-    content: string
-  }
-}
+  attributes: {
+    id: number;
+    title: string;
+    description: string;
+    slug: string;
+    cover: any;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+};
+
+export type HeaderType = {
+  attributes: {
+    id: number;
+    title: string;
+    cover: any;
+    category: string;
+  };
+};
