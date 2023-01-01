@@ -1,6 +1,12 @@
-/** @type {import('next').NextConfig} */
 module.exports = {
   images: {
-    domains: ['imgix.cosmicjs.com'],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/**",
+      },
+    ],
   },
-}
+};
