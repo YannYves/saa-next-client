@@ -12,8 +12,9 @@
 
 ## Add router + all components required
 
-- [ ] Set up router
-- [ ] Fetch data (per parge, per post)
+- [x] Set up router
+- [x] Fetch data (per parge, per post)
+- [ ] Build successfull
 - [ ] Add navbar
 - [ ] Add banner
 - [ ] Add article component

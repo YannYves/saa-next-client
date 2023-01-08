@@ -14,7 +14,7 @@ const Avatar = (props: AvatarProps) => {
       <div className='w-12 h-12 relative mr-4'>
         {picture && (
           <Image
-            src={`${server + picture}?auto=format,compress,enhance&w=100&h=100`}
+            src={server + picture}
             layout='fill'
             className='rounded-full'
             alt={name}

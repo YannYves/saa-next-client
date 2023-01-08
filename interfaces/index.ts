@@ -49,6 +49,7 @@ export type HeaderType = {
 };
 
 export type AuthorType = {
+  avatar: any;
   data: {
     id: number;
     attributes: {

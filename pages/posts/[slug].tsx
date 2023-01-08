@@ -1,34 +1,39 @@
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
-import Container from '@/components/container'
-import PostBody from '@/components/post-body'
-import MoreStories from '@/components/more-stories'
-import Header from '@/components/header'
-import PostHeader from '@/components/post-header'
-import SectionSeparator from '@/components/section-separator'
-import Layout from '@/components/layout'
-import { getAllPostsWithSlug, getPostAndMorePosts } from '@/lib/api'
-import PostTitle from '@/components/post-title'
-import Head from 'next/head'
-import { CMS_NAME } from '@/lib/constants'
-import markdownToHtml from '@/lib/markdownToHtml'
-import { PostType } from 'interfaces'
-import { ParsedUrlQueryInput } from 'querystring'
+import { useRouter } from "next/router";
+import ErrorPage from "next/error";
+import Container from "@/components/container";
+import PostBody from "@/components/post-body";
+import MoreStories from "@/components/more-stories";
+import Header from "@/components/header";
+import PostHeader from "@/components/post-header";
+import SectionSeparator from "@/components/section-separator";
+import Layout from "@/components/layout";
+import PostTitle from "@/components/post-title";
+import Head from "next/head";
+import { PostType } from "interfaces";
+import { loadPosts } from "@/lib/load-posts";
 
 type PostProps = {
-  post: PostType
-  morePosts: PostType[]
-  preview
-}
+  post: { data: PostType };
+  morePosts: PostType[];
+  server: string;
+};
 
 const Post = (props: PostProps) => {
-  const { post, morePosts, preview } = props
-  const router = useRouter()
-  if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />
+  const { post, server } = props;
+
+  const router = useRouter();
+  const coverImageUrl = post.data.attributes.cover.data.attributes.formats.large
+    ? post.data.attributes.cover.data.attributes.formats.large.url
+    : post.data.attributes.cover.data.attributes.formats.medium.url;
+  const title = post.data.attributes.title;
+  const date = post.data.attributes.createdAt;
+  const author = post.data.attributes.author;
+
+  if (router.isFallback) {
+    return <ErrorPage statusCode={404} />;
   }
   return (
-    <Layout preview={preview}>
+    <Layout>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -37,61 +42,65 @@ const Post = (props: PostProps) => {
           <>
             <article>
               <Head>
-                <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
-                </title>
-                <meta
-                  property="og:image"
-                  content={post.metadata.cover_image.imgix_url}
-                />
+                <title>{title}</title>
+                <meta property='og:image' content={coverImageUrl} />
               </Head>
               <PostHeader
-                title={post.title}
-                coverImage={post.metadata.cover_image}
-                date={post.created_at}
-                author={post.metadata.author}
+                title={title}
+                coverImage={coverImageUrl}
+                date={date}
+                author={author}
+                server={server}
               />
-              <PostBody content={post.content} />
+              <PostBody content={post.data.attributes.description} />
             </article>
             <SectionSeparator />
-            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+            {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           </>
         )}
       </Container>
     </Layout>
-  )
-}
-export default Post
+  );
+};
+export default Post;
 
-type staticProps = {
-  params: ParsedUrlQueryInput
-  preview: boolean
-}
-
-export const getStaticProps = async (props: staticProps) => {
-  const { params, preview = null } = props
-  try {
-    const data = await getPostAndMorePosts(params.slug as string, preview)
-    const content = await markdownToHtml(data['post']?.metadata?.content || '')
-    return {
-      props: {
-        preview,
-        post: {
-          ...data['post'],
-          content,
-        },
-        morePosts: data['morePosts'] || [],
-      },
-    }
-  } catch (err) {
-    return <ErrorPage statusCode={err.status} />
-  }
-}
-
+// This function runs only on @the server side
 export async function getStaticPaths() {
-  const allPosts = (await getAllPostsWithSlug()) || []
-  return {
-    paths: allPosts.map((post) => `/posts/${post.slug}`),
-    fallback: true,
-  }
+  // Instead of fetching your `/api` route you can call the same
+  // function directly in `getStaticProps`
+  const posts = await loadPosts(
+    process.env.STRAPI_SERVER + "/api/articles?populate=deep"!
+  );
+  // Get the paths we want to pre-render based on posts
+
+  const paths = posts.data.map((post: PostType) => ({
+    params: { slug: post.attributes.slug, postId: post.id },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
+
+// This function runs only on @the server side
+export async function getStaticProps(context) {
+  // Instead of fetching your `/api` route you can call the same
+  // function directly in `getStaticProps`
+  const slug = context.params.slug;
+
+  const posts = await loadPosts(
+    process.env.STRAPI_SERVER + "/api/articles?populate=deep"!
+  );
+
+  const postId = posts.data.filter((post) => post.attributes.slug === slug)[0]
+    .id;
+
+  const post = await loadPosts(
+    process.env.STRAPI_SERVER + `/api/articles/${postId}?populate=deep`!
+  );
+
+  const server = process.env.STRAPI_SERVER;
+
+  // Props returned will be passed to the page component
+  return { props: { post, server } };
 }

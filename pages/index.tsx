@@ -17,6 +17,8 @@ const Index = (props: IndexProps) => {
   let homePosts = [];
   let heroPosts = [];
 
+  console.log(posts, "posts");
+
   posts.data.map((post: PostType) =>
     post.attributes.header
       ? (heroPosts = [...heroPosts, post])
@@ -62,6 +64,8 @@ export async function getStaticProps() {
   const posts = await loadPosts(
     process.env.STRAPI_SERVER + "/api/articles?populate=deep"!
   );
+
+  console.log(posts.data[0], "many posts");
 
   const server = process.env.STRAPI_SERVER;
 
