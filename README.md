@@ -14,8 +14,8 @@
 
 - [x] Set up router
 - [x] Fetch data (per parge, per post)
-- [ ] Build successfull
-- [ ] Add navbar
+- [x] Build successfull
+- [x] Add navbar
 - [ ] Add banner
 - [ ] Add article component
 - [ ] Clean up repo

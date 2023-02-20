@@ -6,7 +6,6 @@ import Layout from "@/components/layout";
 import Head from "next/head";
 import { PostType, HeaderType, AuthorType } from "interfaces";
 import { loadPosts } from "@/lib/load-posts";
-
 type IndexProps = {
   posts: { data: PostType[] };
   server: string;
@@ -64,8 +63,6 @@ export async function getStaticProps() {
   const posts = await loadPosts(
     process.env.STRAPI_SERVER + "/api/articles?populate=deep"!
   );
-
-  console.log(posts.data[0], "many posts");
 
   const server = process.env.STRAPI_SERVER;
 
