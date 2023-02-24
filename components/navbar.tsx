@@ -1,148 +1,113 @@
-import { useState, useEffect } from "react";
-import {
-  Navbar,
-  MobileNav,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Link from "next/link";
 
-export default function NavbarComponent() {
-  const [openNav, setOpenNav] = useState(false);
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+}
 
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
+const drawerWidth = 240;
+const navItems = ["Home", "About", "Contact"];
 
-  const navList = (
-    <ul className='mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6'>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-normal'
-      >
-        <Link
-          href='/la-vie-du-syndicat'
-          className='flex items-center hover:underline'
-        >
-          La vie du syndicat
-        </Link>
+export default function DrawerAppBar(props: Props) {
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography variant='h6' sx={{ my: 2 }}>
+        Le syndicat apicole artésien
       </Typography>
-
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-normal'
-      >
-        <Link
-          href='/le-rucher-ecole'
-          className='flex items-center hover:underline'
-        >
-          Le Rucher école
-        </Link>
-      </Typography>
-
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-normal'
-      >
-        <Link href='/actualité' className='flex items-center hover:underline'>
-          Actualité
-        </Link>
-      </Typography>
-
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-normal'
-      >
-        <Link href='/utile' className='flex items-center hover:underline'>
-          Utile
-        </Link>
-      </Typography>
-
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-normal'
-      >
-        <Link
-          href='/petites-annonces'
-          className='flex items-center hover:underline'
-        >
-          Petites annonces
-        </Link>
-      </Typography>
-    </ul>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <Link href={"/" + item}>
+                <ListItemText primary={item} />
+              </Link>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
   return (
-    <Navbar className='mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 font-bold tracking-tighter leading-tight'>
-      <div className='container mx-auto flex items-center justify-between text-blue-gray-900'>
-        <Typography
-          as='span'
-          className='text-xl mr-4 cursor-pointer py-1.5 font-normal'
-        >
-          <Link
-            href='/'
-            className='hover:underline mr-4 cursor-pointer py-1.5 font-normal'
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar component='nav'>
+        <Toolbar>
+          <IconButton
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
-            Home
-          </Link>
-        </Typography>
+            <MenuIcon />
+          </IconButton>
 
-        <div className='hidden lg:block'>{navList}</div>
+          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+            <Link href='/'>Le syndicat apicole artésien</Link>
+          </Typography>
 
-        <IconButton
-          variant='text'
-          className='ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden'
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            {navItems.map((item) => (
+              <Button key={item} sx={{ color: "#fff" }}>
+                <Link href={"/" + item}>{item}</Link>
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Box component='nav'>
+        <Drawer
+          container={container}
+          variant='temporary'
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
         >
-          {openNav ? (
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              className='h-6 w-6'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M6 18L18 6M6 6l12 12'
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-6 w-6'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M4 6h16M4 12h16M4 18h16'
-              />
-            </svg>
-          )}
-        </IconButton>
-      </div>
-      <MobileNav open={openNav}>
-        <div className='container mx-auto'>{navList}</div>
-      </MobileNav>
-    </Navbar>
+          {drawer}
+        </Drawer>
+      </Box>
+      <Box component='main' sx={{ p: 3 }}>
+        <Toolbar />
+      </Box>
+    </Box>
   );
 }

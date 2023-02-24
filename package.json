@@ -6,7 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
     "@material-tailwind/react": "^1.4.2",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
     "classnames": "2.3.1",
     "cosmicjs": "4.1.7",
     "date-fns": "2.28.0",
