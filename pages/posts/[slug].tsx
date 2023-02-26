@@ -35,7 +35,7 @@ const Post = (props: PostProps) => {
   return (
     <Layout>
       <Container>
-        <Header />
+        {/* <Header /> */}
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (

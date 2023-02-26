@@ -9,7 +9,7 @@
   @apply my-6;
 }
 
-.markdown h2 {
+components/intro-img.tsx.markdown h2 {
   @apply text-3xl mt-12 mb-4 leading-snug;
 }
 

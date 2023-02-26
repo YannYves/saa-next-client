@@ -15,7 +15,6 @@ type HeroPostProps = {
 
 const HeroPost = (props: HeroPostProps) => {
   const { title, coverImage, createdAt, author, slug, server } = props;
-  console.log(server, "ici");
 
   return (
     <section>

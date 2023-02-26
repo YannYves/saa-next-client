@@ -4,9 +4,6 @@ const Intro = () => {
       <h1 className='text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8'>
         Le syndicat apicole artésien.
       </h1>
-      <h4 className='text-center md:text-left text-lg mt-5 md:pl-8'>
-        Toute les actus de notre syndicat
-      </h4>
     </section>
   );
 };

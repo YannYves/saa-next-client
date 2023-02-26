@@ -6,6 +6,7 @@ import Layout from "@/components/layout";
 import Head from "next/head";
 import { PostType, HeaderType, AuthorType } from "interfaces";
 import { loadPosts } from "@/lib/load-posts";
+import IntroImg from "@/components/intro-img";
 type IndexProps = {
   posts: { data: PostType[] };
   server: string;
@@ -31,7 +32,8 @@ const Index = (props: IndexProps) => {
           <title>Next.js Blog Example with </title>
         </Head>
         <Container>
-          <Intro />
+          <IntroImg />
+
           {heroPosts.map((heroPost) => (
             <HeroPost
               title={heroPost.attributes.title}
