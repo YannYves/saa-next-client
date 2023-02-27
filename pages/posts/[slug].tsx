@@ -24,7 +24,6 @@ const Post = (props: PostProps) => {
 
   const router = useRouter();
 
-  console.log(router, "router");
   const coverImageUrl = post.data.attributes.cover.data.attributes.formats.large
     ? post.data.attributes.cover.data.attributes.formats.large.url
     : post.data.attributes.cover.data.attributes.formats.medium.url;
