@@ -26,19 +26,21 @@ const Index = (props: IndexProps) => {
       : (allPosts = [...allPosts, post])
   );
 
-  const filteredHomePost = filterPost(allPosts, "home");
-  const filteredHeroPost = filterPost(heroPosts, "home");
+  const filteredHomePost = filterPost(allPosts, "utile");
+  const filteredHeroPost = filterPost(heroPosts, "utile");
 
   return (
     <>
       <Layout>
         <Head>
-          <title>Le syndicat apicole artésien - aceuil </title>
+          <title>Le syndicat apicole artésien - utile</title>
         </Head>
         <Container>
-          <IntroImg SectionIntroText={"Le syndicat apicole artésien."} />
-          <FeaturedIntro />
-          {heroPosts.map((heroPost) => (
+          <IntroImg SectionIntroText={"Les + utiles."} />
+
+          {filteredHeroPost.length > 0 && <FeaturedIntro />}
+
+          {filteredHeroPost.map((heroPost) => (
             <HeroPost
               title={heroPost.attributes.title}
               coverImage={

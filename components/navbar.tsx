@@ -24,7 +24,14 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact"];
+const navItems = [
+  { title: "Home", link: "" },
+  { title: "La vie du syndicat", link: "la-vie-du-syndicat" },
+  { title: "Le rucher école", link: "le-rucher-ecole" },
+  { title: "Actualités", link: "actualites" },
+  { title: "Utile", link: "utile" },
+  { title: "Petites annonces", link: "petites-annonces" },
+];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -36,7 +43,7 @@ export default function DrawerAppBar(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant='h6' sx={{ my: 2 }}>
+      <Typography variant='h6' sx={{ my: 2 }} className='font-bold '>
         Le syndicat apicole artésien
       </Typography>
       <Divider />
@@ -44,8 +51,8 @@ export default function DrawerAppBar(props: Props) {
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <Link href={"/" + item}>
-                <ListItemText primary={item} />
+              <Link href={"/" + item.link}>
+                <ListItemText primary={item.title} />
               </Link>
             </ListItemButton>
           </ListItem>
@@ -77,11 +84,13 @@ export default function DrawerAppBar(props: Props) {
           </Typography>
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                <Link href={"/" + item}>{item}</Link>
-              </Button>
-            ))}
+            {navItems
+              .filter((item) => item.title !== "Home")
+              .map((item) => (
+                <Button key={item} sx={{ color: "#fff" }}>
+                  <Link href={"/" + item.link}>{item.title}</Link>
+                </Button>
+              ))}
           </Box>
         </Toolbar>
       </AppBar>

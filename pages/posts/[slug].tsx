@@ -11,6 +11,7 @@ import PostTitle from "@/components/post-title";
 import Head from "next/head";
 import { PostType } from "interfaces";
 import { loadPosts } from "@/lib/load-posts";
+import BackButton from "@/components/back-button";
 
 type PostProps = {
   post: { data: PostType };
@@ -22,6 +23,8 @@ const Post = (props: PostProps) => {
   const { post, server } = props;
 
   const router = useRouter();
+
+  console.log(router, "router");
   const coverImageUrl = post.data.attributes.cover.data.attributes.formats.large
     ? post.data.attributes.cover.data.attributes.formats.large.url
     : post.data.attributes.cover.data.attributes.formats.medium.url;
@@ -35,7 +38,6 @@ const Post = (props: PostProps) => {
   return (
     <Layout>
       <Container>
-        {/* <Header /> */}
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -45,6 +47,7 @@ const Post = (props: PostProps) => {
                 <title>{title}</title>
                 <meta property='og:image' content={coverImageUrl} />
               </Head>
+              <BackButton />
               <PostHeader
                 title={title}
                 coverImage={coverImageUrl}
@@ -55,7 +58,6 @@ const Post = (props: PostProps) => {
               <PostBody content={post.data.attributes.description} />
             </article>
             <SectionSeparator />
-            {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           </>
         )}
       </Container>
