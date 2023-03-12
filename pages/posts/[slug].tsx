@@ -76,8 +76,7 @@ export async function getStaticProps(context) {
   const onePost = ghostPosts.filter((post: any) => post.slug === slug);
 
   const post = await readPostsGhost(onePost[0].id);
-  const server = process.env.STRAPI_SERVER;
 
   // Props returned will be passed to the page component
-  return { props: { post, server } };
+  return { props: { post } };
 }
