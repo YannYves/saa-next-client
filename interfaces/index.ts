@@ -23,20 +23,13 @@ export type AvatarType = {
 };
 
 export type PostType = {
-  id: number;
-  attributes: {
-    title: string;
-    description: string;
-    slug: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    cover: PostMediaType;
-    author: AuthorType;
-    category: CategoryType;
-    blocks: any;
-    header: boolean;
-  };
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  created_at: string;
+  feature_image: string;
+  primary_author: AuthorType;
 };
 
 export type HeaderType = {
@@ -49,18 +42,8 @@ export type HeaderType = {
 };
 
 export type AuthorType = {
-  avatar: any;
-  data: {
-    id: number;
-    attributes: {
-      name: string;
-      email: string;
-      artciles: any;
-      avatar: AvatarType;
-      createdAt: string;
-      updatedAt: string;
-    };
-  };
+  name: string;
+  profile_image: string;
 };
 
 export type CategoryType = {

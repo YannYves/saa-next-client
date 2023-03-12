@@ -10,27 +10,25 @@ type CoverImageProps = {
 const CoverImage = (props: CoverImageProps) => {
   const { title, url, slug } = props;
 
-  const image = (
-    <Image
-      src={url}
-      alt='Picture of the author'
-      width={500}
-      height={500}
-      className={cn("lazyload shadow-small w-full", {
-        "hover:shadow-medium transition-shadow duration-200": slug,
-      })}
-    />
-  );
-  return (
-    <div className='sm:mx-0'>
-      {slug ? (
+  if (slug !== null && url !== null) {
+    const image = (
+      <Image
+        src={url}
+        alt='Picture of the author'
+        width={500}
+        height={500}
+        className={cn("lazyload shadow-small w-full", {
+          "hover:shadow-medium transition-shadow duration-200": slug,
+        })}
+      />
+    );
+    return (
+      <div className='sm:mx-0'>
         <Link href={`/posts/${slug}`} aria-label={title}>
           {image}
         </Link>
-      ) : (
-        image
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 };
 export default CoverImage;

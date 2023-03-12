@@ -1,21 +1,10 @@
 # Backlog
 
-- [x] set basic set up
-- [x] working landing page
-- [ ] Add router + all components required
-- [ ] check build webhook from strapi
-- [ ] migrate contents from legacy CMS
-- [ ] Choose SQL BDD service
-- [ ] deploy in prod ( vercel ?)
-- [ ] add test env ?
+- [ ] add test env for front + deploy
 - [ ] fix ts
-
-## Add router + all components required
-
-- [ ] Handle article without picture
-- [ ] Pagination
-- [ ] Going back button aticle
-- [ ] Loarder
+- [ ] check build webhook from ghost
+- [ ] Loader
 - [ ] Theme
 - [ ] Spacing
-- [ ] Clean up repo
+- [ ] Pagination
+- [ ] deploy in prod ( vercel ?)

@@ -10,11 +10,10 @@ type HeroPostProps = {
   createdAt: string;
   author: AuthorType;
   slug: string;
-  server: string;
 };
 
 const HeroPost = (props: HeroPostProps) => {
-  const { title, coverImage, createdAt, author, slug, server } = props;
+  const { title, coverImage, createdAt, author, slug } = props;
 
   return (
     <section>
@@ -33,11 +32,7 @@ const HeroPost = (props: HeroPostProps) => {
           </div>
         </div>
         <div>
-          <Avatar
-            name={author.data.attributes.name}
-            picture={author.data.attributes.avatar.data.attributes.url}
-            server={server}
-          />
+          <Avatar name={author.name} picture={author.profile_image} />
         </div>
       </div>
     </section>

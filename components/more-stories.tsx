@@ -3,11 +3,10 @@ import PostPreview from "./post-preview";
 
 type MoreStoriesProps = {
   posts: PostType[];
-  server: string;
 };
 
 const MoreStories = (props: MoreStoriesProps) => {
-  const { posts, server } = props;
+  const { posts } = props;
   return (
     <section>
       <h2 className='mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight'>
@@ -17,14 +16,11 @@ const MoreStories = (props: MoreStoriesProps) => {
         {posts.map((post) => (
           <PostPreview
             key={post.id}
-            title={post.attributes.title}
-            coverImage={
-              server + post.attributes.cover.data.attributes.formats.small.url
-            }
-            date={post.attributes.createdAt}
-            author={post.attributes.author}
-            slug={post.attributes.slug}
-            server={server}
+            title={post.title}
+            coverImage={post.feature_image}
+            date={post.created_at}
+            author={post.primary_author}
+            slug={post.slug}
           />
         ))}
       </div>

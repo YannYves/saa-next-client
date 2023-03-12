@@ -1,12 +1,5 @@
 module.exports = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "1337",
-        pathname: "/**",
-      },
-    ],
+    domains: [process.env.BACKEND_URL, "static.ghost.org"],
   },
 };

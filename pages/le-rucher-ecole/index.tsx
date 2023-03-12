@@ -1,63 +1,17 @@
-import Container from "@/components/container";
-import MoreStories from "@/components/more-stories";
-import HeroPost from "@/components/hero-post";
-import Intro from "@/components/intro";
-import Layout from "@/components/layout";
-import Head from "next/head";
-import { PostType, HeaderType, AuthorType } from "interfaces";
-import { loadPosts } from "@/lib/load-posts";
-import IntroImg from "@/components/intro-img";
-import { filterPost } from "@/lib/filter-post";
-import FeaturedIntro from "@/components/featuredIntro";
+import Landing from "@/components/landing";
+import { getPostsGhost, getPostsTags } from "@/lib/post";
 
 type IndexProps = {
-  posts: { data: PostType[] };
-  server: string;
+  ghostPosts: any;
+  tags: any;
 };
 
 const Index = (props: IndexProps) => {
-  const { posts, server } = props;
-  let allPosts = [];
-  let heroPosts = [];
-
-  posts.data.map((post: PostType) =>
-    post.attributes.header
-      ? (heroPosts = [...heroPosts, post])
-      : (allPosts = [...allPosts, post])
-  );
-
-  const filteredHomePost = filterPost(allPosts, "le-rucher-ecole");
-  const filteredHeroPost = filterPost(heroPosts, "le-rucher-ecole");
+  const { ghostPosts, tags } = props;
 
   return (
     <>
-      <Layout>
-        <Head>
-          <title>Le syndicat apicole artésien - le rucher école </title>
-        </Head>
-        <Container>
-          <IntroImg SectionIntroText={"Le rucher ecole."} />
-
-          {filteredHeroPost.length > 0 && <FeaturedIntro />}
-
-          {filteredHeroPost.map((heroPost) => (
-            <HeroPost
-              title={heroPost.attributes.title}
-              coverImage={
-                server +
-                heroPost.attributes.cover.data.attributes.formats.medium.url
-              }
-              createdAt={heroPost.attributes.createdAt}
-              author={heroPost.attributes.author}
-              slug={heroPost.attributes.slug}
-              server={server}
-            />
-          ))}
-          {filteredHomePost.length > 0 && (
-            <MoreStories posts={filteredHomePost} server={server} />
-          )}
-        </Container>
-      </Layout>
+      <Landing ghostPosts={ghostPosts} tags={tags} />
     </>
   );
 };
@@ -66,14 +20,10 @@ export default Index;
 
 // This function runs only on @the server side
 export async function getStaticProps() {
-  // Instead of fetching your `/api` route you can call the same
-  // function directly in `getStaticProps`
-  const posts = await loadPosts(
-    process.env.STRAPI_SERVER + "/api/articles?populate=deep"!
-  );
-
-  const server = process.env.STRAPI_SERVER;
+  const filter = "tag:rucher-ecole";
+  const ghostPosts = await getPostsGhost(filter);
+  const tags = await getPostsTags();
 
   // Props returned will be passed to the page component
-  return { props: { posts, server } };
+  return { props: { ghostPosts, tags } };
 }

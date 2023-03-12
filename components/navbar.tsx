@@ -49,7 +49,7 @@ export default function DrawerAppBar(props: Props) {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.title} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
               <Link href={"/" + item.link}>
                 <ListItemText primary={item.title} />
@@ -87,7 +87,7 @@ export default function DrawerAppBar(props: Props) {
             {navItems
               .filter((item) => item.title !== "Home")
               .map((item) => (
-                <Button key={item} sx={{ color: "#fff" }}>
+                <Button key={item.title} sx={{ color: "#fff" }}>
                   <Link href={"/" + item.link}>{item.title}</Link>
                 </Button>
               ))}

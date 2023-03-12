@@ -10,11 +10,10 @@ type PostPreviewProps = {
   date: string;
   author: AuthorType;
   slug: string;
-  server: string;
 };
 
 const PostPreview = (props: PostPreviewProps) => {
-  const { title, coverImage, date, author, slug, server } = props;
+  const { title, coverImage, date, author, slug } = props;
 
   return (
     <div>
@@ -29,11 +28,7 @@ const PostPreview = (props: PostPreviewProps) => {
       <div className='text-lg mb-4'>
         <Date dateString={date} />
       </div>
-      <Avatar
-        name={author.data.attributes.name}
-        picture={author.data.attributes.avatar.data.attributes.url}
-        server={server}
-      />
+      <Avatar name={author.name} picture={author.profile_image} />
     </div>
   );
 };
