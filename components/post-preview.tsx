@@ -18,6 +18,8 @@ const PostPreview = (props: PostPreviewProps) => {
   const { title, coverImage, date, author, slug, frontDomain, backendUrl } =
     props;
 
+  console.log(frontDomain, "frontDomain");
+
   return (
     <div>
       <div className='mb-5'>
