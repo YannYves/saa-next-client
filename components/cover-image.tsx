@@ -25,7 +25,7 @@ const CoverImage = (props: CoverImageProps) => {
     );
     return (
       <div className='sm:mx-0'>
-        <Link href={`${frontDomain}/posts/${slug}`} aria-label={title}>
+        <Link href={`/posts/${slug}`} aria-label={title}>
           {image}
         </Link>
       </div>
