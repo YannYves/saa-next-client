@@ -1,6 +1,6 @@
 # Backlog
 
-- [ ] add test env for front + deploy
+- [x] add test env for front + deploy
 - [ ] fix ts
 - [ ] check build webhook from ghost
 - [ ] Loader
