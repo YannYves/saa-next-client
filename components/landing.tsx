@@ -9,10 +9,12 @@ import FeaturedIntro from "@/components/featuredIntro";
 type IndexProps = {
   ghostPosts: any;
   tags: any;
+  backendUrl: any;
+  frontDomain: any;
 };
 
 function Landing(props: IndexProps) {
-  const { ghostPosts, tags } = props;
+  const { ghostPosts, backendUrl, frontDomain } = props;
   let allPosts = [];
   let heroPosts = [];
 
@@ -40,9 +42,17 @@ function Landing(props: IndexProps) {
               createdAt={heroPost.created_at}
               author={heroPost.primary_author}
               slug={heroPost.slug}
+              backendUrl={backendUrl}
+              frontDomain={frontDomain}
             />
           ))}
-          {ghostPosts.length > 0 && <MoreStories posts={ghostPosts} />}
+          {ghostPosts.length > 0 && (
+            <MoreStories
+              posts={ghostPosts}
+              backendUrl={backendUrl}
+              frontDomain={frontDomain}
+            />
+          )}
         </Container>
       </Layout>
     </>

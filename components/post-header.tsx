@@ -9,10 +9,11 @@ type PostHeaderProps = {
   feature_image: string;
   date: string;
   author: any;
+  frontDomain;
 };
 
 const PostHeader = (props: PostHeaderProps) => {
-  const { title, feature_image, date, author } = props;
+  const { title, feature_image, date, author, frontDomain } = props;
   const avatarPicture = author.profile_image;
 
   return (
@@ -24,7 +25,12 @@ const PostHeader = (props: PostHeaderProps) => {
         </div>
       )}
       <div className='mb-8 md:mb-16 sm:mx-0'>
-        <CoverImage title={title} url={feature_image} slug={""} />
+        <CoverImage
+          title={title}
+          url={feature_image}
+          slug={""}
+          frontDomain={frontDomain}
+        />
       </div>
       <div className='max-w-2xl mx-auto'>
         {avatarPicture && (

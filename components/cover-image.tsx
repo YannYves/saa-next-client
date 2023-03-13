@@ -6,9 +6,10 @@ type CoverImageProps = {
   title;
   url;
   slug;
+  frontDomain;
 };
 const CoverImage = (props: CoverImageProps) => {
-  const { title, url, slug } = props;
+  const { title, url, slug, frontDomain } = props;
 
   if (slug !== null && url !== null) {
     const image = (
@@ -24,10 +25,7 @@ const CoverImage = (props: CoverImageProps) => {
     );
     return (
       <div className='sm:mx-0'>
-        <Link
-          href={`${process.env.FRONT_DOMAIN}/posts/${slug}`}
-          aria-label={title}
-        >
+        <Link href={`${frontDomain}/posts/${slug}`} aria-label={title}>
           {image}
         </Link>
       </div>

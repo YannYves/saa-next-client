@@ -13,10 +13,12 @@ import { getPostsGhost, readPostsGhost } from "@/lib/post";
 type PostProps = {
   post: any;
   morePosts: any;
+  backendUrl;
+  frontDomain;
 };
 
 const Post = (props: PostProps) => {
-  const { post } = props;
+  const { post, backendUrl, frontDomain } = props;
   const { feature_image, title, created_at, primary_author } = post;
   const router = useRouter();
 
@@ -37,6 +39,7 @@ const Post = (props: PostProps) => {
               </Head>
               <BackButton />
               <PostHeader
+                frontDomain={frontDomain}
                 title={title}
                 feature_image={feature_image}
                 date={created_at}
@@ -75,7 +78,12 @@ export async function getStaticProps(context) {
   //TODO what if two times the same slug ?
   const onePost = ghostPosts.filter((post: any) => post.slug === slug);
   const post = await readPostsGhost(onePost[0].id);
+  const backendUrl = process.env.BACKEND_URL;
+  const frontDomain =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : process.env.FRONT_DOMAIN;
 
   // Props returned will be passed to the page component
-  return { props: { post } };
+  return { props: { post, backendUrl, frontDomain } };
 }

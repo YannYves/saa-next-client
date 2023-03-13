@@ -3,10 +3,12 @@ import PostPreview from "./post-preview";
 
 type MoreStoriesProps = {
   posts: PostType[];
+  backendUrl;
+  frontDomain;
 };
 
 const MoreStories = (props: MoreStoriesProps) => {
-  const { posts } = props;
+  const { posts, backendUrl, frontDomain } = props;
   return (
     <section>
       <h2 className='mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight'>
@@ -21,6 +23,8 @@ const MoreStories = (props: MoreStoriesProps) => {
             date={post.created_at}
             author={post.primary_author}
             slug={post.slug}
+            backendUrl={backendUrl}
+            frontDomain={frontDomain}
           />
         ))}
       </div>

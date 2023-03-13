@@ -25,7 +25,7 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = [
-  { title: "Home", link: "" },
+  { title: "Home", link: "/" },
   { title: "La vie du syndicat", link: "la-vie-du-syndicat" },
   { title: "Le rucher école", link: "le-rucher-ecole" },
   { title: "Actualités", link: "actualites" },

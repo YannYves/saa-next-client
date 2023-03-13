@@ -13,7 +13,7 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      <Meta />
+      {/* <Meta /> */}
       <div className='min-h-screen'>
         <NavbarComponent />
         <main>{children}</main>
