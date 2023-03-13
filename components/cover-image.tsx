@@ -24,7 +24,10 @@ const CoverImage = (props: CoverImageProps) => {
     );
     return (
       <div className='sm:mx-0'>
-        <Link href={`/posts/${slug}`} aria-label={title}>
+        <Link
+          href={`${process.env.FRONT_DOMAIN}/posts/${slug}`}
+          aria-label={title}
+        >
           {image}
         </Link>
       </div>
