@@ -25,6 +25,8 @@ const HeroPost = (props: HeroPostProps) => {
     backendUrl,
   } = props;
 
+  console.log(slug, "slug");
+
   return (
     <section>
       <div className='mb-8 md:mb-16'>
