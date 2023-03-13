@@ -40,7 +40,7 @@ const Meta = () => {
         content={"https://unsplash.com/photos/HxXQrWiOmBA"}
       />
     </Head>
-  );∑
+  );
 };
 
 export default Meta;
