@@ -44,8 +44,9 @@ const Post = (props: PostProps) => {
                 feature_image={feature_image}
                 date={created_at}
                 author={primary_author}
+                excerpt={post.excerpt}
               />
-              <PostBody content={post.excerpt} />
+              <PostBody html={post.html} />
             </article>
             <SectionSeparator />
           </>

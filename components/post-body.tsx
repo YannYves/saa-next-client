@@ -1,14 +1,15 @@
 import markdownStyles from "./markdown-styles.module.css";
 
 type PostBodyProps = {
-  content: string;
+  html: string;
 };
 
 const PostBody = (props: PostBodyProps) => {
-  const { content } = props;
+  const { html } = props;
+
   return (
     <div className='max-w-2xl mx-auto'>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import PostTitle from "./post-title";
 import { AuthorType } from "interfaces";
+import PostSubTitle from "./post-subtitle";
 
 type PostHeaderProps = {
   title: string;
@@ -10,20 +11,15 @@ type PostHeaderProps = {
   date: string;
   author: any;
   frontDomain;
+  excerpt;
 };
 
 const PostHeader = (props: PostHeaderProps) => {
-  const { title, feature_image, date, author, frontDomain } = props;
+  const { title, feature_image, date, author, frontDomain, excerpt } = props;
   const avatarPicture = author.profile_image;
 
   return (
     <>
-      <PostTitle>{title}</PostTitle>
-      {avatarPicture && (
-        <div className='hidden md:block md:mb-12'>
-          <Avatar name={author.name} picture={avatarPicture} />
-        </div>
-      )}
       <div className='mb-8 md:mb-16 sm:mx-0'>
         <CoverImage
           title={title}
@@ -32,6 +28,15 @@ const PostHeader = (props: PostHeaderProps) => {
           frontDomain={frontDomain}
         />
       </div>
+      <PostTitle>{title}</PostTitle>
+      <PostSubTitle>{excerpt}</PostSubTitle>
+
+      {avatarPicture && (
+        <div className='hidden md:block md:mb-12'>
+          <Avatar name={author.name} picture={avatarPicture} />
+        </div>
+      )}
+
       <div className='max-w-2xl mx-auto'>
         {avatarPicture && (
           <div className='block md:hidden mb-6'>

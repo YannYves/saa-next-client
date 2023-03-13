@@ -11,10 +11,11 @@ type IndexProps = {
   tags: any;
   backendUrl: any;
   frontDomain: any;
+  backgroundImage;
 };
 
 function Landing(props: IndexProps) {
-  const { ghostPosts, backendUrl, frontDomain } = props;
+  const { ghostPosts, backendUrl, frontDomain, backgroundImage } = props;
   let allPosts = [];
   let heroPosts = [];
 
@@ -33,7 +34,10 @@ function Landing(props: IndexProps) {
           <title>Le syndicat apicole artésien - aceuil </title>
         </Head>
         <Container>
-          <IntroImg SectionIntroText={"Le syndicat apicole artésien."} />
+          <IntroImg
+            SectionIntroText={backgroundImage[0].title}
+            backgroundImage={backgroundImage}
+          />
           <FeaturedIntro />
           {heroPosts.map((heroPost) => (
             <HeroPost

@@ -2,13 +2,15 @@ import { Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import Intro from "./intro";
 
-function IntroImg({ SectionIntroText }) {
-  const backgroundImage = "https://source.unsplash.com/random";
-
+function IntroImg({ SectionIntroText, backgroundImage }) {
   return (
     <>
       <div className='mb-8 md:mb-16'>
-        <Paper style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <Paper
+          style={{
+            backgroundImage: `url(${backgroundImage[0].feature_image})`,
+          }}
+        >
           <img
             style={{ display: "none" }}
             src={backgroundImage}
@@ -26,7 +28,7 @@ function IntroImg({ SectionIntroText }) {
                   paragraph
                   className='text-white'
                 >
-                  {"Bienvenue"}
+                  {backgroundImage[0].excerpt}
                 </Typography>
               </div>
             </Grid>

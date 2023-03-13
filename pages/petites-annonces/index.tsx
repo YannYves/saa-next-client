@@ -6,12 +6,11 @@ type IndexProps = {
   tags: any;
   backendUrl: any;
   frontDomain: any;
+  backgroundImage;
 };
 
 const Index = (props: IndexProps) => {
-  const { ghostPosts, tags, backendUrl, frontDomain } = props;
-
-  console.log(backendUrl, frontDomain);
+  const { ghostPosts, tags, backendUrl, frontDomain, backgroundImage } = props;
 
   return (
     <>
@@ -20,6 +19,7 @@ const Index = (props: IndexProps) => {
         tags={tags}
         backendUrl={backendUrl}
         frontDomain={frontDomain}
+        backgroundImage={backgroundImage}
       />
     </>
   );
@@ -29,8 +29,10 @@ export default Index;
 
 // This function runs only on @the server side
 export async function getStaticProps() {
-  const filter = "tag:petites-annonces";
+  const filter = "tag:petites-annonces+tag:-header";
   const ghostPosts = await getPostsGhost(filter);
+  const backgroundImageFilter = "tags:petites-annonces+tags:header";
+  const backgroundImage = await getPostsGhost(backgroundImageFilter);
   const tags = await getPostsTags();
   const backendUrl = process.env.BACKEND_URL;
   const frontDomain =
@@ -39,5 +41,7 @@ export async function getStaticProps() {
       : process.env.FRONT_DOMAIN;
 
   // Props returned will be passed to the page component
-  return { props: { ghostPosts, tags, backendUrl, frontDomain } };
+  return {
+    props: { ghostPosts, tags, backendUrl, frontDomain, backgroundImage },
+  };
 }
