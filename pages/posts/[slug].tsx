@@ -28,7 +28,7 @@ const Post = (props: PostProps) => {
   return (
     <Layout>
       <Container>
-        {/* {router.isFallback ? (
+        {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
@@ -49,7 +49,7 @@ const Post = (props: PostProps) => {
             </article>
             <SectionSeparator />
           </>
-        )} */}
+        )}
       </Container>
     </Layout>
   );
