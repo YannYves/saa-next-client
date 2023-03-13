@@ -2,7 +2,7 @@ import GhostContentAPI from "@tryghost/content-api";
 
 // Create API instance with site credentials
 const api = new GhostContentAPI({
-  url: "https://" + process.env.BACKEND_URL,
+  url: process.env.BACKEND_URL,
   key: process.env.GHOST_KEY,
   version: process.env.GHOST_VERSION,
 });

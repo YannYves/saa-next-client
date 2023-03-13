@@ -74,7 +74,6 @@ export async function getStaticProps(context) {
   const ghostPosts = await getPostsGhost();
   //TODO what if two times the same slug ?
   const onePost = ghostPosts.filter((post: any) => post.slug === slug);
-
   const post = await readPostsGhost(onePost[0].id);
 
   // Props returned will be passed to the page component
