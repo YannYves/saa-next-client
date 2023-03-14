@@ -9,6 +9,7 @@ import PostTitle from "@/components/post-title";
 import Head from "next/head";
 import BackButton from "@/components/back-button";
 import { getPostsGhost, readPostsGhost } from "@/lib/post";
+import { usePreviousRoute } from "pages/_app";
 
 type PostProps = {
   post: any;
@@ -32,7 +33,7 @@ const Post = (props: PostProps) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article>
+            <article className='mb-24'>
               <Head>
                 <title>{title}</title>
                 <meta property='og:image' content={feature_image} />
@@ -48,7 +49,6 @@ const Post = (props: PostProps) => {
               />
               <PostBody html={post.html} />
             </article>
-            <SectionSeparator />
           </>
         )}
       </Container>

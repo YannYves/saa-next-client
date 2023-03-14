@@ -34,10 +34,15 @@ function Landing(props: IndexProps) {
           <title>Le syndicat apicole artésien - aceuil </title>
         </Head>
         <Container>
-          <IntroImg
-            SectionIntroText={backgroundImage[0].title}
-            backgroundImage={backgroundImage}
-          />
+          {backgroundImage &&
+            backgroundImage[0] &&
+            backgroundImage[0].title &&
+            backgroundImage[0].feature_image && (
+              <IntroImg
+                SectionIntroText={backgroundImage[0].title}
+                backgroundImage={backgroundImage}
+              />
+            )}
           <FeaturedIntro />
           {heroPosts.map((heroPost) => (
             <HeroPost

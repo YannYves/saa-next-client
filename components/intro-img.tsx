@@ -11,12 +11,6 @@ function IntroImg({ SectionIntroText, backgroundImage }) {
             backgroundImage: `url(${backgroundImage[0].feature_image})`,
           }}
         >
-          <img
-            style={{ display: "none" }}
-            src={backgroundImage}
-            alt={"hello"}
-          />
-
           <div className={"hello"} />
           <Grid container>
             <Grid item md={12} pt={8} pb={8} pr={4} pl={4}>

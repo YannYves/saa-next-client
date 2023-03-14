@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply leading-relaxed;
 }
 
 .markdown p,
@@ -7,9 +7,18 @@
 .markdown ol,
 .markdown blockquote {
   @apply my-6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.1px;
+  color: #394047;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
 }
 
-components/intro-img.tsx.markdown h2 {
+.markdown h2 {
   @apply text-3xl mt-12 mb-4 leading-snug;
 }
 
