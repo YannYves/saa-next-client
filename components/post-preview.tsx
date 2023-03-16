@@ -10,23 +10,15 @@ type PostPreviewProps = {
   date: string;
   author: AuthorType;
   slug: string;
-  frontDomain;
-  backendUrl;
 };
 
 const PostPreview = (props: PostPreviewProps) => {
-  const { title, coverImage, date, author, slug, frontDomain, backendUrl } =
-    props;
+  const { title, coverImage, date, author, slug } = props;
 
   return (
     <div>
       <div className='mb-5'>
-        <CoverImage
-          slug={slug}
-          title={title}
-          url={coverImage}
-          frontDomain={frontDomain}
-        />
+        <CoverImage slug={slug} title={title} url={coverImage} />
       </div>
       <h3 className='text-3xl mb-3 leading-snug'>
         <Link href={`/posts/${slug}`} className='hover:underline'>

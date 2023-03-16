@@ -4,7 +4,6 @@ import "lazysizes";
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
 import { ReactNode } from "react";
 import NavbarComponent from "./navbar";
-import ScrollToTopButton from "./scroll-to-top-button";
 
 type LayoutProps = {
   children: ReactNode;
@@ -13,7 +12,7 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      {/* <Meta /> */}
+      <Meta />
       <div className='min-h-screen'>
         <NavbarComponent />
         <main>{children}</main>

@@ -10,32 +10,15 @@ type HeroPostProps = {
   createdAt: string;
   author: AuthorType;
   slug: string;
-  backendUrl: any;
-  frontDomain: any;
 };
 
 const HeroPost = (props: HeroPostProps) => {
-  const {
-    title,
-    coverImage,
-    createdAt,
-    author,
-    slug,
-    frontDomain,
-    backendUrl,
-  } = props;
-
-  console.log(slug, "slug");
+  const { title, coverImage, createdAt, author, slug } = props;
 
   return (
     <section>
       <div className='mb-8 md:mb-16'>
-        <CoverImage
-          title={title}
-          url={coverImage}
-          slug={slug}
-          frontDomain={frontDomain}
-        />
+        <CoverImage title={title} url={coverImage} slug={slug} />
       </div>
       <div className='md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28'>
         <div>

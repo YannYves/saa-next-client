@@ -1,26 +1,21 @@
 import Landing from "@/components/landing";
-import { getPostsGhost, getPostsTags } from "@/lib/post";
+import { getPostsGhost, getPostsTags, isPropertyDefined } from "@/lib/post";
+import { BackgroundImage, PostType, TagType } from "interfaces";
 
 type IndexProps = {
-  ghostPosts: any;
-  tags: any;
-  backendUrl: any;
-  frontDomain: any;
-  backgroundImage;
+  posts: PostType[];
+  tags: TagType[];
+  backendUrl: string;
+  frontDomain: string;
+  backgroundImage: BackgroundImage | undefined;
 };
 
 const Index = (props: IndexProps) => {
-  const { ghostPosts, tags, backendUrl, frontDomain, backgroundImage } = props;
+  const { posts, tags, backendUrl, frontDomain, backgroundImage } = props;
 
   return (
     <>
-      <Landing
-        ghostPosts={ghostPosts}
-        tags={tags}
-        backendUrl={backendUrl}
-        frontDomain={frontDomain}
-        backgroundImage={backgroundImage}
-      />
+      <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
     </>
   );
 };
@@ -30,9 +25,22 @@ export default Index;
 // This function runs only on @the server side
 export async function getStaticProps() {
   const filter = "tag:rucher-ecole+tag:-header";
-  const ghostPosts = await getPostsGhost(filter);
+  const posts = await getPostsGhost(filter);
   const backgroundImageFilter = "tags:rucher-ecole+tags:header";
-  const backgroundImage = await getPostsGhost(backgroundImageFilter);
+  const backgroundImagePost = await getPostsGhost(backgroundImageFilter);
+
+  // TODO : ignoble ?
+  const backgroundImage =
+    backgroundImagePost &&
+    backgroundImagePost[0] &&
+    isPropertyDefined(backgroundImagePost[0], "title") &&
+    isPropertyDefined(backgroundImagePost[0], "feature_image")
+      ? {
+          title: backgroundImagePost[0].title,
+          feature_image: backgroundImagePost[0].feature_image,
+        }
+      : null;
+
   const tags = await getPostsTags();
   const backendUrl = process.env.BACKEND_URL;
   const frontDomain =
@@ -42,6 +50,6 @@ export async function getStaticProps() {
 
   // Props returned will be passed to the page component
   return {
-    props: { ghostPosts, tags, backendUrl, frontDomain, backgroundImage },
+    props: { posts, tags, backendUrl, frontDomain, backgroundImage },
   };
 }

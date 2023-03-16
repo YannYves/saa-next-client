@@ -1,26 +1,21 @@
 import Landing from "@/components/landing";
 import { getPostsGhost, getPostsTags } from "@/lib/post";
+import { BackgroundImage, PostType, TagType } from "interfaces";
 
 type IndexProps = {
-  ghostPosts: any;
-  tags: any;
-  backendUrl: any;
-  frontDomain: any;
-  backgroundImage;
+  posts: PostType[];
+  tags: TagType[];
+  backendUrl: string;
+  frontDomain: string;
+  backgroundImage: BackgroundImage;
 };
 
 const Index = (props: IndexProps) => {
-  const { ghostPosts, tags, backendUrl, frontDomain, backgroundImage } = props;
+  const { posts, tags, backgroundImage } = props;
 
   return (
     <>
-      <Landing
-        ghostPosts={ghostPosts}
-        tags={tags}
-        backendUrl={backendUrl}
-        frontDomain={frontDomain}
-        backgroundImage={backgroundImage}
-      />
+      <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
     </>
   );
 };
@@ -30,9 +25,16 @@ export default Index;
 // This function runs only on @the server side
 export async function getStaticProps() {
   const filter = "tag:acceuil+tag:-header";
-  const ghostPosts = await getPostsGhost(filter);
+  const posts = await getPostsGhost(filter);
   const backgroundImageFilter = "tags:acceuil+tags:header";
-  const backgroundImage = await getPostsGhost(backgroundImageFilter);
+  const backgroundImagePost = await getPostsGhost(backgroundImageFilter);
+  const backgroundImage = backgroundImagePost
+    ? {
+        title: backgroundImagePost[0].title,
+        feature_image: backgroundImagePost[0].feature_image,
+      }
+    : undefined;
+
   const tags = await getPostsTags();
   const backendUrl = process.env.BACKEND_URL;
   const frontDomain =
@@ -42,6 +44,6 @@ export async function getStaticProps() {
 
   // Props returned will be passed to the page component
   return {
-    props: { ghostPosts, tags, backendUrl, frontDomain, backgroundImage },
+    props: { posts, tags, backendUrl, frontDomain, backgroundImage },
   };
 }

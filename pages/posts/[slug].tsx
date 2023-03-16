@@ -10,16 +10,15 @@ import Head from "next/head";
 import BackButton from "@/components/back-button";
 import { getPostsGhost, readPostsGhost } from "@/lib/post";
 import { usePreviousRoute } from "pages/_app";
+import { PostType } from "interfaces";
 
 type PostProps = {
-  post: any;
-  morePosts: any;
-  backendUrl;
-  frontDomain;
+  post: PostType;
+  morePosts: PostType[];
 };
 
 const Post = (props: PostProps) => {
-  const { post, backendUrl, frontDomain } = props;
+  const { post } = props;
   const { feature_image, title, created_at, primary_author } = post;
   const router = useRouter();
 
@@ -40,12 +39,10 @@ const Post = (props: PostProps) => {
               </Head>
               <BackButton />
               <PostHeader
-                frontDomain={frontDomain}
                 title={title}
                 feature_image={feature_image}
                 date={created_at}
                 author={primary_author}
-                excerpt={post.excerpt}
               />
               <PostBody html={post.html} />
             </article>
@@ -60,10 +57,10 @@ export default Post;
 // This function runs only on @the server side
 export async function getStaticPaths() {
   // all post
-  const ghostPosts = await getPostsGhost();
+  const posts = await getPostsGhost();
 
   // Get the paths we want to pre-render based on posts-
-  const paths = ghostPosts.map((post: any) => ({
+  const paths = posts.map((post: any) => ({
     params: { slug: post.slug },
   }));
 
@@ -75,9 +72,9 @@ export async function getStaticPaths() {
 // This function runs only on @the server side
 export async function getStaticProps(context) {
   const slug = context.params.slug;
-  const ghostPosts = await getPostsGhost();
+  const posts = await getPostsGhost();
   //TODO what if two times the same slug ?
-  const onePost = ghostPosts.filter((post: any) => post.slug === slug);
+  const onePost = posts.filter((post: any) => post.slug === slug);
   const post = await readPostsGhost(onePost[0].id);
   const backendUrl = process.env.BACKEND_URL;
   const frontDomain =

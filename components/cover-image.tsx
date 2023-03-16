@@ -3,13 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 type CoverImageProps = {
-  title;
-  url;
-  slug;
-  frontDomain;
+  title: string;
+  url: string;
+  slug: string;
 };
 const CoverImage = (props: CoverImageProps) => {
-  const { title, url, slug, frontDomain } = props;
+  const { title, url, slug } = props;
 
   if (slug !== null && url !== null) {
     const image = (

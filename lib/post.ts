@@ -46,3 +46,7 @@ export async function readPostsGhost(id: string) {
       console.error(err);
     });
 }
+
+export function isPropertyDefined(obj: Object, propName: string): boolean {
+  return propName in obj;
+}

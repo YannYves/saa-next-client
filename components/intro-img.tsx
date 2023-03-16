@@ -2,13 +2,21 @@ import { Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import Intro from "./intro";
 
-function IntroImg({ SectionIntroText, backgroundImage }) {
+type IntroImgProps = {
+  SectionIntroText: string;
+  feature_image: string;
+  excerpt: string;
+};
+
+const IntroImg = (props: IntroImgProps) => {
+  const { excerpt, feature_image, SectionIntroText } = props;
+
   return (
     <>
       <div className='mb-8 md:mb-16'>
         <Paper
           style={{
-            backgroundImage: `url(${backgroundImage[0].feature_image})`,
+            backgroundImage: `url(${feature_image})`,
           }}
         >
           <div className={"hello"} />
@@ -22,7 +30,7 @@ function IntroImg({ SectionIntroText, backgroundImage }) {
                   paragraph
                   className='text-white'
                 >
-                  {backgroundImage[0].excerpt}
+                  {excerpt}
                 </Typography>
               </div>
             </Grid>
@@ -31,6 +39,6 @@ function IntroImg({ SectionIntroText, backgroundImage }) {
       </div>
     </>
   );
-}
+};
 
 export default IntroImg;

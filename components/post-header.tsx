@@ -3,22 +3,17 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import PostTitle from "./post-title";
 import { AuthorType } from "interfaces";
-import PostSubTitle from "./post-subtitle";
 
 type PostHeaderProps = {
   title: string;
   feature_image: string;
   date: string;
-  author: any;
-  frontDomain;
-  excerpt;
+  author: AuthorType;
 };
 
 const PostHeader = (props: PostHeaderProps) => {
-  const { title, feature_image, date, author, frontDomain, excerpt } = props;
+  const { title, feature_image, date, author } = props;
   const avatarPicture = author.profile_image;
-
-  console.log(avatarPicture, "avatarPicture");
 
   return (
     <>
@@ -32,12 +27,7 @@ const PostHeader = (props: PostHeaderProps) => {
           </div>
         )}
 
-        <CoverImage
-          title={title}
-          url={feature_image}
-          slug={""}
-          frontDomain={frontDomain}
-        />
+        <CoverImage title={title} url={feature_image} slug={""} />
       </div>
 
       <div className='max-w-3xl mx-auto'>
