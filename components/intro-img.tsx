@@ -5,11 +5,11 @@ import Intro from "./intro";
 type IntroImgProps = {
   SectionIntroText: string;
   feature_image: string;
-  excerpt: string;
+  excerpt?: string;
 };
 
 const IntroImg = (props: IntroImgProps) => {
-  const { excerpt, feature_image, SectionIntroText } = props;
+  const { feature_image, SectionIntroText, excerpt } = props;
 
   return (
     <>
@@ -24,14 +24,16 @@ const IntroImg = (props: IntroImgProps) => {
             <Grid item md={12} pt={8} pb={8} pr={4} pl={4}>
               <div className={"hello"}>
                 <Intro SectionIntroText={SectionIntroText} />
-                <Typography
-                  variant='h5'
-                  color='inherit'
-                  paragraph
-                  className='text-white'
-                >
-                  {excerpt}
-                </Typography>
+                {excerpt && (
+                  <Typography
+                    variant='h5'
+                    color='inherit'
+                    paragraph
+                    className='text-white'
+                  >
+                    {excerpt}
+                  </Typography>
+                )}
               </div>
             </Grid>
           </Grid>

@@ -26,9 +26,6 @@ function Landing(props: IndexProps) {
       : (allPosts = [...allPosts, post])
   );
 
-  console.log(allPosts, "allPosts");
-  console.log(heroPosts, "heroPosts");
-
   return (
     <>
       <Layout>
@@ -38,14 +35,12 @@ function Landing(props: IndexProps) {
 
         {/*TODO : ignoble ?  */}
         <Container>
-          {backgroundImage !== null &&
-            backgroundImage[0] &&
-            backgroundImage[0].title &&
-            backgroundImage[0].feature_image && (
+          {backgroundImage &&
+            backgroundImage.title &&
+            backgroundImage.feature_image && (
               <IntroImg
-                SectionIntroText={backgroundImage[0].title}
-                feature_image={backgroundImage[0].feature_image}
-                excerpt={backgroundImage[0].excerpt}
+                SectionIntroText={backgroundImage.title}
+                feature_image={backgroundImage.feature_image}
               />
             )}
           {heroPosts && heroPosts.length > 0 && <FeaturedIntro />}
