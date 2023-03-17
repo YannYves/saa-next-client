@@ -3,7 +3,6 @@ import ErrorPage from "next/error";
 import Container from "@/components/container";
 import PostBody from "@/components/post-body";
 import PostHeader from "@/components/post-header";
-import SectionSeparator from "@/components/section-separator";
 import Layout from "@/components/layout";
 import PostTitle from "@/components/post-title";
 import Head from "next/head";
@@ -19,8 +18,16 @@ type PostProps = {
 
 const Post = (props: PostProps) => {
   const { post } = props;
-  const { feature_image, title, created_at, primary_author } = post;
+  const {
+    feature_image,
+    title,
+    created_at,
+    primary_author,
+    feature_image_caption,
+  } = post;
   const router = useRouter();
+
+  console.log(post, "post");
 
   if (router.isFallback) {
     return <ErrorPage statusCode={404} />;

@@ -5,10 +5,11 @@ import Link from "next/link";
 type CoverImageProps = {
   title: string;
   url: string;
-  slug: string;
+  slug?: string;
+  isLink: boolean;
 };
 const CoverImage = (props: CoverImageProps) => {
-  const { title, url, slug } = props;
+  const { title, url, slug, isLink } = props;
 
   if (slug !== null && url !== null) {
     const image = (
@@ -24,9 +25,15 @@ const CoverImage = (props: CoverImageProps) => {
     );
     return (
       <div className='sm:mx-0'>
-        <Link href={`/posts/${slug}`} aria-label={title}>
-          {image}
-        </Link>
+        {isLink ? (
+          <Link href={`/posts/${slug}`} aria-label={title}>
+            {image}
+          </Link>
+        ) : (
+          <>
+            {image}
+          </>
+        )}
       </div>
     );
   }

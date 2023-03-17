@@ -26,6 +26,9 @@ function Landing(props: IndexProps) {
       : (allPosts = [...allPosts, post])
   );
 
+  console.log(allPosts, "allPosts");
+  console.log(heroPosts, "heroPosts");
+
   return (
     <>
       <Layout>
@@ -45,16 +48,18 @@ function Landing(props: IndexProps) {
                 excerpt={backgroundImage[0].excerpt}
               />
             )}
-          <FeaturedIntro />
-          {heroPosts.map((heroPost) => (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.feature_image}
-              createdAt={heroPost.created_at}
-              author={heroPost.primary_author}
-              slug={heroPost.slug}
-            />
-          ))}
+          {heroPosts && heroPosts.length > 0 && <FeaturedIntro />}
+          {heroPosts &&
+            heroPosts.length > 0 &&
+            heroPosts.map((heroPost) => (
+              <HeroPost
+                title={heroPost.title}
+                coverImage={heroPost.feature_image}
+                createdAt={heroPost.created_at}
+                author={heroPost.primary_author}
+                slug={heroPost.slug}
+              />
+            ))}
           {posts.length > 0 && <MoreStories posts={posts} />}
         </Container>
       </Layout>

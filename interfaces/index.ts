@@ -126,7 +126,7 @@ export type PostType = {
   email_subject: null;
   frontmatter: null;
   feature_image_alt: null;
-  feature_image_caption: null;
+  feature_image_caption?: null | string;
 };
 
 export type TagType = {
