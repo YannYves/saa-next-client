@@ -11,7 +11,7 @@ export async function getPostsGhost(filter?: string) {
   if (filter) {
     return await api.posts
       .browse({
-        limit: "15",
+        limit: 10000,
         include: "tags,authors",
         filter,
       })
@@ -22,7 +22,7 @@ export async function getPostsGhost(filter?: string) {
 
   return await api.posts
     .browse({
-      limit: "all",
+      limit: 10000,
       include: "tags,authors",
     })
     .catch((err) => {
