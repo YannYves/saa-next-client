@@ -6,6 +6,8 @@ import Head from "next/head";
 import IntroImg from "@/components/intro-img";
 import FeaturedIntro from "@/components/featuredIntro";
 import { BackgroundImage, PostType, TagType } from "interfaces";
+import { useEffect, useState } from "react";
+import { Button, Stack } from "@mui/material";
 
 type IndexProps = {
   posts: PostType[];
@@ -15,16 +17,40 @@ type IndexProps = {
 
 function Landing(props: IndexProps) {
   const { posts, backgroundImage } = props;
+  const [postDisplayCount, setPostDisplayCount] = useState(10);
+  const [displayShowMorePostButton, setDisplayShowMorePostButton] =
+    useState(false);
   let allPosts = [];
   let heroPosts = [];
 
-  //TODO find out why this is different on client vs server side meta
-
+  // init
   posts.map((post: any) =>
     post.featured
       ? (heroPosts = [...heroPosts, post])
       : (allPosts = [...allPosts, post])
   );
+
+  useEffect(() => {
+    allPosts.length > 10
+      ? setDisplayShowMorePostButton(true)
+      : setDisplayShowMorePostButton(false);
+  }, [posts]);
+
+  useEffect(() => {
+    if (
+      allPosts.length === 0 ||
+      postDisplayCount === allPosts.length ||
+      postDisplayCount > allPosts.length
+    ) {
+      setDisplayShowMorePostButton(false);
+    }
+  }, [postDisplayCount]);
+
+  const handleLoadMore = () => {
+    setPostDisplayCount(postDisplayCount + 10);
+  };
+
+  const displayedPosts = allPosts.slice(0, postDisplayCount);
 
   return (
     <>
@@ -55,7 +81,18 @@ function Landing(props: IndexProps) {
                 slug={heroPost.slug}
               />
             ))}
-          {posts.length > 0 && <MoreStories posts={posts} />}
+          {displayedPosts.length > 0 && <MoreStories posts={displayedPosts} />}
+          {displayShowMorePostButton && (
+            <Stack spacing={2} direction='column' className='mx-20 my-10'>
+              <Button
+                variant='outlined'
+                onClick={handleLoadMore}
+                sx={{ color: "black", border: "1px solid black" }}
+              >
+                voir plus de posts
+              </Button>
+            </Stack>
+          )}
         </Container>
       </Layout>
     </>
