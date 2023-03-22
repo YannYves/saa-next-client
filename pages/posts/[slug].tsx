@@ -27,8 +27,6 @@ const Post = (props: PostProps) => {
   } = post;
   const router = useRouter();
 
-  console.log(post, "post");
-
   if (router.isFallback) {
     return <ErrorPage statusCode={404} />;
   }
