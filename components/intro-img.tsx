@@ -17,6 +17,8 @@ const IntroImg = (props: IntroImgProps) => {
         <Paper
           style={{
             backgroundImage: `url(${feature_image})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
         >
           <div className={"hello"} />

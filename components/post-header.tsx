@@ -3,6 +3,7 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import PostTitle from "./post-title";
 import { AuthorType } from "interfaces";
+import { Box } from "@mui/material";
 
 type PostHeaderProps = {
   title: string;
@@ -25,7 +26,9 @@ const PostHeader = (props: PostHeaderProps) => {
           </div>
         )}
 
-        <CoverImage title={title} url={feature_image} isLink={false} />
+        <Box maxWidth='lg' sx={{ margin: " 0 auto" }}>
+          <CoverImage title={title} url={feature_image} isLink={false} />
+        </Box>
       </div>
 
       <div className='max-w-3xl mx-auto'>
