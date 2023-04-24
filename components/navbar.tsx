@@ -14,6 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import { Slide, useScrollTrigger } from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = [
@@ -35,7 +36,7 @@ export default function DrawerAppBar() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant='h6' sx={{ my: 2 }} className='font-bold '>
-        Le syndicat apicole artésien
+        Home
       </Typography>
       <Divider />
       <List>
@@ -56,13 +57,16 @@ export default function DrawerAppBar() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
+        position='static'
+        color='transparent'
         component='nav'
         sx={{
-          color: "rgba(0, 0, 0, 0.87)",
-          backgroundColor: "white",
+          color: "#fff",
+          border: 0,
         }}
+        elevation={0}
       >
-        <Toolbar>
+        <Toolbar sx={{ mt: { sm: 1, lg: 4 }, mx: { sm: 1, lg: 8 } }}>
           <IconButton
             color='inherit'
             aria-label='open drawer'
@@ -73,29 +77,43 @@ export default function DrawerAppBar() {
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1, fontWeight: "480" }}
-          >
-            <Link href='/'>Le syndicat apicole artésien</Link>
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link href='/'>
+              <Typography variant='h4' fontWeight={600}>
+                Home
+              </Typography>
+            </Link>
+          </Box>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             {navItems
               .filter((item) => item.title !== "Home")
               .map((item) => (
-                <Button
-                  key={item.title}
-                  sx={{ color: "rgba(0, 0, 0, 0.87)", fontWeight: "480" }}
-                >
-                  <Link href={"/" + item.link}>{item.title}</Link>
-                </Button>
+                <Box sx={{ mx: { sm: 1, md: 2 } }}>
+                  <Link href={"/" + item.link}>
+                    <Typography
+                      variant='h6'
+                      fontWeight={550}
+                      sx={{ fontSize: { sm: "1rem", md: "1.5rem" } }}
+                    >
+                      {item.title}
+                    </Typography>
+                  </Link>
+                </Box>
               ))}
           </Box>
         </Toolbar>
       </AppBar>
-      <Box component='nav'>
+      <Box
+        component='nav'
+        sx={{
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+          },
+        }}
+      >
         <Drawer
           variant='temporary'
           open={mobileOpen}
@@ -103,19 +121,9 @@ export default function DrawerAppBar() {
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
         >
           {drawer}
         </Drawer>
-      </Box>
-      <Box component='main' sx={{ p: 3 }}>
-        <Toolbar />
       </Box>
     </Box>
   );

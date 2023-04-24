@@ -3,6 +3,7 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
 import { AuthorType } from "interfaces";
+import { Box } from "@mui/material";
 
 type PostPreviewProps = {
   title: string;
@@ -16,7 +17,7 @@ const PostPreview = (props: PostPreviewProps) => {
   const { title, coverImage, date, author, slug } = props;
 
   return (
-    <div>
+    <Box>
       <div className='mb-5'>
         <CoverImage slug={slug} title={title} url={coverImage} isLink={true} />
       </div>
@@ -29,7 +30,7 @@ const PostPreview = (props: PostPreviewProps) => {
         <Date dateString={date} />
       </div>
       <Avatar name={author.name} picture={author.profile_image} />
-    </div>
+    </Box>
   );
 };
 

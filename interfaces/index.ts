@@ -154,6 +154,7 @@ export type TagType = {
 export type BackgroundImage = {
   title: string;
   feature_image: string;
+  html: string;
 };
 
 export type HeaderType = {

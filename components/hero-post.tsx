@@ -3,6 +3,7 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
 import { AuthorType } from "interfaces";
+import { Box, Grid } from "@mui/material";
 
 type HeroPostProps = {
   title: string;
@@ -16,26 +17,26 @@ const HeroPost = (props: HeroPostProps) => {
   const { title, coverImage, createdAt, author, slug } = props;
 
   return (
-    <section>
-      <div className='mb-8 md:mb-16'>
+    <Grid container className='sm:mt-10 lg:mt-24 mb-16 md:mb-24 '>
+      <Grid item xs={8}>
         <CoverImage title={title} url={coverImage} slug={slug} isLink={true} />
-      </div>
-      <div className='md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28'>
+      </Grid>
+      <Grid item xs={4}>
         <div>
-          <h3 className='mb-4 text-3xl lg:text-4xl leading-tight'>
+          <h3 className='p-4 mb-4 text-xl lg:text-4xl font-semibold'>
             <Link href={`/posts/${slug}`} className='hover:underline'>
               {title}
             </Link>
           </h3>
-          <div className='mb-4 md:mb-0 text-lg'>
+          <div className='p-4 mb-4 md:mb-0 text-xl'>
             <Date dateString={createdAt} />
           </div>
         </div>
         <div>
           <Avatar name={author.name} picture={author.profile_image} />
         </div>
-      </div>
-    </section>
+      </Grid>
+    </Grid>
   );
 };
 

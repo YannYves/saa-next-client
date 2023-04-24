@@ -58,17 +58,16 @@ function Landing(props: IndexProps) {
         <Head>
           <title>Le syndicat apicole artésien - aceuil </title>
         </Head>
-
-        {/*TODO : ignoble ?  */}
+        {backgroundImage &&
+          backgroundImage.title &&
+          backgroundImage.feature_image && (
+            <IntroImg
+              SectionIntroText={backgroundImage.title}
+              feature_image={backgroundImage.feature_image}
+              html={backgroundImage.html}
+            />
+          )}
         <Container>
-          {backgroundImage &&
-            backgroundImage.title &&
-            backgroundImage.feature_image && (
-              <IntroImg
-                SectionIntroText={backgroundImage.title}
-                feature_image={backgroundImage.feature_image}
-              />
-            )}
           {heroPosts && heroPosts.length > 0 && <FeaturedIntro />}
           {heroPosts &&
             heroPosts.length > 0 &&

@@ -32,6 +32,7 @@ export async function getStaticProps() {
     ? {
         title: backgroundImagePost[0].title,
         feature_image: backgroundImagePost[0].feature_image,
+        html: backgroundImagePost[0].html,
       }
     : undefined;
 

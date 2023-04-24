@@ -1,16 +1,9 @@
 # Backlog
 
-- [ ] deploy in prod
+- [ ] remove useless things
+- [ ] image de header
+- [ ] Theme MUI
 - [ ] text sizes
-- [x] image de header
 - [ ] post date modified
-- [ ] Theme
-- [ ] Loader
-
-# Done
-
-- [x] add test env for front + deploy
-- [x] fix ts
-- [x] check build webhook from ghost
-- [x] Spacing
-- [x] Pagination
+- [ ] Million.JS
+- [ ] deploy in prod

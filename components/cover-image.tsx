@@ -15,7 +15,7 @@ const CoverImage = (props: CoverImageProps) => {
     const image = (
       <Image
         src={url}
-        alt='Picture of the author'
+        alt={title}
         width={500}
         height={500}
         className={cn("lazyload shadow-small w-full", {
@@ -30,9 +30,7 @@ const CoverImage = (props: CoverImageProps) => {
             {image}
           </Link>
         ) : (
-          <>
-            {image}
-          </>
+          <>{image}</>
         )}
       </div>
     );

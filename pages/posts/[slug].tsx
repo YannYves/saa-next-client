@@ -23,7 +23,6 @@ const Post = (props: PostProps) => {
     title,
     created_at,
     primary_author,
-    feature_image_caption,
   } = post;
   const router = useRouter();
 

@@ -1,46 +1,35 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import Intro from "./intro";
 
 type IntroImgProps = {
   SectionIntroText: string;
   feature_image: string;
-  excerpt?: string;
+  html?: string;
 };
 
 const IntroImg = (props: IntroImgProps) => {
-  const { feature_image, SectionIntroText, excerpt } = props;
+  const { feature_image, SectionIntroText, html } = props;
 
   return (
     <>
-      <div className='mb-8 md:mb-16'>
+      <Box sx={{ height: "70vh" }}>
         <Paper
-          style={{
+          component='img'
+          sx={{
             backgroundImage: `url(${feature_image})`,
             backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
             backgroundSize: "cover",
+            marginTop: -20,
+            height: "70vh",
+            OObjectFit: "cover",
+            objectFit: "cover",
+            width: "100%",
           }}
-        >
-          <div className={"hello"} />
-          <Grid container>
-            <Grid item md={12} pt={8} pb={8} pr={4} pl={4}>
-              <div className={"hello"}>
-                <Intro SectionIntroText={SectionIntroText} />
-                {excerpt && (
-                  <Typography
-                    variant='h5'
-                    color='inherit'
-                    paragraph
-                    className='text-white'
-                  >
-                    {excerpt}
-                  </Typography>
-                )}
-              </div>
-            </Grid>
-          </Grid>
-        </Paper>
-      </div>
+        />
+        <Intro SectionIntroText={SectionIntroText} html={html} />
+      </Box>
     </>
   );
 };

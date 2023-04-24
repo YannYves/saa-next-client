@@ -14,9 +14,7 @@ const Index = (props: IndexProps) => {
   const { posts, tags, backendUrl, frontDomain, backgroundImage } = props;
 
   return (
-    <>
-      <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
-    </>
+    <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
   );
 };
 
