@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 type SectionIntroTextProps = {
   SectionIntroText: string;
@@ -11,16 +11,32 @@ const Intro = (props: SectionIntroTextProps) => {
 
   return (
     <Box sx={{ position: "relative", bottom: { xs: 400, sm: 600 } }}>
-      <section className='flex-col flex items-center md:justify-between mt-16 mb-16 md:mb-12'>
-        <h1 className=' text-center text-3xl sm:text-5xl md:text-8xl font-extrabold tracking-tighter leading-tight md:pr-8 text-white my-8'>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: { md: "spaceBetween" },
+          mt: 16,
+          mb: { xs: 16, md: 12 },
+        }}
+      >
+        <Typography
+          variant='h1'
+          component='h1'
+          align='center'
+          sx={{
+            fontSize: { xs: "1.875rem", sm: "3rem", md: "6rem" },
+            fontWeight: 800,
+            paddingRight: { md: 8 },
+            color: "white",
+            my: 8,
+          }}
+        >
           {SectionIntroText}
-        </h1>
-
-        <div
-          className='px-8 py-4 text-center text-2xl sm:text-4xl font-normal md:text-3xl tracking-tighter leading-tight md:pr-8 text-white '
-          dangerouslySetInnerHTML={markup}
-        ></div>
-      </section>
+        </Typography>
+      </Box>
+      <div dangerouslySetInnerHTML={markup}></div>
     </Box>
   );
 };

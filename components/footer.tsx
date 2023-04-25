@@ -1,27 +1,64 @@
 import Link from "next/link";
-import Container from "./container";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import ScrollToTopButton from "./scroll-to-top-button";
 
 const Footer = () => {
   return (
-    <footer className='bg-accent-1 border-t border-accent-2'>
+    <Box
+      sx={{
+        backgroundColor: "accent1.main",
+        borderTop: "1px solid accent2.main",
+      }}
+    >
       <Container>
-        <div className='py-28 flex flex-col lg:flex-row items-center'>
-          <h3 className='text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2'>
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          spacing={{ xs: 4, lg: 8 }}
+          alignItems={{ lg: "center" }}
+          py={10}
+        >
+          <Typography
+            variant='h2'
+            component='h3'
+            fontWeight='bold'
+            textAlign={{ xs: "center", lg: "left" }}
+            sx={{ flex: "1 1 50%" }}
+            mb={{ xs: 10, lg: 0 }}
+            pr={{ lg: 8 }}
+          >
             Le syndicat apicole artésien
-          </h3>
-          <div className='flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2'>
-            <Link
-              href={"/"}
-              className='mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0'
-            >
-              Acceuil
+          </Typography>
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            justifyContent={{ xs: "center", lg: "flex-start" }}
+            spacing={{ xs: 4, lg: 8 }}
+            alignItems={{ lg: "center" }}
+            sx={{ flex: "1 1 50%" }}
+          >
+            <Link href='/' passHref>
+              <Button
+                component='a'
+                variant='contained'
+                color='primary'
+                sx={{
+                  px: { xs: 6, lg: 4 },
+                  py: 2,
+                  fontWeight: "bold",
+                  transition: "all 0.2s",
+                }}
+              >
+                Accueil
+              </Button>
             </Link>
             <ScrollToTopButton />
-          </div>
-        </div>
+          </Stack>
+        </Stack>
       </Container>
-    </footer>
+    </Box>
   );
 };
 

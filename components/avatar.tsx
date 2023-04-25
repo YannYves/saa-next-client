@@ -1,28 +1,29 @@
 import Image from "next/image";
+import { Box, Typography } from "@mui/material";
 
 type AvatarProps = {
   name: string;
   picture?: string;
 };
 
-const Avatar = (props: AvatarProps) => {
-  const { name, picture } = props;
-
-  if (picture !== null) {
-    return (
-      <div className='flex items-center'>
-        <div className='w-12 h-12 relative mr-4'>
+const Avatar = ({ name, picture }: AvatarProps) => {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ position: "relative", width: 12, height: 12, mr: 4 }}>
+        {picture && (
           <Image
             src={picture}
             layout='fill'
             className='rounded-full'
             alt={name}
           />
-        </div>
-        <div className='text-xl font-bold'>{name}</div>
-      </div>
-    );
-  }
+        )}
+      </Box>
+      <Typography variant='h4' fontWeight='bold'>
+        {name}
+      </Typography>
+    </Box>
+  );
 };
 
 export default Avatar;

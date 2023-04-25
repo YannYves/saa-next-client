@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
-// TODO ?
-import { usePreviousRoute } from "pages/_app";
+import { Typography, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function BackButton() {
   const router = useRouter();
 
   return (
-    <button className='hover:underline' onClick={router.back}>
-      <h2 className='text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 md:mt-8'>
-        <ArrowBackIcon />
+    <Button sx={{ textTransform: "none" }} onClick={router.back}>
+      <Typography variant='h5' mb={2} mt={8} fontWeight='bold'>
+        <ArrowBackIcon sx={{ mr: 1 }} />
         Retour
-      </h2>
-    </button>
+      </Typography>
+    </Button>
   );
 }
