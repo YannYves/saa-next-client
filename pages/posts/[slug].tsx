@@ -8,7 +8,6 @@ import PostTitle from "@/components/post-title";
 import Head from "next/head";
 import BackButton from "@/components/back-button";
 import { getPostsGhost, readPostsGhost } from "@/lib/post";
-import { usePreviousRoute } from "pages/_app";
 import { PostType } from "interfaces";
 
 type PostProps = {
@@ -18,44 +17,36 @@ type PostProps = {
 
 const Post = (props: PostProps) => {
   const { post } = props;
-  const {
-    feature_image,
-    title,
-    created_at,
-    primary_author,
-  } = post;
+  const { feature_image, title, created_at, primary_author } = post;
   const router = useRouter();
 
   if (router.isFallback) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <Layout>
+      <Head>
+        <title>{title}</title>
+        <meta property='og:image' content={feature_image} />
+      </Head>
       <Container>
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article className='mb-24'>
-              <Head>
-                <title>{title}</title>
-                <meta property='og:image' content={feature_image} />
-              </Head>
-              <BackButton />
-              <PostHeader
-                title={title}
-                feature_image={feature_image}
-                date={created_at}
-                author={primary_author}
-              />
-              <PostBody html={post.html} />
-            </article>
-          </>
-        )}
+        <BackButton />
+        <article className='my-8'>
+          <PostHeader
+            title={title}
+            feature_image={feature_image}
+            date={created_at}
+            author={primary_author}
+          />
+
+          <PostBody html={post.html} />
+        </article>
       </Container>
     </Layout>
   );
 };
+
 export default Post;
 
 // This function runs only on @the server side

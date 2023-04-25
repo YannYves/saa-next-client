@@ -1,38 +1,37 @@
-import cn from "classnames";
-import Image from "next/image";
 import Link from "next/link";
+import ResponsiveImage from "./responsive-image";
+import { styled, useTheme, useMediaQuery } from "@mui/material";
 
 type CoverImageProps = {
   title: string;
   url: string;
   slug?: string;
   isLink: boolean;
+  fixedHeight: boolean;
 };
+
+const StyledDiv = styled("div")(({ theme }) => ({
+  [theme.breakpoints.up("sm")]: {
+    margin: 0,
+  },
+}));
+
 const CoverImage = (props: CoverImageProps) => {
-  const { title, url, slug, isLink } = props;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { title, url, slug, isLink, fixedHeight } = props;
 
   if (slug !== null && url !== null) {
-    const image = (
-      <Image
-        src={url}
-        alt={title}
-        width={500}
-        height={500}
-        className={cn("lazyload shadow-small w-full", {
-          "hover:shadow-medium transition-shadow duration-200": slug,
-        })}
-      />
-    );
     return (
-      <div className='sm:mx-0'>
+      <StyledDiv sx={{ mx: isSmallScreen ? 2 : 0 }}>
         {isLink ? (
           <Link href={`/posts/${slug}`} aria-label={title}>
-            {image}
+            <ResponsiveImage src={url} alt={title} fixedHeight={fixedHeight} />
           </Link>
         ) : (
-          <>{image}</>
+          <ResponsiveImage src={url} alt={title} fixedHeight={fixedHeight} />
         )}
-      </div>
+      </StyledDiv>
     );
   }
 };
