@@ -16,14 +16,16 @@ const ResponsiveImage: React.FC<Props> = ({ src, alt, fixedHeight }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isLArgeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
-  let imageSize = 450; // default size for large screens
+  let imageSize = 200; // default size for large screens
   if (isSmallScreen) {
     imageSize = 200;
   } else if (isMediumScreen) {
     imageSize = 350;
+  } else if (isLArgeScreen) {
+    imageSize = 450;
   }
-
   return (
     <StyledImage
       src={src}

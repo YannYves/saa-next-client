@@ -15,6 +15,7 @@ type PostPreviewProps = {
 
 const PostPreviewBox = styled("div")(({ theme }) => ({
   display: "flex",
+  marginBottom: "2rem",
   flexDirection: "column",
   height: "100%",
   "& h3": {
@@ -47,12 +48,12 @@ const PostPreview = (props: PostPreviewProps) => {
           fixedHeight={true}
         />
       </div>
-      <h3 className='text-3xl mb-3 leading-snug'>
+      <h3 className='text-2xl mx-3 my-1 leading-snug'>
         <Link href={`/posts/${slug}`} className='hover:underline'>
           {title}
         </Link>
       </h3>
-      <div className='text-lg mb-4'>
+      <div className='text-lg mx-3 my-1'>
         <Date dateString={date} />
       </div>
       <Avatar name={author.name} picture={author.profile_image} />

@@ -10,9 +10,9 @@ const Intro = (props: SectionIntroTextProps) => {
   const markup = { __html: html };
 
   return (
-    <Box sx={{ position: "relative", bottom: { xs: 400, sm: 600 } }}>
+    <Box sx={{ position: "relative", bottom: { xs: 400, sm: 500 } }}>
       <section className='flex-col flex items-center md:justify-between mt-16 mb-16 md:mb-12'>
-        <h1 className=' text-center text-3xl sm:text-5xl md:text-8xl font-extrabold tracking-tighter leading-tight md:pr-8 text-white my-8'>
+        <h1 className=' text-center text-3xl md:text-7xl font-extrabold tracking-tighter leading-tight md:pr-8 text-white my-8'>
           {SectionIntroText}
         </h1>
 
