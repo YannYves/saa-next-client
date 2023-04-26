@@ -4,7 +4,6 @@ import Container from "@/components/container";
 import PostBody from "@/components/post-body";
 import PostHeader from "@/components/post-header";
 import Layout from "@/components/layout";
-import PostTitle from "@/components/post-title";
 import Head from "next/head";
 import BackButton from "@/components/back-button";
 import { getPostsGhost, readPostsGhost } from "@/lib/post";
@@ -19,6 +18,8 @@ const Post = (props: PostProps) => {
   const { post } = props;
   const { feature_image, title, created_at, primary_author } = post;
   const router = useRouter();
+
+  console.log(primary_author, "primary_author");
 
   if (router.isFallback) {
     return <ErrorPage statusCode={404} />;

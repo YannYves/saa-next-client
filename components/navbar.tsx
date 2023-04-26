@@ -34,9 +34,12 @@ export default function DrawerAppBar() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant='h6' sx={{ my: 2 }} className='font-bold '>
-        Home
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: "center", width: "60vw" }}
+    >
+      <Typography variant='h6' sx={{ my: 2 }}>
+        Acceuil
       </Typography>
       <Divider />
       <List>
@@ -79,8 +82,8 @@ export default function DrawerAppBar() {
 
           <Box sx={{ flexGrow: 1 }}>
             <Link href='/'>
-              <Typography variant='h4' fontWeight={600}>
-                Home
+              <Typography variant='h5' fontWeight={500}>
+                Acceuil
               </Typography>
             </Link>
           </Box>
@@ -92,9 +95,11 @@ export default function DrawerAppBar() {
                 <Box sx={{ mx: { sm: 1, md: 2 } }}>
                   <Link href={"/" + item.link}>
                     <Typography
-                      variant='h6'
-                      fontWeight={550}
-                      sx={{ fontSize: { sm: "1rem", md: "1.5rem" } }}
+                      variant='h5'
+                      fontWeight={500}
+                      sx={{
+                        fontSize: { sm: "1rem", md: "1.4rem" },
+                      }}
                     >
                       {item.title}
                     </Typography>

@@ -1,3 +1,4 @@
+import { useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 
 type AvatarProps = {
@@ -7,16 +8,18 @@ type AvatarProps = {
 
 const Avatar = ({ name, picture }: AvatarProps) => {
   const hasPicture = picture != null;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <div className='flex items-center'>
-      <div className='w-12 h-12 relative mr-4'>
+      <div className='w-12 h-12 flex mr-4'>
         {hasPicture ? (
           <Image
             src={picture}
             alt={name}
-            width={48}
-            height={48}
+            width={isSmallScreen ? 36 : 48}
+            height={isSmallScreen ? 36 : 48}
             layout='responsive'
             objectFit='cover'
             className='rounded-full'
@@ -24,11 +27,17 @@ const Avatar = ({ name, picture }: AvatarProps) => {
         ) : (
           <div
             className='rounded-full bg-gray-300'
-            style={{ width: 48, height: 48 }}
+            style={{
+              width: isSmallScreen ? 36 : 48,
+              height: isSmallScreen ? 36 : 48,
+            }}
           />
         )}
       </div>
-      <div className='text-xl font-bold' aria-label={`Avatar of ${name}`}>
+      <div
+        className='text-base sm:text-xl font-bold'
+        aria-label={`Avatar of ${name}`}
+      >
         {name}
       </div>
     </div>

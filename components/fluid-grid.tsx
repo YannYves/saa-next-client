@@ -29,6 +29,7 @@ const FluidGrid: React.FC<Props> = ({ posts, columnSizes }) => {
           xs={12}
           sm={columnSizes[index % columnSizes.length]}
           key={index}
+          theme={theme}
         >
           <PostPreview
             key={post.id}

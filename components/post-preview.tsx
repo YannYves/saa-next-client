@@ -3,7 +3,13 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
 import { AuthorType } from "interfaces";
-import { styled } from "@mui/material";
+import {
+  Box,
+  Typography,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 type PostPreviewProps = {
   title: string;
@@ -13,50 +19,62 @@ type PostPreviewProps = {
   slug: string;
 };
 
-const PostPreviewBox = styled("div")(({ theme }) => ({
-  display: "flex",
-  marginBottom: "2rem",
-  flexDirection: "column",
-  height: "100%",
-  "& h3": {
-    marginTop: "0",
-    marginBottom: "0.5rem",
-    fontSize: theme.typography.pxToRem(24),
-    lineHeight: theme.typography.pxToRem(32),
-    fontWeight: "bold",
-    textTransform: "capitalize",
-  },
-  "& .text-lg": {
-    color: theme.palette.grey[600],
-  },
-  "& .avatar": {
-    marginTop: "auto",
-  },
-}));
-
 const PostPreview = (props: PostPreviewProps) => {
-  const { title, coverImage, date, author, slug } = props;
+  const { title, coverImage, date, slug } = props;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const PostPreviewBox = styled("div")(({ theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    "& > div": {
+      marginBottom: isSmallScreen ? "0.5rem" : "1rem",
+    },
+    "& h3": {
+      marginTop: "0",
+      marginBottom: isSmallScreen ? "0rem" : "0.5rem",
+      fontSize: theme.typography.pxToRem(24),
+      lineHeight: theme.typography.pxToRem(32),
+      fontWeight: isSmallScreen ? 500 : 700,
+      textTransform: "capitalize",
+    },
+    "& .text-lg": {
+      color: theme.palette.grey[600],
+    },
+    "& .avatar": {
+      marginTop: "auto",
+    },
+    height: "100%",
+    minHeight: isSmallScreen ? "auto" : "350px",
+  }));
 
   return (
     <PostPreviewBox>
-      <div className='mb-5'>
+      <div>
         <CoverImage
           slug={slug}
           title={title}
           url={coverImage}
           isLink={true}
-          fixedHeight={true}
+          fixedHeight={isSmallScreen ? false : true}
         />
       </div>
-      <h3 className='text-2xl mx-3 my-1 leading-snug'>
-        <Link href={`/posts/${slug}`} className='hover:underline'>
-          {title}
-        </Link>
-      </h3>
-      <div className='text-lg mx-3 my-1'>
+      <Box height={isSmallScreen ? "auto" : 50}>
+        <Typography
+          component='h3'
+          className='py-4 px-6 md:px-8 mb-4 text-xl md:text-3xl font-medium'
+        >
+          <Link href={`/posts/${slug}`} className='hover:underline'>
+            {title}
+          </Link>
+        </Typography>
+      </Box>
+      <Typography
+        variant='subtitle2'
+        className='px-6 md:px-8 mb-4 text-md md:text-lg font-light'
+      >
         <Date dateString={date} />
-      </div>
-      <Avatar name={author.name} picture={author.profile_image} />
+      </Typography>
     </PostPreviewBox>
   );
 };
