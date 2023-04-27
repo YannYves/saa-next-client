@@ -24,13 +24,7 @@ const FluidGrid: React.FC<Props> = ({ posts, columnSizes }) => {
   return (
     <Grid container spacing={4} mb={4}>
       {posts.map((post, index) => (
-        <StyledGridItem
-          item
-          xs={12}
-          sm={columnSizes[index % columnSizes.length]}
-          key={index}
-          theme={theme}
-        >
+        <StyledGridItem item xs={12} sm={6} md={4} key={index} theme={theme}>
           <PostPreview
             key={post.id}
             title={post.title}

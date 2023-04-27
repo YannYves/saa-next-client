@@ -4,7 +4,6 @@ import { useTheme, useMediaQuery, styled } from "@mui/material";
 type Props = {
   src: string;
   alt: string;
-  fixedHeight: boolean;
 };
 
 const StyledImage = styled("img")({
@@ -12,7 +11,7 @@ const StyledImage = styled("img")({
   width: "100%",
 });
 
-const ResponsiveImage: React.FC<Props> = ({ src, alt, fixedHeight }) => {
+const ResponsiveImage: React.FC<Props> = ({ src, alt }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -26,13 +25,7 @@ const ResponsiveImage: React.FC<Props> = ({ src, alt, fixedHeight }) => {
   } else if (isLArgeScreen) {
     imageSize = 500;
   }
-  return (
-    <StyledImage
-      src={src}
-      alt={alt}
-      style={{ height: fixedHeight ? `${imageSize}px !important` : "auto" }}
-    />
-  );
+  return <StyledImage src={src} alt={alt} />;
 };
 
 export default ResponsiveImage;

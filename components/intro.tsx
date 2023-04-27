@@ -17,7 +17,7 @@ const Intro = (props: SectionIntroTextProps) => {
       }}
     >
       <section className='flex-col flex items-center md:justify-between mt-16 mb-16 md:mb-12'>
-        <h1 className=' text-center text-3xl md:text-7xl font-extrabold tracking-tight leading-tight md:pr-8 text-white my-8'>
+        <h1 className=' text-center text-3xl md:text-7xl font-extrabold tracking-tight leading-tight md:pr-8 text-white my-8 max-w-6xl'>
           {SectionIntroText}
         </h1>
 

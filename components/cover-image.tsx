@@ -7,7 +7,6 @@ type CoverImageProps = {
   url: string;
   slug?: string;
   isLink: boolean;
-  fixedHeight: boolean;
 };
 
 const StyledDiv = styled("div")(({ theme }) => ({
@@ -19,17 +18,17 @@ const StyledDiv = styled("div")(({ theme }) => ({
 const CoverImage = (props: CoverImageProps) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { title, url, slug, isLink, fixedHeight } = props;
+  const { title, url, slug, isLink } = props;
 
   if (slug !== null && url !== null) {
     return (
       <StyledDiv sx={{ mx: isSmallScreen ? 2 : 0 }}>
         {isLink ? (
           <Link href={`/posts/${slug}`} aria-label={title}>
-            <ResponsiveImage src={url} alt={title} fixedHeight={fixedHeight} />
+            <ResponsiveImage src={url} alt={title} />
           </Link>
         ) : (
-          <ResponsiveImage src={url} alt={title} fixedHeight={fixedHeight} />
+          <ResponsiveImage src={url} alt={title} />
         )}
       </StyledDiv>
     );

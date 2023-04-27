@@ -37,13 +37,7 @@ const PostPreview = (props: PostPreviewProps) => {
   return (
     <PostPreviewBox>
       <div>
-        <CoverImage
-          slug={slug}
-          title={title}
-          url={coverImage}
-          isLink={true}
-          fixedHeight={isLargeScreen ? false : true}
-        />
+        <CoverImage slug={slug} title={title} url={coverImage} isLink={true} />
       </div>
       <Box mx={isSmallScreen ? 2 : 0}>
         <Typography className='py-3 xl:pt-5 font-medium sm:py-2 text-xl xl:text-2xl '>

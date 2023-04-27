@@ -26,12 +26,7 @@ const PostHeader = (props: PostHeaderProps) => {
         </div>
 
         <Box maxWidth='lg' sx={{ margin: " 0 auto" }}>
-          <CoverImage
-            title={title}
-            url={feature_image}
-            isLink={false}
-            fixedHeight={isSmallScreen ? false : true}
-          />
+          <CoverImage title={title} url={feature_image} isLink={false} />
         </Box>
       </div>
 

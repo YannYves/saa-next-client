@@ -21,13 +21,7 @@ const HeroPost = (props: HeroPostProps) => {
   return (
     <Grid container className='sm:mt-10 lg:mt-24 mb-16 md:mb-24 '>
       <Grid item xs={12} md={8}>
-        <CoverImage
-          title={title}
-          url={coverImage}
-          slug={slug}
-          isLink={true}
-          fixedHeight={false}
-        />
+        <CoverImage title={title} url={coverImage} slug={slug} isLink={true} />
       </Grid>
       <Grid item xs={12} md={4}>
         <div className='flex flex-col justify-start h-full'>
