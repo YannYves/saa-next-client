@@ -8,6 +8,7 @@ import FeaturedIntro from "@/components/featuredIntro";
 import { BackgroundImage, PostType, TagType } from "interfaces";
 import { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
+import { useRouter } from "next/router";
 
 type IndexProps = {
   posts: PostType[];
@@ -56,7 +57,7 @@ function Landing(props: IndexProps) {
     <>
       <Layout>
         <Head>
-          <title>Le syndicat apicole artésien - aceuil </title>
+          <title>Le syndicat apicole artésien</title>
         </Head>
         {backgroundImage &&
           backgroundImage.title &&
