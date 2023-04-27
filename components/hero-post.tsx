@@ -3,10 +3,11 @@ import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
 import { AuthorType } from "interfaces";
-import { Box, Grid, Typography } from "@mui/material";
+import { useMediaQuery, useTheme, Box, Grid, Typography } from "@mui/material";
 
 type HeroPostProps = {
   title: string;
+  date: string;
   coverImage: string;
   createdAt: string;
   author: AuthorType;
@@ -14,7 +15,9 @@ type HeroPostProps = {
 };
 
 const HeroPost = (props: HeroPostProps) => {
-  const { title, coverImage, createdAt, author, slug } = props;
+  const { title, coverImage, slug, date } = props;
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Grid container className='sm:mt-10 lg:mt-24 mb-16 md:mb-24 '>
@@ -29,23 +32,19 @@ const HeroPost = (props: HeroPostProps) => {
       </Grid>
       <Grid item xs={12} md={4}>
         <div className='flex flex-col justify-start h-full'>
-          <div>
-            <Typography
-              variant='h4'
-              component='h3'
-              className='py-4 px-6 md:px-8 mb-4 text-xl md:text-3xl font-medium'
-            >
+          <Box mx={isSmallScreen ? 2 : 0}>
+            <Typography className='py-3 md:px-3 font-medium sm:py-2 text-xl md:text-xl lg:md:text-2xl xl:text-3xl'>
               <Link href={`/posts/${slug}`} className='hover:underline'>
                 {title}
               </Link>
             </Typography>
             <Typography
               variant='subtitle2'
-              className='px-6 md:px-8 mb-4 text-md md:text-lg font-light'
+              className='md:px-3 font-medium sm:py-2 mb-4 text-md md:text-lg xl:text-xl font-light'
             >
-              <Date dateString={createdAt} />
+              <Date dateString={date} />
             </Typography>
-          </div>
+          </Box>
         </div>
       </Grid>
     </Grid>

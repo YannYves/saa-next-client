@@ -1,4 +1,3 @@
-import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
@@ -22,30 +21,17 @@ type PostPreviewProps = {
 const PostPreview = (props: PostPreviewProps) => {
   const { title, coverImage, date, slug } = props;
   const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const PostPreviewBox = styled("div")(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
-    "& > div": {
-      marginBottom: isSmallScreen ? "0.5rem" : "1rem",
-    },
-    "& h3": {
-      marginTop: "0",
-      marginBottom: isSmallScreen ? "0rem" : "0.5rem",
-      fontSize: theme.typography.pxToRem(24),
-      lineHeight: theme.typography.pxToRem(32),
-      fontWeight: isSmallScreen ? 500 : 700,
-      textTransform: "capitalize",
-    },
     "& .text-lg": {
       color: theme.palette.grey[600],
     },
-    "& .avatar": {
-      marginTop: "auto",
-    },
     height: "100%",
-    minHeight: isSmallScreen ? "auto" : "350px",
+    minHeight: isLargeScreen ? "auto" : "350px",
   }));
 
   return (
@@ -56,25 +42,22 @@ const PostPreview = (props: PostPreviewProps) => {
           title={title}
           url={coverImage}
           isLink={true}
-          fixedHeight={isSmallScreen ? false : true}
+          fixedHeight={isLargeScreen ? false : true}
         />
       </div>
-      <Box height={isSmallScreen ? "auto" : 50}>
-        <Typography
-          component='h3'
-          className='py-4 px-6 md:px-8 mb-4 text-xl md:text-3xl font-medium'
-        >
+      <Box mx={isSmallScreen ? 2 : 0}>
+        <Typography className='py-3 xl:pt-5 font-medium sm:py-2 text-xl xl:text-2xl '>
           <Link href={`/posts/${slug}`} className='hover:underline'>
             {title}
           </Link>
         </Typography>
+        <Typography
+          variant='subtitle2'
+          className='md:px-0 font-medium sm:py-2 mb-4 text-md font-light xl:text-lg'
+        >
+          <Date dateString={date} />
+        </Typography>
       </Box>
-      <Typography
-        variant='subtitle2'
-        className='px-6 md:px-8 mb-4 text-md md:text-lg font-light'
-      >
-        <Date dateString={date} />
-      </Typography>
     </PostPreviewBox>
   );
 };

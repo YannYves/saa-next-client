@@ -19,8 +19,6 @@ const Post = (props: PostProps) => {
   const { feature_image, title, created_at, primary_author } = post;
   const router = useRouter();
 
-  console.log(primary_author, "primary_author");
-
   if (router.isFallback) {
     return <ErrorPage statusCode={404} />;
   }

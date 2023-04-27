@@ -13,7 +13,7 @@ const Intro = (props: SectionIntroTextProps) => {
     <Box
       sx={{
         position: "relative",
-        bottom: { xs: 380, sm: 450, lg: 500, xl: 550 },
+        bottom: { xs: 350, sm: 450, lg: 500, xl: 550 },
       }}
     >
       <section className='flex-col flex items-center md:justify-between mt-16 mb-16 md:mb-12'>

@@ -75,7 +75,7 @@ function Landing(props: IndexProps) {
               <HeroPost
                 title={heroPost.title}
                 coverImage={heroPost.feature_image}
-                createdAt={heroPost.created_at}
+                date={heroPost.created_at}
                 author={heroPost.primary_author}
                 slug={heroPost.slug}
               />

@@ -92,7 +92,7 @@ export default function DrawerAppBar() {
             {navItems
               .filter((item) => item.title !== "Home")
               .map((item) => (
-                <Box sx={{ mx: { sm: 1, md: 2 } }}>
+                <Box sx={{ mx: { sm: 1, lg: 2 } }}>
                   <Link href={"/" + item.link}>
                     <Typography
                       variant='h5'
