@@ -18,7 +18,7 @@ import { Slide, useScrollTrigger } from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = [
-  { title: "Home", link: "/" },
+  { title: "Home", link: "" },
   { title: "La vie du syndicat", link: "la-vie-du-syndicat" },
   { title: "Le rucher école", link: "le-rucher-ecole" },
   { title: "Actualités", link: "actualites" },
@@ -92,7 +92,7 @@ export default function DrawerAppBar() {
             {navItems
               .filter((item) => item.title !== "Home")
               .map((item) => (
-                <Box sx={{ mx: { sm: 1, lg: 2 } }}>
+                <Box sx={{ mx: { sm: 1, lg: 2 } }} key={item.title}>
                   <Link href={"/" + item.link}>
                     <Typography
                       variant='h5'

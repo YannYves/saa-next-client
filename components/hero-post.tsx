@@ -9,7 +9,6 @@ type HeroPostProps = {
   title: string;
   date: string;
   coverImage: string;
-  createdAt: string;
   author: AuthorType;
   slug: string;
 };

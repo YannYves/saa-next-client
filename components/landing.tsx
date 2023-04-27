@@ -71,13 +71,14 @@ function Landing(props: IndexProps) {
           {heroPosts && heroPosts.length > 0 && <FeaturedIntro />}
           {heroPosts &&
             heroPosts.length > 0 &&
-            heroPosts.map((heroPost) => (
+            heroPosts.map((heroPost, idx) => (
               <HeroPost
                 title={heroPost.title}
                 coverImage={heroPost.feature_image}
                 date={heroPost.created_at}
                 author={heroPost.primary_author}
                 slug={heroPost.slug}
+                key={idx}
               />
             ))}
           {displayedPosts.length > 0 && <MoreStories posts={displayedPosts} />}
