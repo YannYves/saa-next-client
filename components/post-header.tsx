@@ -16,7 +16,6 @@ const PostHeader = (props: PostHeaderProps) => {
   const { title, feature_image, date, author } = props;
   const avatarPicture = author.profile_image;
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
@@ -26,7 +25,12 @@ const PostHeader = (props: PostHeaderProps) => {
         </div>
 
         <Box maxWidth='lg' sx={{ margin: " 0 auto" }}>
-          <CoverImage title={title} url={feature_image} isLink={false} />
+          <CoverImage
+            title={title}
+            url={feature_image}
+            isLink={false}
+            isFeatured={true}
+          />
         </Box>
       </div>
 

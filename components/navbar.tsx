@@ -12,9 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Link from "next/link";
-import { Slide, useScrollTrigger } from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = [
@@ -39,7 +37,7 @@ export default function DrawerAppBar() {
       sx={{ textAlign: "center", width: "60vw" }}
     >
       <Typography variant='h5' sx={{ my: 2 }}>
-        Acceuil
+        Le syndicat apicole artésien
       </Typography>
       <Divider />
       <List>
@@ -83,7 +81,7 @@ export default function DrawerAppBar() {
           <Box sx={{ flexGrow: 1 }}>
             <Link href='/'>
               <Typography variant='h5' fontWeight={550}>
-                Acceuil
+                Accueil
               </Typography>
             </Link>
           </Box>

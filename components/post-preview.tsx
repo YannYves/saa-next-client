@@ -32,22 +32,29 @@ const PostPreview = (props: PostPreviewProps) => {
     },
     height: "100%",
     minHeight: isLargeScreen ? "auto" : "350px",
+    maxHeight: isLargeScreen ? "auto" : "600px",
   }));
 
   return (
     <PostPreviewBox>
       <div>
-        <CoverImage slug={slug} title={title} url={coverImage} isLink={true} />
+        <CoverImage
+          slug={slug}
+          title={title}
+          url={coverImage}
+          isLink={true}
+          isFeatured={false}
+        />
       </div>
       <Box mx={isSmallScreen ? 2 : 0}>
-        <Typography className='py-3 xl:pt-5 font-medium sm:py-2 text-base sm:text-lg md:text-xl lg:md:text-2xl xl:text-3xl'>
+        <Typography className='py-3 xl:pt-5 font-medium sm:py-2 text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl'>
           <Link href={`/posts/${slug}`} className='hover:underline'>
             {title}
           </Link>
         </Typography>
         <Typography
           variant='subtitle2'
-          className='md:px-0 font-medium sm:py-2 mb-4 text-md font-light text-md md:text-lg xl:text-xl'
+          className='md:px-0 font-medium sm:py-2 mb-4 text-md font-light text-md md:text-base xl:text-lg'
         >
           <Date dateString={date} />
         </Typography>
