@@ -38,7 +38,7 @@ export default function DrawerAppBar() {
       onClick={handleDrawerToggle}
       sx={{ textAlign: "center", width: "60vw" }}
     >
-      <Typography variant='h6' sx={{ my: 2 }}>
+      <Typography variant='h5' sx={{ my: 2 }}>
         Acceuil
       </Typography>
       <Divider />
@@ -77,12 +77,12 @@ export default function DrawerAppBar() {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon />
+            <MenuIcon fontSize='large' />
           </IconButton>
 
           <Box sx={{ flexGrow: 1 }}>
             <Link href='/'>
-              <Typography variant='h5' fontWeight={500}>
+              <Typography variant='h5' fontWeight={550}>
                 Acceuil
               </Typography>
             </Link>
@@ -92,13 +92,15 @@ export default function DrawerAppBar() {
             {navItems
               .filter((item) => item.title !== "Home")
               .map((item) => (
-                <Box sx={{ mx: { sm: 1, lg: 2 } }} key={item.title}>
+                <Box sx={{ mx: { xs: 0.5, sm: 1, lg: 2 } }} key={item.title}>
                   <Link href={"/" + item.link}>
                     <Typography
                       variant='h5'
-                      fontWeight={500}
+                      fontWeight={550}
                       sx={{
                         fontSize: { sm: "1rem", md: "1.4rem" },
+                        letterSpacing: "-0.025em",
+                        textAlign: "center",
                       }}
                     >
                       {item.title}

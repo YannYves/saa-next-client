@@ -34,7 +34,7 @@ const PostHeader = (props: PostHeaderProps) => {
         <div className='block  mb-3 sm:mb-4 lg:mb-6'>
           <Avatar name={author.name} picture={avatarPicture} />
         </div>
-        <div className='mb-6 text-base sm:text-lg font-semibold'>
+        <div className='mb-6 text-sm sm:text-base md:text-lg font-normal'>
           <Date dateString={date} />
         </div>
       </div>

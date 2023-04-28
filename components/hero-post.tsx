@@ -26,7 +26,7 @@ const HeroPost = (props: HeroPostProps) => {
       <Grid item xs={12} md={4}>
         <div className='flex flex-col justify-start h-full'>
           <Box mx={isSmallScreen ? 2 : 0}>
-            <Typography className='py-3 md:px-3 font-medium sm:py-2 text-xl md:text-xl lg:md:text-2xl xl:text-3xl'>
+            <Typography className='py-3 md:px-3 font-medium sm:py-2 text-base sm:text-lg md:text-xl lg:md:text-2xl xl:text-3xl'>
               <Link href={`/posts/${slug}`} className='hover:underline'>
                 {title}
               </Link>

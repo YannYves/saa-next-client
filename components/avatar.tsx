@@ -13,7 +13,7 @@ const Avatar = ({ name, picture }: AvatarProps) => {
 
   return (
     <div className='flex items-center'>
-      <div className='w-12 h-12 flex mr-4'>
+      <div className='w-6 h-6 sm:w-12 sm:h-12 flex mr-4'>
         {hasPicture ? (
           <Image
             src={picture}
