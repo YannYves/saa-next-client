@@ -47,7 +47,7 @@ const PostPreview = (props: PostPreviewProps) => {
         />
       </div>
       <Box mx={isSmallScreen ? 2 : 0}>
-        <Typography className='py-3 xl:pt-5 font-medium sm:py-2 text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl'>
+        <Typography className='pt-2 pb-1 font-semibold	sm:text-lg md:text-lg lg:text-xl xl:text-2xl'>
           <Link href={`/posts/${slug}`} className='hover:underline'>
             {title}
           </Link>

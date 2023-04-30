@@ -1,4 +1,5 @@
-import { parseISO, format } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { fr } from "date-fns/locale";
 
 type DateProps = {
   dateString: string;
@@ -6,10 +7,14 @@ type DateProps = {
 
 const Date = (props: DateProps) => {
   const { dateString } = props;
-  const date = parseISO(dateString);
+
+  const formattedDate = format(parseISO(dateString), "dd MMMM yyyy", {
+    locale: fr,
+  });
+
   return (
-    <time dateTime={dateString} color='#979797'>
-      {format(date, "LLLL	d, yyyy")}
+    <time dateTime={dateString.toString()} color='#979797'>
+      {formattedDate}
     </time>
   );
 };

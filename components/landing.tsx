@@ -9,6 +9,7 @@ import { BackgroundImage, PostType, TagType } from "interfaces";
 import { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { useRouter } from "next/router";
+import BackButton from "./back-button";
 
 type IndexProps = {
   posts: PostType[];
@@ -51,13 +52,23 @@ function Landing(props: IndexProps) {
     setPostDisplayCount(postDisplayCount + 10);
   };
 
+  function formatPath(path: string): string {
+    // Replace hyphens with spaces
+    const formattedPath = path.replace(/-/g, " ");
+
+    // Remove leading and trailing slashes
+    return formattedPath.replace(/^\/|\/$/g, "");
+  }
+
   const displayedPosts = allPosts.slice(0, postDisplayCount);
+  const path = useRouter().pathname;
+  const formattedPath = formatPath(path);
 
   return (
     <>
       <Layout>
         <Head>
-          <title>Le syndicat apicole artésien</title>
+          <title>{formattedPath === "" ? "Accueil" : formattedPath}</title>
         </Head>
         {backgroundImage &&
           backgroundImage.title &&
@@ -93,6 +104,15 @@ function Landing(props: IndexProps) {
                 voir plus de posts
               </Button>
             </Stack>
+          )}
+          {heroPosts.length === 0 && displayedPosts.length === 0 && (
+            <>
+              <section className='flex-col md:flex-row flex items-center sm:items-center md:items-start sm:justify-center lg:justify-between mt-10 sm:mt-10 lg:mt-24 mb-16 md:mb-12'>
+                <h1 className='text-4xl sm:text-5xl md:text-6xl xl:md:text-7xl font-bold tracking-tighter leading-tight md:pr-8'>
+                  Il n'y a pas encore d'article ici ...
+                </h1>
+              </section>
+            </>
           )}
         </Container>
       </Layout>
