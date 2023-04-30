@@ -47,14 +47,14 @@ const PostPreview = (props: PostPreviewProps) => {
         />
       </div>
       <Box mx={isSmallScreen ? 2 : 0}>
-        <Typography className='pt-2 pb-1 font-semibold	sm:text-lg md:text-lg lg:text-xl xl:text-2xl'>
+        <Typography className='pt-2 font-semibold	sm:text-lg md:text-lg lg:text-xl xl:text-2xl'>
           <Link href={`/posts/${slug}`} className='hover:underline'>
             {title}
           </Link>
         </Typography>
         <Typography
           variant='subtitle2'
-          className='md:px-0 font-medium sm:py-2 mb-4 text-md font-light text-md md:text-base xl:text-lg'
+          className='md:px-0 font-light sm:py-2 mb-4 text-md text-md md:text-base xl:text-lg'
         >
           <Date dateString={date} />
         </Typography>
