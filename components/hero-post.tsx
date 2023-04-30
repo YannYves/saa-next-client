@@ -32,14 +32,14 @@ const HeroPost = (props: HeroPostProps) => {
       <Grid item xs={12} md={4}>
         <div className='flex flex-col justify-start h-full'>
           <Box mx={isSmallScreen ? 2 : 0}>
-            <Typography className='pt-2 pb-1 md:px-3 font-semibold text-base sm:text-lg md:text-xl lg:md:text-2xl xl:text-3xl'>
+            <Typography className='pt-2 pb-1 md:px-3 font-semibold text-lg sm:text-lg md:text-xl lg:md:text-2xl xl:text-3xl'>
               <Link href={`/posts/${slug}`} className='hover:underline'>
                 {title}
               </Link>
             </Typography>
             <Typography
               variant='subtitle2'
-              className='md:px-3 font-medium sm:py-2 mb-4 text-md md:text-lg xl:text-xl font-light'
+              className='md:px-3 font-medium sm:py-2 mb-4 text-lg md:text-lg xl:text-xl font-light'
             >
               <Date dateString={date} />
             </Typography>

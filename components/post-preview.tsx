@@ -52,10 +52,7 @@ const PostPreview = (props: PostPreviewProps) => {
             {title}
           </Link>
         </Typography>
-        <Typography
-          variant='subtitle2'
-          className='md:px-0 font-light sm:py-2 mb-4 text-md text-md md:text-base xl:text-lg'
-        >
+        <Typography className='md:px-0 sm:py-1 sm:py-2 mb-4 text-md md:text-base xl:text-lg font-light '>
           <Date dateString={date} />
         </Typography>
       </Box>
