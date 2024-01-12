@@ -29,7 +29,7 @@ const FluidGrid: React.FC<Props> = ({ posts, columnSizes }) => {
             key={post.id}
             title={post.title}
             coverImage={post.feature_image}
-            date={post.created_at}
+            date={post.updated_at}
             author={post.primary_author}
             slug={post.slug}
           />

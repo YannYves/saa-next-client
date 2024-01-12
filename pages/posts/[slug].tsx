@@ -16,7 +16,7 @@ type PostProps = {
 
 const Post = (props: PostProps) => {
   const { post } = props;
-  const { feature_image, title, created_at, primary_author } = post;
+  const { feature_image, title, primary_author, updated_at } = post;
   const router = useRouter();
 
   if (router.isFallback) {
@@ -35,7 +35,7 @@ const Post = (props: PostProps) => {
           <PostHeader
             title={title}
             feature_image={feature_image}
-            date={created_at}
+            date={updated_at}
             author={primary_author}
           />
 

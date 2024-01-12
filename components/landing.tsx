@@ -23,10 +23,10 @@ function Landing(props: IndexProps) {
   const [displayShowMorePostButton, setDisplayShowMorePostButton] =
     useState(false);
   let allPosts = [];
-  let heroPosts = [];
+  let heroPosts: PostType[] = [];
 
   // init
-  posts.map((post: any) =>
+  posts.map((post: PostType) =>
     post.featured
       ? (heroPosts = [...heroPosts, post])
       : (allPosts = [...allPosts, post])
@@ -87,7 +87,7 @@ function Landing(props: IndexProps) {
               <HeroPost
                 title={heroPost.title}
                 coverImage={heroPost.feature_image}
-                date={heroPost.created_at}
+                date={heroPost.updated_at}
                 author={heroPost.primary_author}
                 slug={heroPost.slug}
                 key={idx}
