@@ -3,7 +3,7 @@
 }
 
 .markdown img {
-  display: none;
+  margin: 0 auto ;
 }
 
 .markdown p,
@@ -45,6 +45,7 @@ img.kg-image,
   width: fit-content;
   width: -moz-fit-content;
 }
+
 img.kg-image {
   width: auto;
   margin: 0 auto;
@@ -52,6 +53,7 @@ img.kg-image {
   height: auto;
   max-height: 60vh;
 }
+
 figure.kg-card.kg-gallery-card.kg-width-wide {
   margin: 20px 3px;
   padding: 0;
