@@ -8,6 +8,7 @@ import Head from "next/head";
 import BackButton from "@/components/back-button";
 import { getPostsGhost, readPostsGhost } from "@/lib/post";
 import { PostType } from "interfaces";
+import { fetchPosts } from "@/lib/fetchPost";
 
 type PostProps = {
   post: PostType;
@@ -27,11 +28,11 @@ const Post = (props: PostProps) => {
     <Layout>
       <Head>
         <title>{title}</title>
-        <meta property='og:image' content={feature_image} />
+        <meta property="og:image" content={feature_image} />
       </Head>
       <Container>
         <BackButton />
-        <article className='my-8'>
+        <article className="my-8">
           <PostHeader
             title={title}
             feature_image={feature_image}
@@ -51,7 +52,7 @@ export default Post;
 // This function runs only on @the server side
 export async function getStaticPaths() {
   // all post
-  const posts = await getPostsGhost();
+  const posts = await fetchPosts();
 
   // Get the paths we want to pre-render based on posts-
   const paths = posts.map((post: any) => ({
@@ -66,16 +67,27 @@ export async function getStaticPaths() {
 // This function runs only on @the server side
 export async function getStaticProps(context) {
   const slug = context.params.slug;
-  const posts = await getPostsGhost();
-  //TODO what if two times the same slug ?
-  const onePost = posts.filter((post: any) => post.slug === slug);
-  const post = await readPostsGhost(onePost[0].id);
-  const backendUrl = process.env.BACKEND_URL;
+
+  const posts = await fetchPosts();
+  const onePost = posts.find((post) => post.slug === slug);
+
+  if (!onePost) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
   const frontDomain =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : process.env.FRONT_DOMAIN;
+      : process.env.FRONT_DOMAIN || "https://yourdomain.com";
 
-  // Props returned will be passed to the page component
-  return { props: { post, backendUrl, frontDomain } };
+  return {
+    props: {
+      post: onePost,
+      backendUrl,
+      frontDomain,
+    },
+  };
 }

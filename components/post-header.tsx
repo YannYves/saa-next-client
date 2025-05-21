@@ -5,6 +5,11 @@ import PostTitle from "./post-title";
 import { AuthorType } from "interfaces";
 import { useMediaQuery, useTheme, Box } from "@mui/material";
 
+const DEFAULT_AUTHOR = {
+  name: "Mock Author",
+  profile_image: "https://placehold.co/100x100",
+};
+
 type PostHeaderProps = {
   title: string;
   feature_image: string;
@@ -14,17 +19,18 @@ type PostHeaderProps = {
 
 const PostHeader = (props: PostHeaderProps) => {
   const { title, feature_image, date, author } = props;
-  const avatarPicture = author.profile_image;
+  const avatarPicture = author?.profile_image || DEFAULT_AUTHOR.profile_image;
+  const safeAuthorName = author?.name || DEFAULT_AUTHOR.name;
   const theme = useTheme();
 
   return (
     <>
-      <div className='mb-8 md:mb-16 sm:mx-0'>
-        <div className='flex flex-col items-center content-center mb-1 sm:mb-4 lg:mb-6'>
+      <div className="mb-8 md:mb-16 sm:mx-0">
+        <div className="flex flex-col items-center content-center mb-1 sm:mb-4 lg:mb-6">
           <PostTitle>{title}</PostTitle>
         </div>
 
-        <Box maxWidth='lg' sx={{ margin: " 0 auto" }}>
+        <Box maxWidth="lg" sx={{ margin: " 0 auto" }}>
           <CoverImage
             title={title}
             url={feature_image}
@@ -34,11 +40,11 @@ const PostHeader = (props: PostHeaderProps) => {
         </Box>
       </div>
 
-      <div className='max-w-3xl mx-auto'>
-        <div className='block  mb-3 sm:mb-4 lg:mb-6'>
-          <Avatar name={author.name} picture={avatarPicture} />
+      <div className="max-w-3xl mx-auto">
+        <div className="block  mb-3 sm:mb-4 lg:mb-6">
+          <Avatar name={safeAuthorName} picture={avatarPicture} />
         </div>
-        <div className='mb-6 text-sm sm:text-base md:text-lg font-normal'>
+        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal">
           <Date dateString={date} />
         </div>
       </div>

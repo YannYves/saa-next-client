@@ -1,6 +1,7 @@
 import Landing from "@/components/landing";
 import { getPostsGhost, getPostsTags, isPropertyDefined } from "@/lib/post";
 import { BackgroundImage, PostType, TagType } from "interfaces";
+import { mockPosts } from "@/lib/mock-posts";
 
 type IndexProps = {
   posts: PostType[];
@@ -48,6 +49,9 @@ export async function getStaticProps() {
 
   // Props returned will be passed to the page component
   return {
-    props: { posts, tags, backendUrl, frontDomain, backgroundImage },
+    props: {
+      mockPosts,
+      // posts, tags, backendUrl, frontDomain, backgroundImage
+    },
   };
 }
