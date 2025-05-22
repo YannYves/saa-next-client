@@ -1,56 +1,47 @@
 import Landing from "@/components/landing";
-import { getPostsGhost, getPostsTags, isPropertyDefined } from "@/lib/post";
-import { BackgroundImage, PostType, TagType } from "interfaces";
-import { mockPosts } from "@/lib/mock-posts";
+import { BackgroundImage, PostType } from "interfaces";
+import { fetchPosts } from "@/lib/fetchPost";
+import { mockBackgroundImage } from "@/lib/mock-background-image";
+import { getSectionBySlug } from "@/lib/sections";
+
 type IndexProps = {
   posts: PostType[];
-  tags: TagType[];
-  backendUrl: string;
-  frontDomain: string;
-  backgroundImage: BackgroundImage | undefined;
+  backgroundImage: BackgroundImage;
+  section: {
+    name: string;
+    description: string;
+  };
 };
 
 const Index = (props: IndexProps) => {
-  const { posts, tags, backgroundImage } = props;
+  const { posts, backgroundImage, section } = props;
 
   return (
-    <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
+    <>
+      <Landing
+        posts={posts}
+        backgroundImage={backgroundImage}
+        section={section}
+      />
+    </>
   );
 };
 
-export default Index;
-
 // This function runs only on @the server side
 export async function getStaticProps() {
-  const filter = "tag:utile+tag:-header";
-  const posts = await getPostsGhost(filter);
-  const backgroundImageFilter = "tags:utile+tags:header";
-  const backgroundImagePost = await getPostsGhost(backgroundImageFilter);
+  const posts = await fetchPosts("utile");
+  const section = getSectionBySlug("utile");
 
-  // TODO : ignoble ?
-  const backgroundImage =
-    backgroundImagePost &&
-    backgroundImagePost[0] &&
-    isPropertyDefined(backgroundImagePost[0], "title") &&
-    isPropertyDefined(backgroundImagePost[0], "feature_image")
-      ? {
-          title: backgroundImagePost[0].title,
-          feature_image: backgroundImagePost[0].feature_image,
-        }
-      : null;
-
-  const tags = await getPostsTags();
-  const backendUrl = process.env.BACKEND_URL;
-  const frontDomain =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : process.env.FRONT_DOMAIN;
-
-  // Props returned will be passed to the page component
   return {
     props: {
-      mockPosts,
-      // posts, tags, backendUrl, frontDomain, backgroundImage
+      posts,
+      backgroundImage: mockBackgroundImage,
+      section: {
+        name: section?.name || "Utile",
+        description: section?.description || "",
+      },
     },
   };
 }
+
+export default Index;

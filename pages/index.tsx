@@ -1,53 +1,43 @@
 import Landing from "@/components/landing";
-import { getPostsTags } from "@/lib/post";
-import { BackgroundImage, PostType, TagType } from "interfaces";
+// should be removed ?
+import { BackgroundImage, PostType } from "interfaces";
 import { fetchPosts } from "@/lib/fetchPost";
+import { mockBackgroundImage } from "@/lib/mock-background-image";
 
 type IndexProps = {
   posts: PostType[];
-  tags: TagType[];
-  backendUrl: string;
-  frontDomain: string;
   backgroundImage: BackgroundImage;
 };
 
 const Index = (props: IndexProps) => {
-  const { posts, tags, backgroundImage } = props;
+  const { posts, backgroundImage } = props;
 
   return (
     <>
-      <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
+      <Landing posts={posts} backgroundImage={backgroundImage} />
     </>
   );
 };
-
-export default Index;
 
 // This function runs only on @the server side
 export async function getStaticProps() {
   // const filter = "tag:acceuil+tag:-header";
   const posts = await fetchPosts();
-
-  //const backgroundImageFilter = "tags:acceuil+tags:header";
-  // const backgroundImagePost = await getPostsGhost(backgroundImageFilter);
-  // const backgroundImage = backgroundImagePost
-  //   ? {
-  //       title: backgroundImagePost[0].title,
-  //       feature_image: backgroundImagePost[0].feature_image,
-  //       html: backgroundImagePost[0].html,
-  //     }
-  //   : undefined;
-
-  const tags = await getPostsTags();
-  const backendUrl = process.env.BACKEND_URL;
   const frontDomain =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : process.env.FRONT_DOMAIN;
 
-  // Props returned will be passed to the page component
+  // Use mock background image in development mode
+  const backgroundImage =
+    process.env.NODE_ENV === "development" ? mockBackgroundImage : null;
+
   return {
-    props: { posts },
-    // posts, tags, backendUrl, frontDomain, backgroundImage
+    props: {
+      posts,
+      backgroundImage,
+    },
   };
 }
+
+export default Index;

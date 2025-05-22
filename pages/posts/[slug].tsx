@@ -1,93 +1,65 @@
 import { useRouter } from "next/router";
-import ErrorPage from "next/error";
-import Container from "@/components/container";
-import PostBody from "@/components/post-body";
+import { mockPosts } from "@/lib/mock-posts";
 import PostHeader from "@/components/post-header";
+import PostBody from "@/components/post-body";
 import Layout from "@/components/layout";
-import Head from "next/head";
-import BackButton from "@/components/back-button";
-import { getPostsGhost, readPostsGhost } from "@/lib/post";
 import { PostType } from "interfaces";
-import { fetchPosts } from "@/lib/fetchPost";
+import BackButton from "@/components/back-button";
 
 type PostProps = {
   post: PostType;
-  morePosts: PostType[];
 };
 
-const Post = (props: PostProps) => {
-  const { post } = props;
-  const { feature_image, title, primary_author, published_at } = post;
+const Post = ({ post }: PostProps) => {
   const router = useRouter();
 
-  if (router.isFallback) {
-    return <ErrorPage statusCode={404} />;
+  if (!post) {
+    return <div>Loading...</div>;
   }
 
   return (
     <Layout>
-      <Head>
-        <title>{title}</title>
-        <meta property="og:image" content={feature_image} />
-      </Head>
-      <Container>
-        <BackButton />
-        <article className="my-8">
-          <PostHeader
-            title={title}
-            feature_image={feature_image}
-            date={published_at}
-            author={primary_author}
-          />
-
-          <PostBody html={post.html} />
-        </article>
-      </Container>
+      <BackButton />
+      <article className="mb-32">
+        <PostHeader
+          title={post.title}
+          feature_image={post.feature_image}
+          date={post.published_at}
+          author={post.primary_author}
+        />
+        <PostBody html={post.html} />
+      </article>
     </Layout>
   );
 };
 
-export default Post;
-
-// This function runs only on @the server side
 export async function getStaticPaths() {
-  // all post
-  const posts = await fetchPosts();
-
-  // Get the paths we want to pre-render based on posts-
-  const paths = posts.map((post: any) => ({
+  // Get all possible paths from mock posts
+  const paths = mockPosts.map((post) => ({
     params: { slug: post.slug },
   }));
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+  return {
+    paths,
+    fallback: false, // Return 404 for non-existent paths
+  };
 }
 
-// This function runs only on @the server side
-export async function getStaticProps(context) {
-  const slug = context.params.slug;
+export async function getStaticProps({ params }: { params: { slug: string } }) {
+  // Find the post that matches the slug
+  const post = mockPosts.find((p) => p.slug === params.slug);
 
-  const posts = await fetchPosts();
-  const onePost = posts.find((post) => post.slug === slug);
-
-  if (!onePost) {
+  if (!post) {
     return {
-      notFound: true,
+      notFound: true, // This will show the 404 page
     };
   }
 
-  const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
-  const frontDomain =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : process.env.FRONT_DOMAIN || "https://yourdomain.com";
-
   return {
     props: {
-      post: onePost,
-      backendUrl,
-      frontDomain,
+      post,
     },
   };
 }
+
+export default Post;

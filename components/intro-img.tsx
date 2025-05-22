@@ -15,7 +15,7 @@ const IntroImg = (props: IntroImgProps) => {
     <>
       <Box sx={{ height: "70vh" }}>
         <Paper
-          component='img'
+          component="img"
           sx={{
             backgroundImage: `url(${feature_image})`,
             backgroundRepeat: "no-repeat",

@@ -1,57 +1,43 @@
 import Landing from "@/components/landing";
-import { getPostsGhost, getPostsTags, isPropertyDefined } from "@/lib/post";
-import { BackgroundImage, PostType, TagType } from "interfaces";
-import { mockPosts } from "@/lib/mock-posts";
+// should be removed ?
+import { BackgroundImage, PostType } from "interfaces";
+import { fetchPosts } from "@/lib/fetchPost";
+import { mockBackgroundImage } from "@/lib/mock-background-image";
 
 type IndexProps = {
   posts: PostType[];
-  tags: TagType[];
-  backendUrl: string;
-  frontDomain: string;
-  backgroundImage: BackgroundImage | undefined;
+  backgroundImage: BackgroundImage;
 };
 
 const Index = (props: IndexProps) => {
-  const { posts, tags, backgroundImage } = props;
+  const { posts, backgroundImage } = props;
 
   return (
-    <Landing posts={posts} tags={tags} backgroundImage={backgroundImage} />
+    <>
+      <Landing posts={posts} backgroundImage={backgroundImage} />
+    </>
   );
 };
 
-export default Index;
-
 // This function runs only on @the server side
 export async function getStaticProps() {
-  const filter = "tag:news+tag:-header";
-  const posts = await getPostsGhost(filter);
-  const backgroundImageFilter = "tags:news+tags:header";
-  const backgroundImagePost = await getPostsGhost(backgroundImageFilter);
-
-  // TODO : ignoble ?
-  const backgroundImage =
-    backgroundImagePost &&
-    backgroundImagePost[0] &&
-    isPropertyDefined(backgroundImagePost[0], "title") &&
-    isPropertyDefined(backgroundImagePost[0], "feature_image")
-      ? {
-          title: backgroundImagePost[0].title,
-          feature_image: backgroundImagePost[0].feature_image,
-        }
-      : null;
-
-  const tags = await getPostsTags();
-  const backendUrl = process.env.BACKEND_URL;
+  // const filter = "tag:acceuil+tag:-header";
+  const posts = await fetchPosts();
   const frontDomain =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : process.env.FRONT_DOMAIN;
 
-  // Props returned will be passed to the page component
+  // Use mock background image in development mode
+  const backgroundImage =
+    process.env.NODE_ENV === "development" ? mockBackgroundImage : null;
+
   return {
     props: {
-      mockPosts,
-      // posts, tags, backendUrl, frontDomain, backgroundImage
+      posts,
+      backgroundImage,
     },
   };
 }
+
+export default Index;
