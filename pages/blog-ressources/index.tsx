@@ -1,8 +1,8 @@
 import Landing from "@/components/landing";
 import { BackgroundImage, PostType } from "interfaces";
-import { fetchPosts } from "@/lib/fetchPost";
 import { mockBackgroundImage } from "@/lib/mock-background-image";
 import { getSectionBySlug } from "@/lib/sections";
+import { mockPosts } from "@/lib/mock-posts";
 
 type IndexProps = {
   posts: PostType[];
@@ -27,19 +27,15 @@ const Index = (props: IndexProps) => {
   );
 };
 
-// This function runs only on @the server side
 export async function getStaticProps() {
-  const posts = await fetchPosts("le-rucher-ecole");
-  const section = getSectionBySlug("le-rucher-ecole");
+  const section = getSectionBySlug("blog-ressources");
+  const posts = mockPosts.filter((post) => post.section === "blog-ressources");
 
   return {
     props: {
       posts,
       backgroundImage: mockBackgroundImage,
-      section: {
-        name: section?.name || "Le Rucher École",
-        description: section?.description || "",
-      },
+      section,
     },
   };
 }

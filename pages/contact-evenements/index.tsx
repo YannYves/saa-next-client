@@ -1,9 +1,8 @@
 import Landing from "@/components/landing";
-// should be removed ?
 import { BackgroundImage, PostType } from "interfaces";
-import { fetchPosts } from "@/lib/fetchPost";
 import { mockBackgroundImage } from "@/lib/mock-background-image";
 import { getSectionBySlug } from "@/lib/sections";
+import { mockPosts } from "@/lib/mock-posts";
 
 type IndexProps = {
   posts: PostType[];
@@ -28,19 +27,17 @@ const Index = (props: IndexProps) => {
   );
 };
 
-// This function runs only on @the server side
 export async function getStaticProps() {
-  const posts = await fetchPosts("la-vie-du-syndicat");
-  const section = getSectionBySlug("la-vie-du-syndicat");
+  const section = getSectionBySlug("contact-evenements");
+  const posts = mockPosts.filter(
+    (post) => post.section === "contact-evenements"
+  );
 
   return {
     props: {
       posts,
       backgroundImage: mockBackgroundImage,
-      section: {
-        name: section?.name || "La Vie du Syndicat",
-        description: section?.description || "",
-      },
+      section,
     },
   };
 }

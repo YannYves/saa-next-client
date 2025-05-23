@@ -7,28 +7,29 @@ export type Section = {
 
 export const SECTIONS: Section[] = [
   {
-    id: "la-vie-du-syndicat",
-    name: "La Vie du Syndicat",
-    slug: "la-vie-du-syndicat",
-    description: "Actualités et informations sur les activités du syndicat",
+    id: "accueil",
+    name: "Accueil",
+    slug: "accueil",
+    description:
+      "Présentation de l'association et mise en avant des derniers articles",
   },
   {
-    id: "le-rucher-ecole",
-    name: "Le Rucher École",
-    slug: "le-rucher-ecole",
-    description: "Formations et activités du rucher école",
+    id: "association",
+    name: "L'association",
+    slug: "association",
+    description: "Qui sommes-nous, nos ruchers et comment nous soutenir",
   },
   {
-    id: "utile",
-    name: "Utile",
-    slug: "utile",
-    description: "Informations pratiques et ressources utiles",
+    id: "blog-ressources",
+    name: "Blog & ressources",
+    slug: "blog-ressources",
+    description: "Articles, guides pratiques et liens utiles sur l'apiculture",
   },
   {
-    id: "actualites",
-    name: "Actualités",
-    slug: "actualites",
-    description: "Actualités générales sur l'apiculture",
+    id: "contact-evenements",
+    name: "Contact & événements",
+    slug: "contact-evenements",
+    description: "Agenda des événements et formulaire de contact",
   },
 ];
 

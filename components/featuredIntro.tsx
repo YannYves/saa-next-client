@@ -1,15 +1,21 @@
-import React from "react";
+import { Box, Typography } from "@mui/material";
+import { PostType } from "interfaces";
 
-function FeaturedIntro() {
+type FeaturedIntroProps = {
+  post: PostType;
+};
+
+const FeaturedIntro = ({ post }: FeaturedIntroProps) => {
   return (
-    <>
-      <section className='flex-col md:flex-row flex items-center sm:items-center md:items-start sm:justify-center lg:justify-between mt-10 sm:mt-10 lg:mt-24 mb-16 md:mb-12'>
-        <h1 className='text-4xl sm:text-5xl md:text-6xl xl:md:text-7xl font-bold tracking-tighter leading-tight md:pr-8'>
-          A la une
-        </h1>
-      </section>
-    </>
+    <Box sx={{ mb: 4, textAlign: "center" }}>
+      <Typography variant="h1" component="h1" sx={{ mb: 2 }}>
+        {post.title}
+      </Typography>
+      <Typography variant="body1" color="text.secondary">
+        {post.custom_excerpt}
+      </Typography>
+    </Box>
   );
-}
+};
 
 export default FeaturedIntro;

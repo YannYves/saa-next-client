@@ -44,7 +44,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
     },
-    section: "la-vie-du-syndicat",
+    section: "accueil",
   },
   {
     id: "mock-2",
@@ -56,7 +56,7 @@ export const mockPosts: MockPost[] = [
     feature_image:
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `
-      <p>Le Rucher École du Syndicat Apicole d'Alsace accueille chaque année de nombreux stagiaires souhaitant se former à l'apiculture.</p>
+      <p>Le Rucher École du Syndicat Apicole d'Alsace accueille chaque année de nombreux stagiaires souhant se former à l'apiculture.</p>
       <h2>Le programme de formation</h2>
       <p>La formation comprend :</p>
       <ul>
@@ -71,7 +71,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
     },
-    section: "le-rucher-ecole",
+    section: "association",
   },
   {
     id: "mock-3",
@@ -95,7 +95,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
     },
-    section: "utile",
+    section: "blog-ressources",
   },
   {
     id: "mock-4",
@@ -112,7 +112,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-5",
@@ -129,7 +129,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-6",
@@ -146,7 +146,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-7",
@@ -164,7 +164,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-8",
@@ -181,7 +181,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-9",
@@ -198,7 +198,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-10",
@@ -215,7 +215,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-11",
@@ -232,7 +232,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-12",
@@ -249,7 +249,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
     },
-    section: "actualites",
+    section: "blog-ressources",
   },
   {
     id: "mock-13",
@@ -453,7 +453,7 @@ export const mockPosts: MockPost[] = [
       profile_image:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
     },
-    section: "la-vie-du-syndicat",
+    section: "petites-annonces",
   },
   {
     id: "mock-25",

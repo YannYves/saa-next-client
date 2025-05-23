@@ -10,18 +10,23 @@ import { useEffect, useState } from "react";
 import { Button, Stack, Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import BackButton from "./back-button";
+import { Section } from "@/lib/sections";
 
 type IndexProps = {
   posts: PostType[];
   backgroundImage: BackgroundImage;
-  section?: {
-    name: string;
-    description: string;
-  };
+  section?: Section;
+};
+
+const defaultSection: Section = {
+  id: "accueil",
+  name: "Accueil",
+  slug: "accueil",
+  description: "Bienvenue sur le site du Syndicat Apicole Artésien",
 };
 
 function Landing(props: IndexProps) {
-  const { posts, backgroundImage, section } = props;
+  const { posts, backgroundImage, section = defaultSection } = props;
   const [displayedPosts, setDisplayedPosts] = useState<PostType[]>([]);
   const [featuredPost, setFeaturedPost] = useState<PostType | null>(null);
   const [displayShowMoreButton, setDisplayShowMoreButton] = useState(false);
@@ -70,61 +75,32 @@ function Landing(props: IndexProps) {
   const formattedPath = formatPath(path);
 
   return (
-    <>
-      <Layout>
-        <Head>
-          <title>{formattedPath === "" ? "Accueil" : formattedPath}</title>
-        </Head>
-        {backgroundImage?.title && backgroundImage?.feature_image && (
+    <Layout>
+      <Head>
+        <title>{section.name}</title>
+      </Head>
+      <Container>
+        {section.name && (
           <IntroImg
-            SectionIntroText={backgroundImage.title}
-            feature_image={backgroundImage.feature_image}
-            html={backgroundImage.html}
+            featureImage={backgroundImage.feature_image}
+            section={section}
           />
         )}
-        <Container>
-          {section && (
-            <Box sx={{ mb: 4, textAlign: "center" }}>
-              <Typography variant="h1" component="h1" sx={{ mb: 2 }}>
-                {section.name}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {section.description}
-              </Typography>
-            </Box>
-          )}
-          {featuredPost && <FeaturedIntro />}
-          {featuredPost && (
-            <HeroPost
-              title={featuredPost.title}
-              coverImage={featuredPost.feature_image}
-              date={featuredPost.published_at}
-              author={featuredPost.primary_author}
-              slug={featuredPost.slug}
-            />
-          )}
-          {displayedPosts.length > 0 && <MoreStories posts={displayedPosts} />}
-          {displayShowMoreButton && (
-            <Box sx={{ textAlign: "center", mt: 4, mb: 4 }}>
-              <Button
-                variant="contained"
-                onClick={handleLoadMore}
-                sx={{ px: 4, py: 1.5 }}
-              >
-                Voir plus
-              </Button>
-            </Box>
-          )}
-          {!featuredPost && displayedPosts.length === 0 && (
-            <section className="flex-col md:flex-row flex items-center sm:items-center md:items-start sm:justify-center lg:justify-between mt-10 sm:mt-10 lg:mt-24 mb-16 md:mb-12">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl xl:md:text-7xl font-bold tracking-tighter leading-tight md:pr-8">
-                Il n'y a pas encore d'article ici ...
-              </h1>
-            </section>
-          )}
-        </Container>
-      </Layout>
-    </>
+        {featuredPost && <FeaturedIntro post={featuredPost} />}
+        {displayedPosts.length > 0 && <MoreStories posts={displayedPosts} />}
+        {displayShowMoreButton && (
+          <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+            <Button
+              variant="contained"
+              onClick={handleLoadMore}
+              sx={{ px: 4, py: 1.5 }}
+            >
+              Voir plus
+            </Button>
+          </Box>
+        )}
+      </Container>
+    </Layout>
   );
 }
 

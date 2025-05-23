@@ -16,12 +16,9 @@ import Link from "next/link";
 
 const drawerWidth = 240;
 const navItems = [
-  { title: "Home", link: "" },
-  { title: "La vie du syndicat", link: "la-vie-du-syndicat" },
-  { title: "Le rucher école", link: "le-rucher-ecole" },
-  { title: "Actualités", link: "actualites" },
-  { title: "Utile", link: "utile" },
-  { title: "Petites annonces", link: "petites-annonces" },
+  { title: "L'association", link: "association" },
+  { title: "Blog & ressources", link: "blog-ressources" },
+  { title: "Contact & événements", link: "contact-evenements" },
 ];
 
 export default function DrawerAppBar() {
@@ -36,7 +33,7 @@ export default function DrawerAppBar() {
       onClick={handleDrawerToggle}
       sx={{ textAlign: "center", width: "60vw" }}
     >
-      <Typography variant='h5' sx={{ my: 2 }}>
+      <Typography variant="h5" sx={{ my: 2 }}>
         Le syndicat apicole artésien
       </Typography>
       <Divider />
@@ -58,9 +55,9 @@ export default function DrawerAppBar() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        position='static'
-        color='transparent'
-        component='nav'
+        position="static"
+        color="transparent"
+        component="nav"
         sx={{
           color: "#fff",
           border: 0,
@@ -69,18 +66,18 @@ export default function DrawerAppBar() {
       >
         <Toolbar sx={{ mt: { sm: 1, lg: 4 }, mx: { sm: 1, lg: 8 } }}>
           <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <MenuIcon fontSize='large' />
+            <MenuIcon fontSize="large" />
           </IconButton>
 
           <Box sx={{ flexGrow: 1 }}>
-            <Link href='/'>
-              <Typography variant='h5' fontWeight={550}>
+            <Link href="/">
+              <Typography variant="h5" fontWeight={550}>
                 Accueil
               </Typography>
             </Link>
@@ -93,7 +90,7 @@ export default function DrawerAppBar() {
                 <Box sx={{ mx: { xs: 0.5, sm: 1, lg: 2 } }} key={item.title}>
                   <Link href={"/" + item.link}>
                     <Typography
-                      variant='h5'
+                      variant="h5"
                       fontWeight={550}
                       sx={{
                         fontSize: { sm: "1rem", md: "1.4rem" },
@@ -110,7 +107,7 @@ export default function DrawerAppBar() {
         </Toolbar>
       </AppBar>
       <Box
-        component='nav'
+        component="nav"
         sx={{
           display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": {
@@ -120,7 +117,7 @@ export default function DrawerAppBar() {
         }}
       >
         <Drawer
-          variant='temporary'
+          variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{

@@ -1,41 +1,44 @@
 import Landing from "@/components/landing";
-// should be removed ?
 import { BackgroundImage, PostType } from "interfaces";
-import { fetchPosts } from "@/lib/fetchPost";
 import { mockBackgroundImage } from "@/lib/mock-background-image";
+import { getSectionBySlug } from "@/lib/sections";
+import { mockPosts } from "@/lib/mock-posts";
 
 type IndexProps = {
   posts: PostType[];
   backgroundImage: BackgroundImage;
+  section: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string;
+  };
 };
 
 const Index = (props: IndexProps) => {
-  const { posts, backgroundImage } = props;
+  const { posts, backgroundImage, section } = props;
 
   return (
     <>
-      <Landing posts={posts} backgroundImage={backgroundImage} />
+      <Landing
+        posts={posts}
+        backgroundImage={backgroundImage}
+        section={section}
+      />
     </>
   );
 };
 
 // This function runs only on @the server side
 export async function getStaticProps() {
-  // const filter = "tag:acceuil+tag:-header";
-  const posts = await fetchPosts();
-  const frontDomain =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : process.env.FRONT_DOMAIN;
-
-  // Use mock background image in development mode
-  const backgroundImage =
-    process.env.NODE_ENV === "development" ? mockBackgroundImage : null;
+  const section = getSectionBySlug("accueil");
+  const posts = mockPosts.filter((post) => post.section === "accueil");
 
   return {
     props: {
       posts,
-      backgroundImage,
+      backgroundImage: mockBackgroundImage,
+      section,
     },
   };
 }
