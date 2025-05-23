@@ -65,7 +65,7 @@ export const mockPosts: MockPost[] = [
         <li>Des sessions sur la gestion des maladies</li>
       </ul>
     `,
-    featured: false,
+    featured: true,
     primary_author: {
       name: "Marie Schmidt",
       profile_image:
@@ -89,7 +89,7 @@ export const mockPosts: MockPost[] = [
       <h2>Les miels d'été</h2>
       <p>Plus foncés et plus intenses, ils proviennent souvent du tilleul et des fleurs sauvages.</p>
     `,
-    featured: false,
+    featured: true,
     primary_author: {
       name: "Pierre Weber",
       profile_image:
@@ -556,5 +556,24 @@ export const mockPosts: MockPost[] = [
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
     },
     section: "la-vie-du-syndicat",
+  },
+  // Contact & événements featured post
+  {
+    id: "mock-100",
+    title: "Atelier découverte : Les abeilles en ville",
+    slug: "atelier-decouverte-abeilles-ville",
+    custom_excerpt:
+      "Participez à notre prochain atelier pour découvrir l'apiculture urbaine !",
+    published_at: "2024-03-20T00:00:00.000Z",
+    feature_image:
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
+    html: `<p>Rejoignez-nous pour un atelier passionnant sur l'apiculture en ville, ouvert à tous !</p>`,
+    featured: true,
+    primary_author: {
+      name: "Sophie Martin",
+      profile_image:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
+    },
+    section: "contact-evenements",
   },
 ];

@@ -9,9 +9,7 @@ const MoreStories = (props: MoreStoriesProps) => {
   const { posts } = props;
   return (
     <section>
-      <h2 className='text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold flex-col flex items-center sm:items-center md:items-start my-12'>
-        Autres articles
-      </h2>
+      <div style={{ marginTop: 48 }} />
       <FluidGrid posts={posts} columnSizes={[6]} />
     </section>
   );

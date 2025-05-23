@@ -11,6 +11,7 @@ import { Button, Stack, Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import BackButton from "./back-button";
 import { Section } from "@/lib/sections";
+import Intro from "@/components/intro";
 
 type IndexProps = {
   posts: PostType[];
@@ -80,20 +81,46 @@ function Landing(props: IndexProps) {
         <title>{section.name}</title>
       </Head>
       <Container>
-        {section.name && (
-          <IntroImg
-            featureImage={backgroundImage.feature_image}
-            section={section}
-          />
+        <IntroImg
+          featureImage={backgroundImage.feature_image}
+          section={section}
+        />
+        <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 0 }, mb: 4 }}>
+          <Intro section={section} />
+        </Box>
+        {featuredPost && (
+          <Box sx={{ maxWidth: 1200, mx: "auto", mb: 8 }}>
+            <HeroPost
+              title={featuredPost.title}
+              coverImage={featuredPost.feature_image}
+              date={featuredPost.published_at}
+              author={featuredPost.primary_author}
+              slug={featuredPost.slug}
+            />
+          </Box>
         )}
-        {featuredPost && <FeaturedIntro post={featuredPost} />}
-        {displayedPosts.length > 0 && <MoreStories posts={displayedPosts} />}
+        {displayedPosts.length > 0 && (
+          <Box sx={{ maxWidth: 1200, mx: "auto", mt: 8 }}>
+            <MoreStories posts={displayedPosts} />
+          </Box>
+        )}
         {displayShowMoreButton && (
           <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
             <Button
-              variant="contained"
+              variant="text"
               onClick={handleLoadMore}
-              sx={{ px: 4, py: 1.5 }}
+              sx={{
+                fontWeight: 600,
+                fontSize: "1.1rem",
+                color: "#222",
+                textTransform: "none",
+                px: 2,
+                py: 1,
+                "&:hover": {
+                  textDecoration: "underline",
+                  background: "none",
+                },
+              }}
             >
               Voir plus
             </Button>

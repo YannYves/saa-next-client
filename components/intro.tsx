@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Section } from "@/lib/sections";
 
 type IntroProps = {
@@ -7,25 +7,23 @@ type IntroProps = {
 
 const Intro = ({ section }: IntroProps) => {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          position: "relative",
-          top: -100,
-          backgroundColor: "white",
-          borderRadius: 2,
-          p: 4,
-          boxShadow: 3,
-        }}
+    <Box>
+      <Typography
+        variant="h3"
+        component="h1"
+        fontWeight={700}
+        sx={{ mb: 1, letterSpacing: "-0.02em", lineHeight: 1.1 }}
       >
-        <Typography variant="h4" component="h1" gutterBottom>
-          {section.name}
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {section.description}
-        </Typography>
-      </Box>
-    </Container>
+        {section.name}
+      </Typography>
+      <Typography
+        variant="subtitle1"
+        color="text.secondary"
+        sx={{ fontSize: { xs: "1rem", md: "1.15rem" }, fontWeight: 400 }}
+      >
+        {section.description}
+      </Typography>
+    </Box>
   );
 };
 

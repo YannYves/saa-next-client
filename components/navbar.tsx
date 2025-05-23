@@ -59,8 +59,9 @@ export default function DrawerAppBar() {
         color="transparent"
         component="nav"
         sx={{
-          color: "#fff",
-          border: 0,
+          backgroundColor: "#fff",
+          color: "#222",
+          borderBottom: "1px solid #eee",
         }}
         elevation={0}
       >

@@ -1,6 +1,5 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
-import Intro from "./intro";
 import { Section } from "@/lib/sections";
 
 type IntroImgProps = {
@@ -8,23 +7,31 @@ type IntroImgProps = {
   section: Section;
 };
 
-const IntroImg = ({ featureImage, section }: IntroImgProps) => {
+const IntroImg = ({ featureImage }: IntroImgProps) => {
   return (
-    <Box sx={{ height: "70vh" }}>
-      <Paper
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 1200,
+        mx: "auto",
+        height: { xs: "38vw", md: "340px" },
+        minHeight: 180,
+        borderRadius: 2,
+        overflow: "hidden",
+        mb: { xs: 2, md: 4 },
+      }}
+    >
+      <Box
         component="img"
+        src={featureImage}
+        alt="Section hero"
         sx={{
-          backgroundImage: `url(${featureImage})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          marginTop: -20,
-          height: "70vh",
-          objectFit: "cover",
           width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          display: "block",
         }}
       />
-      <Intro section={section} />
     </Box>
   );
 };
