@@ -55,13 +55,14 @@ export async function fetchPosts(section?: string) {
       : process.env.GOOGLE_SHEET_ID_PROD;
 
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
-  // Use the section as the tab name, default to 'Feuille1' if not provided
-  const tabName = section || "acceuil";
+  // Use the section as the tab name, default to 'accueil' if not provided
+  const tabName = section || "accueil";
   // Adjust range to cover all columns (A2:L for 12 columns)
   const range = `${tabName}!A2:L`;
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
   const res = await fetch(url);
+  console.log(url, "url");
   const data = await res.json();
 
   if (!res.ok || !data.values) {

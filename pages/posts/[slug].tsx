@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { mockPosts } from "@/lib/mock-posts";
+import { fetchPosts } from "@/lib/fetchPost";
 import PostHeader from "@/components/post-header";
 import PostBody from "@/components/post-body";
 import Layout from "@/components/layout";
@@ -34,20 +34,24 @@ const Post = ({ post }: PostProps) => {
 };
 
 export async function getStaticPaths() {
-  // Get all possible paths from mock posts
-  const paths = mockPosts.map((post) => ({
+  // Get all posts from all sections
+  const posts = await fetchPosts();
+  
+  // Get all possible paths from posts
+  const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
 
   return {
     paths,
-    fallback: false, // Return 404 for non-existent paths
+    fallback: 'blocking', // Enable ISR
   };
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-  // Find the post that matches the slug
-  const post = mockPosts.find((p) => p.slug === params.slug);
+  // Get all posts and find the one that matches the slug
+  const posts = await fetchPosts();
+  const post = posts.find((p) => p.slug === params.slug);
 
   if (!post) {
     return {
@@ -59,6 +63,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     props: {
       post,
     },
+    revalidate: 60, // Revalidate every minute
   };
 }
 
