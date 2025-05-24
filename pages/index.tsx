@@ -2,7 +2,7 @@ import Landing from "@/components/landing";
 import { BackgroundImage, PostType } from "interfaces";
 import { mockBackgroundImage } from "@/lib/mock-background-image";
 import { getSectionBySlug } from "@/lib/sections";
-import { mockPosts } from "@/lib/mock-posts";
+import { fetchPosts } from "@/lib/fetchPost";
 
 type IndexProps = {
   posts: PostType[];
@@ -32,7 +32,7 @@ const Index = (props: IndexProps) => {
 // This function runs only on @the server side
 export async function getStaticProps() {
   const section = getSectionBySlug("accueil");
-  const posts = mockPosts.filter((post) => post.section === "accueil");
+  const posts = await fetchPosts("accueil");
 
   return {
     props: {
