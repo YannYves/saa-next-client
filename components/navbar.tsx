@@ -59,9 +59,11 @@ export default function DrawerAppBar() {
         color="transparent"
         component="nav"
         sx={{
-          backgroundColor: "#fff",
-          color: "#222",
-          borderBottom: "1px solid #eee",
+          backgroundColor: "#FAFAFA",
+          color: "#374151",
+          borderBottom: "1px solid #EAEAEA",
+          boxShadow: "none",
+          py: { xs: 1, sm: 1.5 },
         }}
         elevation={0}
       >
@@ -78,7 +80,14 @@ export default function DrawerAppBar() {
 
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/">
-              <Typography variant="h5" fontWeight={550}>
+              <Typography
+                variant="h5"
+                fontWeight={500}
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.3rem", md: "1.5rem" },
+                  letterSpacing: "-0.01em",
+                }}
+              >
                 Accueil
               </Typography>
             </Link>
@@ -92,10 +101,10 @@ export default function DrawerAppBar() {
                   <Link href={"/" + item.link}>
                     <Typography
                       variant="h5"
-                      fontWeight={550}
+                      fontWeight={400}
                       sx={{
-                        fontSize: { sm: "1rem", md: "1.4rem" },
-                        letterSpacing: "-0.025em",
+                        fontSize: { sm: "1rem", md: "1.15rem" },
+                        letterSpacing: "-0.01em",
                         textAlign: "center",
                       }}
                     >

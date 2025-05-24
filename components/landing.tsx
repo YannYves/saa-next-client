@@ -81,11 +81,21 @@ function Landing(props: IndexProps) {
         <title>{section.name}</title>
       </Head>
       <Container>
-        <IntroImg
-          featureImage={backgroundImage.feature_image}
-          section={section}
-        />
-        <Box sx={{ maxWidth: 1200, mx: "auto", px: { xs: 2, md: 0 }, mb: 4 }}>
+        <Box sx={{ display: { xs: "none", md: "block" } }}>
+          <IntroImg
+            featureImage={backgroundImage.feature_image}
+            section={section}
+          />
+        </Box>
+        <Box
+          sx={{
+            maxWidth: 1200,
+            mx: "auto",
+            px: { xs: 2, md: 0 },
+            mb: 4,
+            mt: { xs: 4, md: 0 },
+          }}
+        >
           <Intro section={section} />
         </Box>
         {featuredPost && (

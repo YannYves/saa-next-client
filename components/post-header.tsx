@@ -41,10 +41,10 @@ const PostHeader = (props: PostHeaderProps) => {
       </div>
 
       <div className="max-w-3xl mx-auto">
-        <div className="block  mb-3 sm:mb-4 lg:mb-6">
+        <div className="block mb-3 sm:mb-4 lg:mb-6 text-left md:text-center ml-4 md:ml-0">
           <Avatar name={safeAuthorName} picture={avatarPicture} />
         </div>
-        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal">
+        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal text-left md:text-center ml-4 md:ml-0">
           <Date dateString={date} />
         </div>
       </div>
