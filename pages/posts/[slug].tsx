@@ -36,7 +36,7 @@ const Post = ({ post }: PostProps) => {
 export async function getStaticPaths() {
   // Get all posts from all sections
   const posts = await fetchPosts();
-  
+
   // Get all possible paths from posts
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
@@ -44,7 +44,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: 'blocking', // Enable ISR
+    fallback: "blocking", // Enable ISR
   };
 }
 

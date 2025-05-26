@@ -20,15 +20,15 @@ export const SECTIONS: Section[] = [
     description: "Qui sommes-nous, nos ruchers et comment nous soutenir",
   },
   {
-    id: "blog-ressources",
+    id: "ressources",
     name: "Blog & ressources",
-    slug: "blog-ressources",
+    slug: "ressources",
     description: "Articles, guides pratiques et liens utiles sur l'apiculture",
   },
   {
-    id: "contact-evenements",
+    id: "evenements",
     name: "Contact & événements",
-    slug: "contact-evenements",
+    slug: "evenements",
     description: "Agenda des événements et formulaire de contact",
   },
 ];

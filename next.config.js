@@ -9,6 +9,7 @@ module.exports = {
       "avatar.url1",
       "avatar.url2",
       "avatar.url3",
+      "loremflickr.com",
     ],
   },
 };
