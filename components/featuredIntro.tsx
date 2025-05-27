@@ -12,7 +12,7 @@ const FeaturedIntro = ({ post }: FeaturedIntroProps) => {
         {post.title}
       </Typography>
       <Typography variant="body1" color="text.secondary">
-        {post.custom_excerpt}
+        {/* Removed custom_excerpt as it is no longer in PostType */}
       </Typography>
     </Box>
   );
