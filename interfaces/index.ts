@@ -26,7 +26,7 @@ export type PostType = {
   id: string;
   title: string;
   slug: string;
-  html: string;
+  content: string;
   feature_image: string;
   featured: boolean;
   published_at: string;

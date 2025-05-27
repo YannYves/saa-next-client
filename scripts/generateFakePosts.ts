@@ -165,17 +165,3 @@ const postsBySection = posts.reduce((acc: any, post: any) => {
   acc[post.section].push(post);
   return acc;
 }, {});
-
-// Print the data in a format ready to be copied to Google Sheets
-console.log("=== Posts by Section ===");
-Object.entries(postsBySection).forEach(
-  ([section, sectionPosts]: [string, any[]]) => {
-    console.log(`\n=== ${section.toUpperCase()} ===`);
-    console.log(
-      "ID\tTitle\tSlug\tCustom Excerpt\tPublished At\tFeature Image\tHTML\tFeatured\tAuthor Name\tAuthor Profile Image\tSection\tTags"
-    );
-    sectionPosts.forEach((post) => {
-      console.log(convertPostToSheetRow(post).join("\t"));
-    });
-  }
-);

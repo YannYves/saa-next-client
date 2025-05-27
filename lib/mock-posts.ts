@@ -1,5 +1,11 @@
 import { Section } from "./sections";
 
+export type MockAuthor = {
+  id: string;
+  name: string;
+  profile_image: string;
+};
+
 export type MockPost = {
   id: string;
   title: string;
@@ -9,41 +15,56 @@ export type MockPost = {
   feature_image: string;
   html: string;
   featured: boolean;
-  primary_author: {
-    name: string;
-    profile_image: string;
-  };
+  author_id: string;
   section: string;
 };
 
+// Mock authors
+export const mockAuthors: MockAuthor[] = [
+  {
+    id: "1",
+    name: "Marie Schmidt",
+    profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marie",
+  },
+  {
+    id: "2",
+    name: "Jean-Pierre Martin",
+    profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jean",
+  },
+  {
+    id: "3",
+    name: "Sophie Dubois",
+    profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie",
+  },
+  {
+    id: "4",
+    name: "Pierre Durand",
+    profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pierre",
+  },
+];
+
+// Mock posts
 export const mockPosts: MockPost[] = [
   {
     id: "mock-1",
-    title: "L'apiculture en Alsace : Une tradition ancestrale",
-    slug: "apiculture-alsace-tradition",
-    custom_excerpt:
-      "Découvrez l'histoire et les traditions de l'apiculture en Alsace.",
+    title: "L'apiculteur bénévole : pourquoi pas vous ?",
+    slug: "apiculteur-benevole-pourquoi-pas-vous",
+    custom_excerpt: "Découvrez comment devenir apiculteur bénévole.",
     published_at: "2024-03-15T00:00:00.000Z",
     feature_image:
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `
-      <p>L'apiculture en Alsace est une tradition qui remonte à plusieurs siècles. Les apiculteurs alsaciens ont développé des techniques uniques adaptées au climat et à la flore locale.</p>
-      <h2>Les spécificités de l'apiculture alsacienne</h2>
-      <p>La région bénéficie d'une grande diversité florale, permettant la production de miels variés et de qualité exceptionnelle. Les forêts vosgiennes, les vergers et les cultures locales offrent aux abeilles une nourriture abondante et diversifiée.</p>
-      <h2>Les défis actuels</h2>
-      <p>Comme partout en France, les apiculteurs alsaciens font face à plusieurs défis :</p>
+      <p>Devenir apiculteur bénévole est une excellente façon de contribuer à la préservation des abeilles.</p>
+      <h2>Comment commencer ?</h2>
+      <p>Voici les étapes pour devenir apiculteur bénévole :</p>
       <ul>
-        <li>Le changement climatique</li>
-        <li>Les pesticides</li>
-        <li>Les parasites comme le varroa</li>
+        <li>Participer à une formation</li>
+        <li>Rejoindre un rucher école</li>
+        <li>Accompagner un apiculteur expérimenté</li>
       </ul>
     `,
     featured: true,
-    primary_author: {
-      name: "Jean Dupont",
-      profile_image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "accueil",
   },
   {
@@ -66,15 +87,37 @@ export const mockPosts: MockPost[] = [
       </ul>
     `,
     featured: true,
-    primary_author: {
-      name: "Marie Schmidt",
-      profile_image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "association",
   },
   {
     id: "mock-3",
+    title: "L'apiculture urbaine : une tendance en plein essor",
+    slug: "apiculture-urbaine-tendance",
+    custom_excerpt: "L'apiculture en ville, une pratique en développement.",
+    published_at: "2024-03-01T00:00:00.000Z",
+    feature_image:
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
+    html: `<p>L'apiculture urbaine connaît un essor important dans les grandes villes.</p>`,
+    featured: false,
+    author_id: "3",
+    section: "actualites",
+  },
+  {
+    id: "mock-4",
+    title: "Le miel de printemps : une douceur précoce",
+    slug: "miel-printemps-douceur",
+    custom_excerpt: "Les caractéristiques du miel de printemps.",
+    published_at: "2024-02-29T00:00:00.000Z",
+    feature_image:
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
+    html: `<p>Le miel de printemps est le premier miel de la saison apicole.</p>`,
+    featured: false,
+    author_id: "4",
+    section: "actualites",
+  },
+  {
+    id: "mock-5",
     title: "Les différentes variétés de miel en Alsace",
     slug: "varietes-miel-alsace",
     custom_excerpt:
@@ -90,15 +133,11 @@ export const mockPosts: MockPost[] = [
       <p>Plus foncés et plus intenses, ils proviennent souvent du tilleul et des fleurs sauvages.</p>
     `,
     featured: true,
-    primary_author: {
-      name: "Pierre Weber",
-      profile_image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "blog-ressources",
   },
   {
-    id: "mock-4",
+    id: "mock-6",
     title: "La santé des abeilles : un enjeu majeur",
     slug: "sante-abeilles-enjeu",
     custom_excerpt: "Les défis sanitaires dans l'apiculture moderne.",
@@ -107,15 +146,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>La santé des abeilles est un enjeu crucial pour l'apiculture et l'environnement.</p>`,
     featured: false,
-    primary_author: {
-      name: "Sophie Martin",
-      profile_image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "blog-ressources",
   },
   {
-    id: "mock-5",
+    id: "mock-7",
     title: "Les techniques d'élevage des reines",
     slug: "techniques-elevage-reines",
     custom_excerpt: "Guide pratique pour l'élevage des reines d'abeilles.",
@@ -124,15 +159,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>L'élevage des reines est une technique essentielle pour maintenir des colonies fortes.</p>`,
     featured: false,
-    primary_author: {
-      name: "Thomas Klein",
-      profile_image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "blog-ressources",
   },
   {
-    id: "mock-6",
+    id: "mock-8",
     title: "Le miel de sapin des Vosges",
     slug: "miel-sapin-vosges",
     custom_excerpt: "Un miel rare et précieux des forêts vosgiennes.",
@@ -141,15 +172,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de sapin est une spécialité rare et précieuse des Vosges.</p>`,
     featured: false,
-    primary_author: {
-      name: "Claire Dubois",
-      profile_image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "blog-ressources",
   },
   {
-    id: "mock-7",
+    id: "mock-9",
     title: "L'apithérapie : les bienfaits des produits de la ruche",
     slug: "apitherapie-bienfaits",
     custom_excerpt:
@@ -159,15 +186,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>L'apithérapie utilise les produits de la ruche pour leurs vertus thérapeutiques.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Michel Bernard",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "blog-ressources",
   },
   {
-    id: "mock-8",
+    id: "mock-10",
     title: "La pollinisation : un service écologique essentiel",
     slug: "pollinisation-service-ecologique",
     custom_excerpt: "Le rôle crucial des abeilles dans la pollinisation.",
@@ -176,15 +199,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Les abeilles jouent un rôle crucial dans la pollinisation des cultures.</p>`,
     featured: false,
-    primary_author: {
-      name: "Émilie Rousseau",
-      profile_image:
-        "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "blog-ressources",
   },
   {
-    id: "mock-9",
+    id: "mock-11",
     title: "Les ruches connectées : l'apiculture du futur",
     slug: "ruches-connectees-futur",
     custom_excerpt: "La technologie au service de l'apiculture moderne.",
@@ -193,15 +212,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Les ruches connectées révolutionnent la pratique de l'apiculture.</p>`,
     featured: false,
-    primary_author: {
-      name: "Lucas Meyer",
-      profile_image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "blog-ressources",
   },
   {
-    id: "mock-10",
+    id: "mock-12",
     title: "La propolis : l'antibiotique naturel",
     slug: "propolis-antibiotique-naturel",
     custom_excerpt: "Les propriétés médicinales de la propolis.",
@@ -210,15 +225,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>La propolis est un produit de la ruche aux propriétés médicinales remarquables.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Anne Petit",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "blog-ressources",
   },
   {
-    id: "mock-11",
+    id: "mock-13",
     title: "Le miel de tilleul : une douceur estivale",
     slug: "miel-tilleul-douceur",
     custom_excerpt: "Découvrez le miel de tilleul, une spécialité estivale.",
@@ -227,15 +238,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de tilleul est une spécialité estivale aux notes mentholées.</p>`,
     featured: false,
-    primary_author: {
-      name: "Julie Wagner",
-      profile_image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "blog-ressources",
   },
   {
-    id: "mock-12",
+    id: "mock-14",
     title: "La gelée royale : l'or de la ruche",
     slug: "gelee-royale-or-ruche",
     custom_excerpt: "Les secrets de la gelée royale et ses bienfaits.",
@@ -244,15 +251,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>La gelée royale est un produit rare et précieux de la ruche.</p>`,
     featured: false,
-    primary_author: {
-      name: "Marc Fischer",
-      profile_image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "blog-ressources",
   },
   {
-    id: "mock-13",
+    id: "mock-15",
     title: "Les abeilles sauvages : des pollinisateurs essentiels",
     slug: "abeilles-sauvages-pollinisateurs",
     custom_excerpt: "Le rôle des abeilles sauvages dans l'écosystème.",
@@ -261,15 +264,11 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Les abeilles sauvages sont des pollinisateurs essentiels pour la biodiversité.</p>`,
     featured: false,
-    primary_author: {
-      name: "Nathalie Muller",
-      profile_image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "actualites",
   },
   {
-    id: "mock-14",
+    id: "mock-16",
     title: "Le miel de châtaignier : un goût unique",
     slug: "miel-chataignier-gout",
     custom_excerpt: "Les caractéristiques du miel de châtaignier.",
@@ -278,45 +277,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de châtaignier se distingue par son goût unique et ses propriétés.</p>`,
     featured: false,
-    primary_author: {
-      name: "Philippe Klein",
-      profile_image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-    },
-    section: "actualites",
-  },
-  {
-    id: "mock-15",
-    title: "L'apiculture urbaine : une tendance en plein essor",
-    slug: "apiculture-urbaine-tendance",
-    custom_excerpt: "L'apiculture en ville, une pratique en développement.",
-    published_at: "2024-03-01T00:00:00.000Z",
-    feature_image:
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
-    html: `<p>L'apiculture urbaine connaît un essor important dans les grandes villes.</p>`,
-    featured: false,
-    primary_author: {
-      name: "Sophie Dubois",
-      profile_image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-    },
-    section: "actualites",
-  },
-  {
-    id: "mock-16",
-    title: "Le miel de printemps : une douceur précoce",
-    slug: "miel-printemps-douceur",
-    custom_excerpt: "Les caractéristiques du miel de printemps.",
-    published_at: "2024-02-29T00:00:00.000Z",
-    feature_image:
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
-    html: `<p>Le miel de printemps est le premier miel de la saison apicole.</p>`,
-    featured: false,
-    primary_author: {
-      name: "Jean-Pierre Martin",
-      profile_image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "actualites",
   },
   {
@@ -329,11 +290,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>La prévention et le traitement des maladies sont essentiels en apiculture.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Thomas Weber",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "actualites",
   },
   {
@@ -346,11 +303,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de montagne est réputé pour sa pureté et sa qualité.</p>`,
     featured: false,
-    primary_author: {
-      name: "Marie-Claire Schmidt",
-      profile_image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "actualites",
   },
   {
@@ -363,11 +316,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>L'apiculture biologique suit des principes stricts de respect de l'environnement.</p>`,
     featured: false,
-    primary_author: {
-      name: "Pierre Dubois",
-      profile_image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "actualites",
   },
   {
@@ -380,11 +329,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de lavande est apprécié pour son arôme caractéristique.</p>`,
     featured: false,
-    primary_author: {
-      name: "Claire Martin",
-      profile_image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "actualites",
   },
   {
@@ -397,11 +342,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le changement climatique affecte les populations d'abeilles et leur comportement.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Sophie Bernard",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "actualites",
   },
   {
@@ -414,11 +355,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de forêt est un produit naturel aux multiples vertus.</p>`,
     featured: false,
-    primary_author: {
-      name: "Lucas Schmidt",
-      profile_image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "actualites",
   },
   {
@@ -431,11 +368,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>L'Alsace possède une longue tradition apicole.</p>`,
     featured: false,
-    primary_author: {
-      name: "Jean-Marc Weber",
-      profile_image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "la-vie-du-syndicat",
   },
   {
@@ -448,11 +381,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de tournesol est une spécialité estivale.</p>`,
     featured: false,
-    primary_author: {
-      name: "Marie Dubois",
-      profile_image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "petites-annonces",
   },
   {
@@ -465,11 +394,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Les abeilles sont essentielles au maintien de la biodiversité.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Thomas Klein",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "actualites",
   },
   {
@@ -482,11 +407,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de romarin est apprécié pour son arôme caractéristique.</p>`,
     featured: false,
-    primary_author: {
-      name: "Claire Schmidt",
-      profile_image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "la-vie-du-syndicat",
   },
   {
@@ -499,11 +420,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>L'apiculture joue un rôle important dans la préservation de l'environnement.</p>`,
     featured: false,
-    primary_author: {
-      name: "Pierre Martin",
-      profile_image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "3",
     section: "actualites",
   },
   {
@@ -516,11 +433,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel de bruyère est réputé pour son goût unique.</p>`,
     featured: false,
-    primary_author: {
-      name: "Sophie Weber",
-      profile_image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "4",
     section: "actualites",
   },
   {
@@ -533,11 +446,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Les abeilles sont essentielles à la pollinisation des cultures.</p>`,
     featured: false,
-    primary_author: {
-      name: "Dr. Michel Dubois",
-      profile_image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "1",
     section: "actualites",
   },
   {
@@ -550,14 +459,10 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Le miel d'acacia est apprécié pour sa douceur et sa clarté.</p>`,
     featured: false,
-    primary_author: {
-      name: "Jean Schmidt",
-      profile_image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-    },
+    author_id: "2",
     section: "la-vie-du-syndicat",
   },
-  // Contact & événements featured post
+  // Events featured post
   {
     id: "mock-100",
     title: "Atelier découverte : Les abeilles en ville",
@@ -569,11 +474,7 @@ export const mockPosts: MockPost[] = [
       "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=2000&auto=format&fit=crop",
     html: `<p>Rejoignez-nous pour un atelier passionnant sur l'apiculture en ville, ouvert à tous !</p>`,
     featured: true,
-    primary_author: {
-      name: "Sophie Martin",
-      profile_image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
-    },
-    section: "contact-evenements",
+    author_id: "3",
+    section: "evenements",
   },
 ];

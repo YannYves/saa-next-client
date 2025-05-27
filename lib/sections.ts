@@ -27,9 +27,9 @@ export const SECTIONS: Section[] = [
   },
   {
     id: "evenements",
-    name: "Contact & événements",
+    name: "Événements",
     slug: "evenements",
-    description: "Agenda des événements et formulaire de contact",
+    description: "Agenda des événements et activités de l'association",
   },
 ];
 

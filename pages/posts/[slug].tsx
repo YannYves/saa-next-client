@@ -5,6 +5,7 @@ import PostBody from "@/components/post-body";
 import Layout from "@/components/layout";
 import { PostType } from "interfaces";
 import BackButton from "@/components/back-button";
+import { SECTIONS } from "@/lib/sections";
 
 type PostProps = {
   post: PostType;
@@ -27,44 +28,61 @@ const Post = ({ post }: PostProps) => {
           date={post.published_at}
           author={post.primary_author}
         />
-        <PostBody html={post.html} />
+        <PostBody content={post.content} />
       </article>
     </Layout>
   );
 };
 
 export async function getStaticPaths() {
-  // Get all posts from all sections
-  const posts = await fetchPosts();
+  let allPosts: PostType[] = [];
+
+  // Get posts from all defined sections
+  for (const section of SECTIONS) {
+    const posts = await fetchPosts(section.slug);
+    allPosts = allPosts.concat(posts);
+  }
 
   // Get all possible paths from posts
-  const paths = posts.map((post) => ({
+  const paths = allPosts.map((post) => ({
     params: { slug: post.slug },
   }));
 
   return {
     paths,
-    fallback: "blocking", // Enable ISR
+    fallback: true, // Changed to true to handle dynamic paths
   };
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-  // Get all posts and find the one that matches the slug
-  const posts = await fetchPosts();
-  const post = posts.find((p) => p.slug === params.slug);
+  try {
+    // Get posts from all sections
+    let allPosts: PostType[] = [];
+    for (const section of SECTIONS) {
+      const posts = await fetchPosts(section.slug);
+      allPosts = allPosts.concat(posts);
+    }
 
-  if (!post) {
+    // Find the post that matches the slug
+    const post = allPosts.find((p) => p.slug === params.slug);
+
+    if (!post) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true, // This will show the 404 page
+      props: {
+        post,
+      },
+      revalidate: 60, // Revalidate every minute
+    };
+  } catch (error) {
+    return {
+      notFound: true,
     };
   }
-
-  return {
-    props: {
-      post,
-    },
-    revalidate: 60, // Revalidate every minute
-  };
 }
 
 export default Post;

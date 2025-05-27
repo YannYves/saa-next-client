@@ -18,7 +18,7 @@ const drawerWidth = 240;
 const navItems = [
   { title: "L'association", link: "association" },
   { title: "Blog & ressources", link: "blog-ressources" },
-  { title: "Contact & événements", link: "contact-evenements" },
+  { title: "événements", link: "evenements" },
 ];
 
 export default function DrawerAppBar() {

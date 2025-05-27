@@ -7,7 +7,7 @@ import { useMediaQuery, useTheme, Box } from "@mui/material";
 
 const DEFAULT_AUTHOR = {
   name: "Mock Author",
-  profile_image: "https://placehold.co/100x100",
+  profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
 };
 
 type PostHeaderProps = {
@@ -21,7 +21,6 @@ const PostHeader = (props: PostHeaderProps) => {
   const { title, feature_image, date, author } = props;
   const avatarPicture = author?.profile_image || DEFAULT_AUTHOR.profile_image;
   const safeAuthorName = author?.name || DEFAULT_AUTHOR.name;
-  const theme = useTheme();
 
   return (
     <>
@@ -40,11 +39,11 @@ const PostHeader = (props: PostHeaderProps) => {
         </Box>
       </div>
 
-      <div className="max-w-3xl mx-auto">
-        <div className="block mb-3 sm:mb-4 lg:mb-6 text-left md:text-center ml-4 md:ml-0">
+      <div className="max-w-3xl mx-auto px-4 md:px-0">
+        <div className="block mb-3 sm:mb-4 lg:mb-6 text-left">
           <Avatar name={safeAuthorName} picture={avatarPicture} />
         </div>
-        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal text-left md:text-center ml-4 md:ml-0">
+        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal text-left">
           <Date dateString={date} />
         </div>
       </div>
