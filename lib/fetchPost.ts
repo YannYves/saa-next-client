@@ -1,6 +1,8 @@
 import { CleaningServices } from "@mui/icons-material";
 import { mockPosts } from "./mock-posts";
 import { marked } from "marked";
+import { google } from "googleapis";
+import { Section } from "./sections";
 
 // Author type definition
 export type Author = {
@@ -8,6 +10,37 @@ export type Author = {
   name: string;
   profile_image: string;
 };
+
+// Helper: get authorized Google Sheets client
+async function getSheetsClient() {
+  // Load the service account key from environment variable
+  const serviceAccountKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_BASE64;
+
+  if (!serviceAccountKey) {
+    throw new Error(
+      "Google Service Account key is not set in environment variables."
+    );
+  }
+
+  const credentials = JSON.parse(
+    Buffer.from(serviceAccountKey, "base64").toString()
+  );
+
+  const auth = new google.auth.JWT(
+    credentials.client_email,
+    null,
+    credentials.private_key.replace(/\n/g, "\n"), // Handle escaped newlines
+    ["https://www.googleapis.com/auth/spreadsheets.readonly"] // Read-only access
+  );
+
+  // Authorize the client
+  await auth.authorize();
+
+  return google.sheets({
+    version: "v4",
+    auth: auth,
+  });
+}
 
 // Helper: fetch authors from Google Sheet
 export async function fetchAuthors(): Promise<Author[]> {
@@ -26,26 +59,37 @@ export async function fetchAuthors(): Promise<Author[]> {
         name: "Jane Smith",
         profile_image: "https://example.com/profile2.jpg",
       },
+      {
+        id: "3",
+        name: "Mock Author",
+        profile_image:
+          "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
+      },
     ];
   }
+
+  const sheets = await getSheetsClient();
 
   const sheetId =
     source === "staging"
       ? process.env.GOOGLE_SHEET_ID_STAGING
       : process.env.GOOGLE_SHEET_ID_PROD;
 
-  const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
   const range = "authors!A2:C"; // Assuming columns: id, name, profile_image
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range: range,
+  });
 
-  if (!res.ok || !data.values) {
-    throw new Error("Failed to fetch authors from Google Sheet");
+  const data = response.data.values;
+
+  if (!data) {
+    console.warn("No data found for authors.");
+    return [];
   }
 
-  return data.values.map((row: string[]) => ({
+  return data.map((row: string[]) => ({
     id: row[0] || "",
     name: row[1] || "Anonymous",
     profile_image: row[2] || "",
@@ -126,25 +170,28 @@ export async function fetchPosts(section?: string) {
   const authors = await fetchAuthors();
 
   // Use Google Sheets as data source
+  const sheets = await getSheetsClient();
+
   const sheetId =
     source === "staging"
       ? process.env.GOOGLE_SHEET_ID_STAGING
       : process.env.GOOGLE_SHEET_ID_PROD;
 
-  const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
   const tabName = section || "accueil";
   const range = `${tabName}!A2:K`; // Reduced to 11 columns since we removed author details
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range: range,
+  });
 
-  if (!res.ok || !data.values) {
-    throw new Error("Failed to fetch posts from Google Sheet");
+  const data = response.data.values;
+
+  if (!data) {
+    console.warn(`No data found for section: ${tabName}`);
+    return [];
   }
 
-  const posts = data.values.map((row: string[]) =>
-    mapSheetRowToPost(row, authors)
-  );
+  const posts = data.map((row: string[]) => mapSheetRowToPost(row, authors));
   return posts;
 }
