@@ -93,14 +93,16 @@ export async function fetchAuthors(): Promise<Author[]> {
 }
 
 // Helper: generate a URL-friendly slug from a title
-function generateSlug(title: string): string {
-  return title
+function generateSlug(tabName: string, index: number): string {
+  // Use a combination of tab name and row index for a unique slug
+  // Sanitize the tab name for the slug
+  const cleanTabName = tabName
     .toLowerCase()
-    .normalize("NFD") // Normalize to decomposed form for handling accents
-    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
-    .replace(/[^a-z0-9]+/g, "-") // Replace any non-alphanumeric chars with hyphens
-    .replace(/^-+|-+$/g, "") // Remove leading/trailing hyphens
-    .replace(/-+/g, "-"); // Replace multiple hyphens with single hyphen
+    .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with hyphens
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+
+  // Combine tab name and index. Adding 2 because data starts from row 2 (index 1) in sheets.
+  return `${cleanTabName}-${index + 2}`; // Row index + 2 ( accounting for header and 0-based index)
 }
 
 // Helper: ensure valid date
@@ -119,9 +121,14 @@ function ensureValidDate(dateStr: string | undefined): string {
 }
 
 // Helper: map a row from GSheet to a post object
-function mapSheetRowToPost(row: string[], authors: Author[]) {
+function mapSheetRowToPost(
+  row: string[],
+  authors: Author[],
+  tabName: string,
+  index: number
+) {
   const [
-    id,
+    id, // We still keep the id from the sheet for data, but not for the slug
     title,
     published_at,
     feature_image,
@@ -138,9 +145,9 @@ function mapSheetRowToPost(row: string[], authors: Author[]) {
   };
 
   return {
-    id: id || "",
+    id: id || "", // Keep the id from the sheet data
     title: title || "",
-    slug: generateSlug(title || ""),
+    slug: generateSlug(tabName || "", index), // Use tabName and index for slug
     published_at: ensureValidDate(published_at),
     feature_image: feature_image || "",
     content: content || "",
@@ -195,6 +202,9 @@ export async function fetchPosts(section?: string) {
     return [];
   }
 
-  const posts = data.map((row: string[]) => mapSheetRowToPost(row, authors));
+  // Pass tabName and index to mapSheetRowToPost
+  const posts = data.map((row: string[], index: number) =>
+    mapSheetRowToPost(row, authors, tabName, index)
+  );
   return posts;
 }
