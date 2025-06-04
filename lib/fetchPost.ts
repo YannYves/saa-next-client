@@ -44,10 +44,13 @@ async function getSheetsClient() {
 
 // Helper: fetch authors from Google Sheet
 export async function fetchAuthors(): Promise<Author[]> {
-  const source = process.env.DATA_SOURCE || "mock";
+  // Use Google Sheets as data source
+  const sheets = await getSheetsClient();
 
-  if (source === "mock") {
-    // Return mock authors for development
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+
+  if (!sheetId) {
+    console.warn("GOOGLE_SHEET_ID is not set. Using mock authors.");
     return [
       {
         id: "1",
@@ -67,13 +70,6 @@ export async function fetchAuthors(): Promise<Author[]> {
       },
     ];
   }
-
-  const sheets = await getSheetsClient();
-
-  const sheetId =
-    source === "staging"
-      ? process.env.GOOGLE_SHEET_ID_STAGING
-      : process.env.GOOGLE_SHEET_ID_PROD;
 
   const range = "authors!A2:C"; // Assuming columns: id, name, profile_image
 
@@ -159,7 +155,19 @@ function mapSheetRowToPost(row: string[], authors: Author[]) {
 export async function fetchPosts(section?: string) {
   const source = process.env.DATA_SOURCE || "mock";
 
+  // If DATA_SOURCE is explicitly set to mock, use mock data
   if (source === "mock") {
+    if (section) {
+      return mockPosts.filter((post) => post.section === section);
+    }
+    return mockPosts;
+  }
+
+  // Otherwise, attempt to fetch from Google Sheets
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+
+  if (!sheetId) {
+    console.warn("GOOGLE_SHEET_ID is not set. Falling back to mock posts.");
     if (section) {
       return mockPosts.filter((post) => post.section === section);
     }
@@ -171,11 +179,6 @@ export async function fetchPosts(section?: string) {
 
   // Use Google Sheets as data source
   const sheets = await getSheetsClient();
-
-  const sheetId =
-    source === "staging"
-      ? process.env.GOOGLE_SHEET_ID_STAGING
-      : process.env.GOOGLE_SHEET_ID_PROD;
 
   const tabName = section || "accueil";
   const range = `${tabName}!A2:K`; // Reduced to 11 columns since we removed author details
