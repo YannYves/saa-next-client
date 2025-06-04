@@ -9,6 +9,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "source.unsplash.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
         hostname: "api.dicebear.com",
         pathname: "**",
       },
@@ -25,6 +30,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "collection.cloudinary.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
         pathname: "**",
       },
     ],
