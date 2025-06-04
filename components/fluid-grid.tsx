@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, GridSize, styled, useTheme } from "@mui/material";
+import { Grid, GridSize } from "@mui/material";
 import { PostType } from "interfaces";
 import PostPreview from "./post-preview";
 
@@ -8,35 +8,37 @@ type Props = {
   columnSizes: GridSize[];
 };
 
-const StyledGridItem = styled(Grid)(({ theme }) => ({
-  height: "100%",
-  [theme.breakpoints.up("sm")]: {
-    minHeight: 400,
-  },
-  [theme.breakpoints.up("md")]: {
-    minHeight: 500,
-  },
-}));
-
-const FluidGrid: React.FC<Props> = ({ posts, columnSizes }) => {
-  const theme = useTheme();
-
+export default function FluidGrid({ posts, columnSizes }: Props) {
   return (
-    <Grid container spacing={4} mb={4}>
+    <Grid container spacing={4} sx={{ mb: 4 }}>
       {posts.map((post, index) => (
-        <StyledGridItem item xs={12} sm={6} md={4} key={index} theme={theme}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          key={index}
+          sx={{
+            height: "100%",
+            minHeight: {
+              sm: 400,
+              md: 500,
+            },
+          }}
+        >
           <PostPreview
             key={post.id}
             title={post.title}
             coverImage={post.feature_image}
             date={post.published_at}
-            author={post.primary_author}
+            author={{
+              name: post.primary_author?.name || "Unknown Author",
+              picture: post.primary_author?.profile_image || "",
+            }}
             slug={post.slug}
           />
-        </StyledGridItem>
+        </Grid>
       ))}
     </Grid>
   );
-};
-
-export default FluidGrid;
+}

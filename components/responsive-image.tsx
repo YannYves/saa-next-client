@@ -1,5 +1,5 @@
-import React from "react";
-import { useTheme, useMediaQuery, styled } from "@mui/material";
+import { Box } from "@mui/material";
+import Image from "next/image";
 
 type Props = {
   src: string;
@@ -7,27 +7,29 @@ type Props = {
   isFeatured: boolean;
 };
 
-const ResponsiveImage: React.FC<Props> = ({ src, alt, isFeatured }) => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
-  const isLArgeScreen = useMediaQuery(theme.breakpoints.up("md"));
-
-  const StyledImage = styled("img")({
-    objectFit: "cover",
-    width: "100%",
-    maxHeight: isFeatured ? "600px" : "300px",
-  });
-
-  let imageSize = 400; // default size for large screens
-  if (isSmallScreen) {
-    imageSize = 200;
-  } else if (isMediumScreen) {
-    imageSize = 350;
-  } else if (isLArgeScreen) {
-    imageSize = 500;
-  }
-  return <StyledImage src={src} alt={alt} />;
-};
-
-export default ResponsiveImage;
+export default function ResponsiveImage({ src, alt, isFeatured }: Props) {
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        height: {
+          xs: isFeatured ? "300px" : "200px",
+          sm: isFeatured ? "400px" : "300px",
+          md: isFeatured ? "600px" : "400px",
+        },
+      }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        style={{
+          objectFit: "cover",
+        }}
+        priority={isFeatured}
+      />
+    </Box>
+  );
+}

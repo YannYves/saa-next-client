@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ResponsiveImage from "./responsive-image";
-import { styled, useTheme, useMediaQuery } from "@mui/material";
+import { Box } from "@mui/material";
 
 type CoverImageProps = {
   title: string;
@@ -10,29 +10,28 @@ type CoverImageProps = {
   isFeatured: boolean;
 };
 
-const StyledDiv = styled("div")(({ theme }) => ({
-  [theme.breakpoints.up("sm")]: {
-    margin: 0,
-  },
-}));
+export default function CoverImage({
+  title,
+  url,
+  slug,
+  isLink,
+  isFeatured,
+}: CoverImageProps) {
+  if (!url) return null;
 
-const CoverImage = (props: CoverImageProps) => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { title, url, slug, isLink, isFeatured } = props;
-
-  if (slug !== null && url !== null) {
-    return (
-      <StyledDiv sx={{ mx: isSmallScreen ? 2 : 0 }}>
-        {isLink ? (
-          <Link href={`/posts/${slug}`} aria-label={title}>
-            <ResponsiveImage src={url} alt={title} isFeatured={isFeatured} />
-          </Link>
-        ) : (
+  return (
+    <Box
+      sx={{
+        mx: { xs: 2, sm: 0 },
+      }}
+    >
+      {isLink && slug ? (
+        <Link href={`/posts/${slug}`} aria-label={title}>
           <ResponsiveImage src={url} alt={title} isFeatured={isFeatured} />
-        )}
-      </StyledDiv>
-    );
-  }
-};
-export default CoverImage;
+        </Link>
+      ) : (
+        <ResponsiveImage src={url} alt={title} isFeatured={isFeatured} />
+      )}
+    </Box>
+  );
+}

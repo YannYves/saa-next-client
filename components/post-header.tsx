@@ -1,54 +1,70 @@
+import { Box } from "@mui/material";
 import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import PostTitle from "./post-title";
-import { AuthorType } from "interfaces";
-import { useMediaQuery, useTheme, Box } from "@mui/material";
 
-const DEFAULT_AUTHOR = {
-  name: "Mock Author",
-  profile_image: "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
-};
-
-type PostHeaderProps = {
+type Props = {
   title: string;
   feature_image: string;
   date: string;
-  author: AuthorType;
+  author: {
+    name: string;
+    profile_image: string;
+  };
 };
 
-const PostHeader = (props: PostHeaderProps) => {
-  const { title, feature_image, date, author } = props;
-  const avatarPicture = author?.profile_image || DEFAULT_AUTHOR.profile_image;
-  const safeAuthorName = author?.name || DEFAULT_AUTHOR.name;
-
+export default function PostHeader({
+  title,
+  feature_image,
+  date,
+  author,
+}: Props) {
   return (
-    <>
-      <div className="mb-8 md:mb-16 sm:mx-0">
-        <div className="flex flex-col items-center content-center mb-1 sm:mb-4 lg:mb-6">
-          <PostTitle>{title}</PostTitle>
-        </div>
-
-        <Box maxWidth="lg" sx={{ margin: " 0 auto" }}>
-          <CoverImage
-            title={title}
-            url={feature_image}
-            isLink={false}
-            isFeatured={true}
-          />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        mb: { xs: 0.5, sm: 2, lg: 3 },
+      }}
+    >
+      <PostTitle title={title} />
+      <Box
+        sx={{
+          maxWidth: "48rem",
+          mx: "auto",
+          px: { xs: 2, md: 0 },
+        }}
+      >
+        <Box
+          sx={{
+            display: "block",
+            mb: { xs: 1.5, sm: 2, lg: 3 },
+            textAlign: "left",
+          }}
+        >
+          <Avatar name={author.name} profile_image={author.profile_image} />
         </Box>
-      </div>
-
-      <div className="max-w-3xl mx-auto px-4 md:px-0">
-        <div className="block mb-3 sm:mb-4 lg:mb-6 text-left">
-          <Avatar name={safeAuthorName} picture={avatarPicture} />
-        </div>
-        <div className="mb-6 text-sm sm:text-base md:text-lg font-normal text-left">
+        <Box
+          sx={{
+            mb: 3,
+            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+            fontWeight: "normal",
+            textAlign: "left",
+          }}
+        >
           <Date dateString={date} />
-        </div>
-      </div>
-    </>
+        </Box>
+      </Box>
+      <Box sx={{ width: "100%", mb: { xs: 3, sm: 4, lg: 6 } }}>
+        <CoverImage
+          title={title}
+          url={feature_image}
+          isLink={false}
+          isFeatured={true}
+        />
+      </Box>
+    </Box>
   );
-};
-
-export default PostHeader;
+}

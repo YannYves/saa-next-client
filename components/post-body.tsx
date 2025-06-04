@@ -1,23 +1,39 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-type PostBodyProps = {
+type Props = {
   content: string;
 };
 
-const PostBody = (props: PostBodyProps) => {
-  const { content } = props;
-
+export default function PostBody({ content }: Props) {
   return (
-    <div className="max-w-3xl mx-auto md:text-lg lg:text-2xl px-4 py-4 sm:px-0 sm:py-0 rounded-lg bg-white">
+    <Box
+      sx={{
+        maxWidth: "48rem",
+        mx: "auto",
+        fontSize: { md: "1.125rem", lg: "1.5rem" },
+        px: { xs: 2, sm: 0 },
+        py: { xs: 2, sm: 0 },
+        borderRadius: 1,
+        bgcolor: "background.paper",
+      }}
+    >
       <Typography
-        variant="body1"
         component="div"
-        sx={{ whiteSpace: "pre-wrap" }}
-      >
-        {content}
-      </Typography>
-    </div>
+        dangerouslySetInnerHTML={{ __html: content }}
+        sx={{
+          "& img": {
+            maxWidth: "100%",
+            height: "auto",
+          },
+          "& a": {
+            color: "primary.main",
+            textDecoration: "none",
+            "&:hover": {
+              textDecoration: "underline",
+            },
+          },
+        }}
+      />
+    </Box>
   );
-};
-
-export default PostBody;
+}

@@ -1,15 +1,24 @@
-import { ReactNode } from "react";
+import { Typography } from "@mui/material";
 
-type PostTitleProps = {
-  children: ReactNode;
+type Props = {
+  title: string;
 };
 
-const PostTitle = (props: PostTitleProps) => {
-  const { children } = props;
+export default function PostTitle({ title }: Props) {
   return (
-    <h1 className="text-2xl sm:text-3xl md:text-5xl tracking-tighter font-bold leading-tight md:leading-none mb-6 md:mb-12 text-left md:text-center ml-4 md:ml-0">
-      {children}
-    </h1>
+    <Typography
+      variant="h1"
+      sx={{
+        fontSize: { xs: "1.5rem", sm: "1.875rem", md: "3rem" },
+        letterSpacing: "-0.025em",
+        fontWeight: "bold",
+        lineHeight: { xs: 1.25, md: 1 },
+        mb: { xs: 3, md: 6 },
+        textAlign: { xs: "left", md: "center" },
+        ml: { xs: 2, md: 0 },
+      }}
+    >
+      {title}
+    </Typography>
   );
-};
-export default PostTitle;
+}

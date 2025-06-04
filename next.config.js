@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: "res.cloudinary.com", // Assuming Cloudinary uses this hostname
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "collection.cloudinary.com",
+        pathname: "**",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
