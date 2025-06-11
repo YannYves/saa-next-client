@@ -1,6 +1,3 @@
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build]
   command = "npm run build"
   publish = ".next"
@@ -27,3 +24,9 @@
 [context.deploy-preview]
   command = "npm run build"
   environment = { DATA_SOURCE = "staging" } 
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
