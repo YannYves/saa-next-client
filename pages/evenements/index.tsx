@@ -2,7 +2,7 @@ import Landing from "@/components/landing";
 import { BackgroundImage, PostType } from "interfaces";
 import { mockBackgroundImage } from "@/lib/mock-background-image";
 import { getSectionBySlug } from "@/lib/sections";
-import { fetchPosts } from "@/lib/fetchPost";
+import { fetchSectionData } from "@/lib/fetchPost";
 import { Section } from "@/lib/sections";
 
 type IndexProps = {
@@ -27,12 +27,12 @@ const Index = (props: IndexProps) => {
 
 export async function getStaticProps() {
   const section = getSectionBySlug("evenements");
-  const posts = await fetchPosts("evenements");
+  const { posts, backgroundImage } = await fetchSectionData("evenements");
 
   return {
     props: {
       posts,
-      backgroundImage: mockBackgroundImage,
+      backgroundImage: backgroundImage || mockBackgroundImage,
       section,
     },
     revalidate: 60, // Revalidate every minute

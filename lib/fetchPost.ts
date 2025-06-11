@@ -179,55 +179,50 @@ function mapSheetRowToPostObj(
   };
 }
 
-export async function fetchPosts(section?: string) {
+// Fetch section data including posts and background image from settings row
+export async function fetchSectionData(section?: string) {
   const source = process.env.DATA_SOURCE || "mock";
 
-  // If DATA_SOURCE is explicitly set to mock, use mock data
   if (source === "mock") {
-    if (section) {
-      return mockPosts.filter((post) => post.section === section);
-    }
-    return mockPosts;
+    // Fallback: use mock data and a mock background image
+    return {
+      posts: mockPosts.filter((post) => !section || post.section === section),
+      backgroundImage: undefined,
+    };
   }
 
-  // Otherwise, attempt to fetch from Google Sheets
   const sheetId = process.env.GOOGLE_SHEET_ID;
-
   if (!sheetId) {
-    console.warn("GOOGLE_SHEET_ID is not set. Falling back to mock posts.");
-    if (section) {
-      return mockPosts.filter((post) => post.section === section);
-    }
-    return mockPosts;
+    return {
+      posts: mockPosts.filter((post) => !section || post.section === section),
+      backgroundImage: undefined,
+    };
   }
 
-  // Fetch authors first
   const authors = await fetchAuthors();
-
-  // Use Google Sheets as data source
   const sheets = await getSheetsClient();
-
   const tabName = section || "accueil";
-  const range = `${tabName}!A1:K`; // Start from row 1 to get headers
-
+  const range = `${tabName}!A1:K`;
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
     range: range,
   });
-
   const data = response.data.values;
-
-  if (!data || data.length < 2) {
-    console.warn(`No data found for section: ${tabName}`);
-    return [];
+  if (!data || data.length < 3) {
+    return { posts: [], backgroundImage: undefined };
   }
-
   const headers = data[0].map((h: string) => h.trim());
-  const rows = data.slice(1);
+  const settingsRow = data[1];
+  const rows = data.slice(2); // skip header and settings row
 
-  // Map each row to an object using headers, then to a post
+  // Get background_image from settings row (if present)
+  const bgImgIdx = headers.indexOf("background_image");
+  const backgroundImage =
+    bgImgIdx !== -1 ? settingsRow[bgImgIdx] || undefined : undefined;
+
+  // Map posts (skip settings row)
   const posts = rows.map((row: string[], index: number) =>
     mapSheetRowToPostObj(mapRowToObject(row, headers), authors, tabName, index)
   );
-  return posts;
+  return { posts, backgroundImage };
 }

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { fetchPosts } from "@/lib/fetchPost";
+import { fetchSectionData } from "@/lib/fetchPost";
 import PostHeader from "@/components/post-header";
 import PostBody from "@/components/post-body";
 import Layout from "@/components/layout";
@@ -39,7 +39,7 @@ export async function getStaticPaths() {
 
   // Get posts from all defined sections
   for (const section of SECTIONS) {
-    const posts = await fetchPosts(section.slug);
+    const { posts } = await fetchSectionData(section.slug);
     allPosts = allPosts.concat(posts);
   }
 
@@ -59,7 +59,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     // Get posts from all sections
     let allPosts: PostType[] = [];
     for (const section of SECTIONS) {
-      const posts = await fetchPosts(section.slug);
+      const { posts } = await fetchSectionData(section.slug);
       allPosts = allPosts.concat(posts);
     }
 

@@ -58,11 +58,7 @@ export type TagType = {
   url: string;
 };
 
-export type BackgroundImage = {
-  title: string;
-  feature_image: string;
-  html: string;
-};
+export type BackgroundImage = string;
 
 export type HeaderType = {
   attributes: {
