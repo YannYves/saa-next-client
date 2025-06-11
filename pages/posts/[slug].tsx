@@ -48,8 +48,6 @@ export async function getStaticPaths() {
     params: { slug: post.slug },
   }));
 
-  console.log("Generating static paths:", paths);
-
   return {
     paths,
     fallback: true, // Changed to true to handle dynamic paths
@@ -67,8 +65,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
     // Find the post that matches the slug
     const post = allPosts.find((p) => p.slug === params.slug);
-
-    console.log("Generating static props:", post);
 
     if (!post) {
       return {

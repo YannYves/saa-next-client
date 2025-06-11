@@ -1,8 +1,7 @@
 import { CleaningServices } from "@mui/icons-material";
 import { mockPosts } from "./mock-posts";
-import { marked } from "marked";
 import { google } from "googleapis";
-import { Section } from "./sections";
+import { v4 as uuidv4 } from "uuid";
 
 // Author type definition
 export type Author = {
@@ -92,6 +91,11 @@ export async function fetchAuthors(): Promise<Author[]> {
   }));
 }
 
+// Helper: generate a unique ID for a post
+function generatePostId(tabName: string): string {
+  return `${tabName}-${uuidv4()}`;
+}
+
 // Helper: generate a URL-friendly slug from a title
 function generateSlug(tabName: string, index: number): string {
   // Use a combination of tab name and row index for a unique slug
@@ -120,38 +124,54 @@ function ensureValidDate(dateStr: string | undefined): string {
   }
 }
 
-// Helper: map a row from GSheet to a post object
-function mapSheetRowToPost(
+// Helper: ensure content is properly formatted as HTML
+function ensureHtmlContent(content: string): string {
+  if (!content) return "";
+
+  // If the content doesn't contain any HTML tags, wrap it in a paragraph
+  if (!content.includes("<") && !content.includes(">")) {
+    return `<p>${content}</p>`;
+  }
+
+  return content;
+}
+
+// Helper: map a row array to an object using headers
+function mapRowToObject(
   row: string[],
+  headers: string[]
+): Record<string, string> {
+  const obj: Record<string, string> = {};
+  headers.forEach((header, i) => {
+    obj[header] = row[i] || "";
+  });
+  return obj;
+}
+
+// Helper: map a row object from GSheet to a post object
+function mapSheetRowToPostObj(
+  rowObj: Record<string, string>,
   authors: Author[],
   tabName: string,
   index: number
 ) {
-  const [
-    id, // We still keep the id from the sheet for data, but not for the slug
-    title,
-    published_at,
-    feature_image,
-    content,
-    featured,
-    author_id, // Now we expect an author_id instead of author details
-  ] = row;
-
   // Find the author by ID
-  const author = authors.find((a) => a.id === author_id) || {
+  const author = authors.find((a) => a.id === rowObj["author_id"]) || {
     id: "",
     name: "Anonymous",
     profile_image: "",
   };
 
+  const postId = generatePostId(tabName);
+
   return {
-    id: id || "", // Keep the id from the sheet data
-    title: title || "",
-    slug: generateSlug(tabName || "", index), // Use tabName and index for slug
-    published_at: ensureValidDate(published_at),
-    feature_image: feature_image || "",
-    content: content || "",
-    featured: featured === "TRUE" || featured === "true",
+    id: postId,
+    title: rowObj["title"] || "",
+    slug: generateSlug(tabName, index),
+    published_at: ensureValidDate(rowObj["published_at"]),
+    feature_image: rowObj["feature_image"] || "",
+    content: ensureHtmlContent(rowObj["content"] || ""),
+    featured: rowObj["featured"] === "TRUE" || rowObj["featured"] === "true",
     primary_author: {
       name: author.name,
       profile_image: author.profile_image,
@@ -188,7 +208,7 @@ export async function fetchPosts(section?: string) {
   const sheets = await getSheetsClient();
 
   const tabName = section || "accueil";
-  const range = `${tabName}!A2:K`; // Reduced to 11 columns since we removed author details
+  const range = `${tabName}!A1:K`; // Start from row 1 to get headers
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
@@ -197,14 +217,17 @@ export async function fetchPosts(section?: string) {
 
   const data = response.data.values;
 
-  if (!data) {
+  if (!data || data.length < 2) {
     console.warn(`No data found for section: ${tabName}`);
     return [];
   }
 
-  // Pass tabName and index to mapSheetRowToPost
-  const posts = data.map((row: string[], index: number) =>
-    mapSheetRowToPost(row, authors, tabName, index)
+  const headers = data[0].map((h: string) => h.trim());
+  const rows = data.slice(1);
+
+  // Map each row to an object using headers, then to a post
+  const posts = rows.map((row: string[], index: number) =>
+    mapSheetRowToPostObj(mapRowToObject(row, headers), authors, tabName, index)
   );
   return posts;
 }

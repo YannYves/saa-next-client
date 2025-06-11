@@ -111,9 +111,16 @@ A crucial tab is likely the `authors` tab, which should contain author informati
 **Important Considerations for Content Creators:**
 
 - Each row in a content tab represents a single post.
-- The order of columns in your sheet tabs must match the expected data structure in `lib/fetchPost.ts`. The first column is expected to be a unique ID for internal linking/keys.
+- The order of columns in your sheet tabs must match the expected data structure in `lib/fetchPost.ts`. The columns should be in this order:
+  1. Title
+  2. Published Date
+  3. Feature Image URL
+  4. Content
+  5. Featured (TRUE/FALSE)
+  6. Author ID (references the authors tab)
 - The `id` column in the `authors` tab **must** contain unique values for each author. Using Google Sheets Data Validation to enforce uniqueness is highly recommended for this column.
 - The slug for each post is automatically generated based on the tab name and row number (e.g., `actualites-3` for the post on the 3rd data row of the 'actualites' tab), ensuring uniqueness for routing.
+- Post IDs are automatically generated using a combination of the section name and a UUID, so you don't need to manage IDs manually.
 
 ## Deployment to Netlify
 

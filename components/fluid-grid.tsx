@@ -17,7 +17,7 @@ export default function FluidGrid({ posts, columnSizes }: Props) {
           xs={12}
           sm={6}
           md={4}
-          key={index}
+          key={post.id}
           sx={{
             height: "100%",
             minHeight: {
