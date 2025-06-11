@@ -33,8 +33,6 @@ function Landing(props: IndexProps) {
   const [displayShowMoreButton, setDisplayShowMoreButton] = useState(false);
   const POSTS_PER_PAGE = 10;
 
-  console.log(backgroundImage, "backgroundImage ic");
-
   useEffect(() => {
     // Sort posts by date (newest first)
     const sortedPosts = [...posts].sort(
