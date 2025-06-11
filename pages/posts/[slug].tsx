@@ -50,7 +50,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true, // Changed to true to handle dynamic paths
+    fallback: false, // ✅ Required for full export
   };
 }
 
