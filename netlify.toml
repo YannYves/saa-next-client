@@ -3,7 +3,7 @@
   publish = "out"
 
 [build.environment]
- NODE_VERSION = "20"
+ NODE_VERSION = "18.19.1"
 
 # Staging environment (default)
 [context.staging]
@@ -25,3 +25,14 @@
   command = "npm run build"
   environment = { DATA_SOURCE = "staging" }
 
+[[redirects]]
+  from = "/posts/*"
+  to = "/posts/:splat/index.html"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/" 
+  to = "/index.html"
+  status = 200
+  force = false

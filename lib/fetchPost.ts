@@ -10,6 +10,11 @@ export type Author = {
   profile_image: string;
 };
 
+// Simple in-memory cache for fetched section data
+const sectionDataCache: {
+  [key: string]: { posts: any[]; backgroundImage: string | undefined };
+} = {};
+
 // Helper: get authorized Google Sheets client
 async function getSheetsClient() {
   // Load the service account key from environment variable
@@ -170,7 +175,7 @@ function mapSheetRowToPostObj(
     slug: generateSlug(tabName, index),
     published_at: ensureValidDate(rowObj["published_at"]),
     feature_image: rowObj["feature_image"] || "",
-    content: ensureHtmlContent(rowObj["content"] || ""),
+    content: rowObj["content"] || "", // Changed to avoid double-wrapping if already HTML
     featured: rowObj["featured"] === "TRUE" || rowObj["featured"] === "true",
     primary_author: {
       name: author.name,
@@ -181,48 +186,80 @@ function mapSheetRowToPostObj(
 
 // Fetch section data including posts and background image from settings row
 export async function fetchSectionData(section?: string) {
+  const tabName = section || "accueil";
+
+  // Check if data is already in cache
+  if (sectionDataCache[tabName]) {
+    return sectionDataCache[tabName];
+  }
+
   const source = process.env.DATA_SOURCE || "mock";
 
   if (source === "mock") {
-    // Fallback: use mock data and a mock background image
-    return {
+    const mockResult = {
       posts: mockPosts.filter((post) => !section || post.section === section),
       backgroundImage: undefined,
     };
+    sectionDataCache[tabName] = mockResult; // Cache mock data too
+    return mockResult;
   }
 
   const sheetId = process.env.GOOGLE_SHEET_ID;
+
   if (!sheetId) {
-    return {
+    console.warn("GOOGLE_SHEET_ID is not set. Using mock posts fallback.");
+    const mockResult = {
       posts: mockPosts.filter((post) => !section || post.section === section),
       backgroundImage: undefined,
     };
+    sectionDataCache[tabName] = mockResult; // Cache mock data too
+    return mockResult;
   }
 
-  const authors = await fetchAuthors();
-  const sheets = await getSheetsClient();
-  const tabName = section || "accueil";
-  const range = `${tabName}!A1:K`;
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: sheetId,
-    range: range,
-  });
-  const data = response.data.values;
-  if (!data || data.length < 3) {
-    return { posts: [], backgroundImage: undefined };
+  try {
+    const authors = await fetchAuthors();
+    const sheets = await getSheetsClient();
+    const range = `${tabName}!A1:K`;
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range: range,
+    });
+    const data = response.data.values;
+
+    if (!data || data.length < 3) {
+      const emptyResult = { posts: [], backgroundImage: undefined };
+      sectionDataCache[tabName] = emptyResult; // Cache empty result
+      return emptyResult;
+    }
+
+    const headers = data[0].map((h: string) => h.trim());
+    const settingsRow = data[1];
+    const rows = data.slice(2); // skip header and settings row
+
+    // Get background_image from settings row (if present)
+    const bgImgIdx = headers.indexOf("background_image");
+    const backgroundImage =
+      bgImgIdx !== -1 ? settingsRow[bgImgIdx] || undefined : undefined;
+
+    // Map posts (skip settings row)
+    const posts = rows.map((row: string[], index: number) => {
+      const mappedPost = mapSheetRowToPostObj(
+        mapRowToObject(row, headers),
+        authors,
+        tabName,
+        index
+      );
+      return mappedPost;
+    });
+
+    const result = { posts, backgroundImage };
+    sectionDataCache[tabName] = result; // Cache the fetched data
+    return result;
+  } catch (error) {
+    console.error(
+      `[fetchSectionData] Error fetching data for section ${section}:`,
+      error
+    );
+    throw error; // Re-throw the error to be caught by getStaticProps
   }
-  const headers = data[0].map((h: string) => h.trim());
-  const settingsRow = data[1];
-  const rows = data.slice(2); // skip header and settings row
-
-  // Get background_image from settings row (if present)
-  const bgImgIdx = headers.indexOf("background_image");
-  const backgroundImage =
-    bgImgIdx !== -1 ? settingsRow[bgImgIdx] || undefined : undefined;
-
-  // Map posts (skip settings row)
-  const posts = rows.map((row: string[], index: number) =>
-    mapSheetRowToPostObj(mapRowToObject(row, headers), authors, tabName, index)
-  );
-  return { posts, backgroundImage };
 }
