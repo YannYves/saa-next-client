@@ -38,3 +38,6 @@ next-env.d.ts
 # cli env
 .env.staging.local
 .env.production.local
+
+# npm cache
+.npm

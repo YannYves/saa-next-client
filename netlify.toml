@@ -1,9 +1,9 @@
 [build]
-  command = "npm run build && npm run export"
+  command = "npm run build"
   publish = "out"
 
 [build.environment]
-  NODE_VERSION = "20"
+ NODE_VERSION = "20"
 
 # Staging environment (default)
 [context.staging]
@@ -23,7 +23,5 @@
 # Deploy preview contexts
 [context.deploy-preview]
   command = "npm run build"
-  environment = { DATA_SOURCE = "staging" } 
+  environment = { DATA_SOURCE = "staging" }
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
