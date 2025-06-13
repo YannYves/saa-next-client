@@ -1,26 +1,26 @@
 [build]
-  command = "npm run build"
-  publish = ".next"
+  command = "npm run build && npm run export"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "20"
 
 # Staging environment (default)
 [context.staging]
-  command = "npm run build"
+  command = "npm run build && npm run export"
   environment = { DATA_SOURCE = "staging" }
 
 # Production environment
 [context.production]
-  command = "npm run build"
+  command = "npm run build && npm run export"
   environment = { DATA_SOURCE = "production" }
 
 # Branch deploy contexts
 [context.branch-deploy]
-  command = "npm run build"
+  command = "npm run build && npm run export"
   environment = { DATA_SOURCE = "staging" }
 
 # Deploy preview contexts
 [context.deploy-preview]
-  command = "npm run build"
+  command = "npm run build && npm run export"
   environment = { DATA_SOURCE = "staging" } 
