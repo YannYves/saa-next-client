@@ -48,12 +48,6 @@ export async function getStaticPaths() {
     params: { slug: post.slug },
   }));
 
-  // Temporarily log the generated paths to Netlify build logs
-  console.log(
-    "Generated paths in getStaticPaths:",
-    paths.map((p) => p.params.slug)
-  );
-
   return {
     paths,
     fallback: false, // ✅ Required for full export

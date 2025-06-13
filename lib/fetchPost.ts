@@ -182,9 +182,11 @@ function mapSheetRowToPostObj(
 // Fetch section data including posts and background image from settings row
 export async function fetchSectionData(section?: string) {
   const source = process.env.DATA_SOURCE || "mock";
+  console.log(`[fetchSectionData] Data source: ${source}`);
 
   if (source === "mock") {
     // Fallback: use mock data and a mock background image
+    console.log(`[fetchSectionData] Using mock data.`);
     return {
       posts: mockPosts.filter((post) => !section || post.section === section),
       backgroundImage: undefined,
@@ -192,37 +194,72 @@ export async function fetchSectionData(section?: string) {
   }
 
   const sheetId = process.env.GOOGLE_SHEET_ID;
+  console.log(
+    `[fetchSectionData] GOOGLE_SHEET_ID: ${sheetId ? "Set" : "Not Set"}`
+  );
+
   if (!sheetId) {
+    console.warn("GOOGLE_SHEET_ID is not set. Using mock posts fallback.");
     return {
       posts: mockPosts.filter((post) => !section || post.section === section),
       backgroundImage: undefined,
     };
   }
 
-  const authors = await fetchAuthors();
-  const sheets = await getSheetsClient();
-  const tabName = section || "accueil";
-  const range = `${tabName}!A1:K`;
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: sheetId,
-    range: range,
-  });
-  const data = response.data.values;
-  if (!data || data.length < 3) {
+  try {
+    const authors = await fetchAuthors();
+    const sheets = await getSheetsClient();
+    const tabName = section || "accueil";
+    console.log(`[fetchSectionData] Fetching data for tab: ${tabName}`);
+    const range = `${tabName}!A1:K`;
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range: range,
+    });
+    const data = response.data.values;
+
+    if (!data || data.length < 3) {
+      console.warn(
+        `[fetchSectionData] No sufficient data found for tab: ${tabName}`
+      );
+      return { posts: [], backgroundImage: undefined };
+    }
+
+    const headers = data[0].map((h: string) => h.trim());
+    const settingsRow = data[1];
+    const rows = data.slice(2); // skip header and settings row
+    console.log(
+      `[fetchSectionData] Found ${rows.length} data rows for tab: ${tabName}`
+    );
+
+    // Get background_image from settings row (if present)
+    const bgImgIdx = headers.indexOf("background_image");
+    const backgroundImage =
+      bgImgIdx !== -1 ? settingsRow[bgImgIdx] || undefined : undefined;
+
+    // Map posts (skip settings row)
+    const posts = rows.map((row: string[], index: number) => {
+      const mappedPost = mapSheetRowToPostObj(
+        mapRowToObject(row, headers),
+        authors,
+        tabName,
+        index
+      );
+      console.log(
+        `[fetchSectionData] Mapped post slug: ${mappedPost.slug} for tab ${tabName}`
+      );
+      return mappedPost;
+    });
+
+    console.log(
+      `[fetchSectionData] Successfully fetched and mapped ${posts.length} posts for tab: ${tabName}`
+    );
+    return { posts, backgroundImage };
+  } catch (error) {
+    console.error(
+      `[fetchSectionData] Error fetching data for section ${section}:`,
+      error
+    );
     return { posts: [], backgroundImage: undefined };
   }
-  const headers = data[0].map((h: string) => h.trim());
-  const settingsRow = data[1];
-  const rows = data.slice(2); // skip header and settings row
-
-  // Get background_image from settings row (if present)
-  const bgImgIdx = headers.indexOf("background_image");
-  const backgroundImage =
-    bgImgIdx !== -1 ? settingsRow[bgImgIdx] || undefined : undefined;
-
-  // Map posts (skip settings row)
-  const posts = rows.map((row: string[], index: number) =>
-    mapSheetRowToPostObj(mapRowToObject(row, headers), authors, tabName, index)
-  );
-  return { posts, backgroundImage };
 }
