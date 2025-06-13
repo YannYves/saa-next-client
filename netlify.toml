@@ -25,9 +25,3 @@
   command = "npm run build"
   environment = { DATA_SOURCE = "staging" }
 
-# Plugins
-[[plugins]]
-package = "@netlify/plugin-sitemap"
-  [plugins.inputs]
-    buildPath = "out"
-
