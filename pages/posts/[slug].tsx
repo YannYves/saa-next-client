@@ -76,7 +76,6 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       props: {
         post,
       },
-      revalidate: 60, // Revalidate every minute
     };
   } catch (error) {
     return {

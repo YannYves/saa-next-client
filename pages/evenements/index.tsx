@@ -35,7 +35,6 @@ export async function getStaticProps() {
       backgroundImage: backgroundImage || mockBackgroundImage,
       section,
     },
-    revalidate: 60, // Revalidate every minute
   };
 }
 
