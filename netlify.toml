@@ -27,7 +27,7 @@
 
 [[redirects]]
   from = "/posts/*"
-  to = "/posts/:splat.html"
+  to = "/posts/:splat/index.html"
   status = 200
   force = false
 
