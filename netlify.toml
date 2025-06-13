@@ -27,9 +27,6 @@
 
 # Plugins
 [[plugins]]
-package = "@netlify/plugin-cache"
-
-[[plugins]]
 package = "@netlify/plugin-sitemap"
   [plugins.inputs]
     buildPath = "out"
