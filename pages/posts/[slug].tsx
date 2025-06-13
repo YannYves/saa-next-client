@@ -67,6 +67,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     const post = allPosts.find((p) => p.slug === params.slug);
 
     if (!post) {
+      console.log(`[getStaticProps] Post not found for slug: ${params.slug}`);
       return {
         notFound: true,
       };
@@ -78,6 +79,10 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       },
     };
   } catch (error) {
+    console.error(
+      `[getStaticProps] Error processing slug ${params.slug}:`,
+      error
+    );
     return {
       notFound: true,
     };
