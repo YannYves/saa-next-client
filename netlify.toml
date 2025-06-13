@@ -37,3 +37,8 @@
   status = 200
   force = false
 
+[[plugins]]
+package = "@netlify/plugin-sitemap"
+  [plugins.inputs]
+    buildPath = "out"
+
