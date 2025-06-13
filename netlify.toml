@@ -31,9 +31,3 @@ package = "@netlify/plugin-sitemap"
   [plugins.inputs]
     buildPath = "out"
 
-[[plugins]]
-package = "netlify-plugin-robots-txt"
-  [plugins.inputs]
-    policy = [
-      { userAgent = "*", allow = "/" }
-    ] 
